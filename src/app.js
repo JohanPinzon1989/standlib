@@ -4,10 +4,17 @@ const myconnection = require('express-myconnection');
 const mysql = require('mysql');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const path = require('path');
 
-const app =express();
+const app = express();
 app.set('port', 4000);
 
+const publicPath = path.resolve(__dirname, 'public');
+
+app.use(express.static(publicPath));
+app.get('/', function(req, res){
+    res.sendFile(__dirname + './main.hbs');
+    });
 app.set('views', __dirname + '/views');
 app.engine('.hbs', engine({
     extname: '.hbs',
