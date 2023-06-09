@@ -16,32 +16,35 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr>
-      <th scope="row">1</th>
-      <td>CC</td>
-      <td>12346</td>
-      <td>Pepito</td>
-      <td>Perez</td>
-      <td>xxx@xx.com</td>
-      <td>2354697</td>
-      <td>3135478924</td>
-      <td>Bogotá</td>
-      <td>Tecnoloia</td>
-      <td>pperez</td>
-      <td class="text-end">
-        <a href="#" type="button" class="btn btn-lidth btn-small"><i
-            class="bi bi-eye"
-          ></i>
-          Ver</a>
-        <a href="#" type="button" class="btn btn-lidth btn-small"><i
-            class="bi bi-pencil"
-          ></i>
-          Editar</a>
-        <a href="#" type="button" class="btn btn-lidth btn-small"><i
-            class="bi bi-person-x"
-          ></i>
-          Eliminar</a>
-      </td>
-    </tr>
+
+    {{#each rows}}
+      <tr>
+        <th scope="row">{{this.Id}}</th>
+        <td>{{this.Tipo_Identificacion_Id}}</td>
+        <td>{{this.N_identificacion}}</td>
+        <td>{{this.Nombre}}</td>
+        <td>{{this.Apellido}}</td>
+        <td>{{this.Email}}</td>
+        <td>{{this.Num_Fijo}}</td>
+        <td>{{this.Num_Celular}}</td>
+        <td>{{this.Estado_provincia_Id}}</td>
+        <td>{{this.Industria_Id}}</td>
+        <td>{{this.username}}</td>
+        <td class="text-end">
+          <a href="#" type="button" class="btn btn-lidth btn-small"><i
+              class="bi bi-eye"
+            ></i>
+            Ver</a>
+          <a href="#" type="button" class="btn btn-lidth btn-small"><i
+              class="bi bi-pencil"
+            ></i>
+            Editar</a>
+          <a href="#" type="button" class="btn btn-lidth btn-small"><i
+              class="bi bi-person-x"
+            ></i>
+            Eliminar</a>
+        </td>
+      </tr>
+    {{/each}}
   </tbody>
 </table>

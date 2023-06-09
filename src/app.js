@@ -5,8 +5,7 @@ const mysql = require('mysql');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
-const routes = require('./routes/handlers');
-const LoginRoutes = require('./routes/login');
+const LoginRoutes = require('./server/routes/login');
 const { connect } = require('http2');
 const connection = require('express-myconnection');
 
@@ -49,19 +48,15 @@ pool.getConnection((err, connection) => {
     console.log('Connected as ID ' + connection.threadId);
 });
 
-//Router
-app.get('/', (req,res) => {
-    res.render('home',{
-        title: "STANDLIB",
-    });
-});
+const routes = require('./server/routes/handlers');
+app.use('/', routes);
 
 app.set('port', 4000);
 app.listen(app.get('port'), () => {
     console.log('Listening on port', app.get('port'));
 });
 
-app.use('/', routes);
+
 
 app.set('views', __dirname + '/views');
 
