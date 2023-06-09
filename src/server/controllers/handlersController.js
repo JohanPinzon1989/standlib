@@ -36,7 +36,8 @@ exports.find = (req, res) => {
         let searchTerm = req.body.buscar;
         console.log(searchTerm);
             //Usar la coneccion
-            connection.query('SELECT * FROM Usuarios WHERE username LIKE ?', ['%' + searchTerm + '%'], (err, rows) =>{
+            connection.query('SELECT * FROM Usuarios WHERE username LIKE ? OR Nombre LIKE ? OR Apellido LIKE ?',
+             ['%' + searchTerm + '%', '%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) =>{
                 connection.release();
                 if(!err) {
                     res.render('home', { rows,
