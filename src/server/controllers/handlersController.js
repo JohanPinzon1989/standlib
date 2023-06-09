@@ -34,6 +34,7 @@ exports.find = (req, res) => {
         if(err) throw err; //no conectado
         console.log('Connected as ID ' + connection.threadId);
         let searchTerm = req.body.buscar;
+        console.log(searchTerm);
             //Usar la coneccion
             connection.query('SELECT * FROM Usuarios WHERE username LIKE ?', ['%' + searchTerm + '%'], (err, rows) =>{
                 connection.release();
@@ -43,7 +44,7 @@ exports.find = (req, res) => {
                 }else {
                     console.log(err);
                 }
-                console.log('El dato para la tabla: \n', rows);
+                //console.log('El dato para la tabla: \n', rows);
             });
     });
 }
