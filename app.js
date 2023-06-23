@@ -1,3 +1,4 @@
+const http = require("http");
 const express = require("express");
 const dotenv = require("dotenv");
 const cookiesParse = require("cookie-parser");
@@ -8,7 +9,7 @@ const app = express();
 app.set("view engine", "ejs");
 
 //Setear carpeta public para archivos externos
-app.use(express.static("public"));
+app.use(express.static("public/"));
 
 //Procesar datos enviados desde formularios
 app.use(express.urlencoded({ extended: true }));
