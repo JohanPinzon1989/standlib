@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+/*const mysql = require("mysql");
 
 const conexion = mysql.createConnection({
   host: process.env.HOST,
@@ -16,4 +16,4 @@ conexion.connect((error) => {
   console.log("Conectado a BD");
 });
 
-module.exports = conexion;
+module.exports = conexion;*/
