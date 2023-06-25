@@ -103,7 +103,7 @@
 								<p class="mb-30">Prueba registro de usuarios</p>
 							</div>
 						</div>
-						<form>
+						<form action="http://localhost:4100/api/usuarios" method="POST">
 							<div class="form-group row">
 								<label for="N-Identificacion" class="col-sm-12 col-md-2 col-form-label">Numero de identificacion</label>
 								<div class="col-sm-12 col-md-10">
@@ -218,12 +218,8 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label"
-									>Input Range</label
-								>
-								<div class="col-sm-12 col-md-10">
-									<input class="form-control" value="50" type="range" />
-								</div>
+								<a href="/" type="button">Cancelar</a>
+								<button type="submit">Registrar</button>
 							</div>
 						</form>
 					</div>
