@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-//const conexion = require("../database/db");
-const agregarUsuarios = require("../../APP_REST_FULL/src/modulos/usuarios/controlador");
+const conexion = require("../src/DB/database");
 
 router.get("/", (req, res) => {
   res.render("index");
