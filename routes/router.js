@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-//const conexion = require("../database/db");
-const agregarUsuarios = require("../../APP_REST_FULL/src/modulos/usuarios/controlador");
+const conexion = require("../DB/database");
+const pais = require("../src/modulos/pais/rutas");
+const usuarios = require("../src/modulos/usuarios/rutas");
+const errors = require("../src/red/errors");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -17,6 +19,9 @@ router.get("/register", (req, res) => {
 });
 
 //Router para registrar los datos
-//app.post("/");
+router.use("/api/pais", pais);
+router.use("/api/usuarios", usuarios);
+router.use("/api/auth", usuarios);
+router.use(errors);
 
 module.exports = router;
