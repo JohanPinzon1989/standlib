@@ -77,7 +77,7 @@ function del(table, data) {
 function query(table, consult) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      "SELECT * FROM " + table + " WHERE ?",
+      "SELECT * FROM " + table + " WHERE username = ?",
       consult,
       (error, result) => {
         return error ? reject(error) : resolve(result[0]);
@@ -92,4 +92,5 @@ module.exports = {
   agregar,
   del,
   query,
+  conmsql,
 };

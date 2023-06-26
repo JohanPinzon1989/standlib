@@ -12,7 +12,7 @@ module.exports = function (dbInyect) {
     db = require("../../../DB/database");
   }
 
-  async function login(username, password) {
+  async function auth(username, password) {
     console.log(username, password);
     if (!username || password) {
       res.render("login", {
@@ -95,6 +95,6 @@ module.exports = function (dbInyect) {
     find,
     agregar,
     del,
-    login,
+    auth,
   };
 };
