@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", { alert: false });
 });
 
 router.get("/register", (req, res) => {
@@ -21,7 +21,7 @@ router.get("/register", (req, res) => {
 //Router para registrar los datos
 router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
-router.use("/api/auth", usuarios);
+router.use("/api/login", usuarios);
 router.use(errors);
 
 module.exports = router;

@@ -108,40 +108,14 @@
 							<div class="login-title">
 								<h2 class="text-center text-primary">Login To DeskApp</h2>
 							</div>
-							<form>
-								<div class="select-role">
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
-										<label class="btn active">
-											<input type="radio" name="options" id="admin" />
-											<div class="icon">
-												<img
-													src="images/briefcase.svg"
-													class="svg"
-													alt=""
-												/>
-											</div>
-											<span>I'm</span>
-											Manager
-										</label>
-										<label class="btn">
-											<input type="radio" name="options" id="user" />
-											<div class="icon">
-												<img
-													src="images/person.svg"
-													class="svg"
-													alt=""
-												/>
-											</div>
-											<span>I'm</span>
-											Employee
-										</label>
-									</div>
-								</div>
+							<form id="login" action="/api/login" method="POST">
+								
 								<div class="input-group custom">
-									<input
+									<input id="username"
+										name="username"
 										type="text"
 										class="form-control form-control-lg"
-										placeholder="Username"
+										placeholder="Usuario"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -150,7 +124,8 @@
 									</div>
 								</div>
 								<div class="input-group custom">
-									<input
+									<input id="password"
+										name="password"
 										type="password"
 										class="form-control form-control-lg"
 										placeholder="**********"
@@ -187,11 +162,10 @@
 											use code for form submit
 											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
 										-->
-											<a
+											<button
 												class="btn btn-primary btn-lg btn-block"
-												href="/"
-												>Sign In</a
-											>
+												type="submit"
+												>Sign In</button>
 										</div>
 										<div
 											class="font-16 weight-600 pt-10 pb-10 text-center"
@@ -231,5 +205,19 @@
 			></iframe
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<% if(alert) { %>
+		<script>
+			Swal.fire({
+        title: "<%= alertTitle %>",
+        alertMessage: "<%= alertMessage %>",
+        alertIcon: "<%= alertIcon %>",
+        showConfirmButton: <%= showConfirmButton %>,
+        timer: <%= timer %>
+		}).then(()=>{
+			window.location = '/<%= ruta %>'
+		})
+		</script>
+		<% } %>
 	</body>
 </html>

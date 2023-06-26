@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const auth = require("../../auth");
+const jwt = require("jsonwebtoken");
+const { use } = require("./rutas");
 
 const Table = "usuarios";
 
@@ -11,14 +13,48 @@ module.exports = function (dbInyect) {
   }
 
   async function login(username, password) {
-    const data = await db.query(Table, { username: username });
-    return bcrypt.compare(password, data.password).then((resultado) => {
-      if (resultado === true) {
-        return auth.asignarToken({ ...data });
-      } else {
-        throw new Error("informacion invalida");
-      }
-    });
+    console.log(username, password);
+    if (!username || password) {
+      res.render("login", {
+        alert: true,
+        alertTitle: "Advertencia",
+        alertMessage: "Ingrese un usuario y contraseña",
+        alertIcon: "info",
+        showConfirmButton: true,
+        timer: false,
+        ruta: "login",
+      });
+    } else {
+      const data = await db.query(Table, { username: username });
+      return bcrypt.compare(password, data.password).then((resultado) => {
+        if (resultado === true) {
+          const id = resultado[0].Id;
+          const token = jwt.sign({ Id: Id }, process.env.JWT_SECRETE, {
+            expiresIn: process.env.JWT_TIME_EXPIRES,
+          });
+          console.log("Token: " + token);
+          const cookiesOptions = {
+            expires: new Date(
+              Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+            ),
+            httpOnly: true,
+          };
+          res.cookie("jwt", token, cookiesOptions);
+          res.render("login", {
+            alert: true,
+            alertTitle: "Conexion exitosa",
+            alertMessage: "DATOS CORRECTOS!",
+            alertIcon: "success",
+            showConfirmButton: true,
+            timer: 800,
+            ruta: "",
+          });
+          //return auth.asignarToken({ ...data });
+        } else {
+          throw new Error("informacion invalida");
+        }
+      });
+    }
   }
 
   function getAll() {
