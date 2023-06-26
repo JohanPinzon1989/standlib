@@ -14,7 +14,7 @@ conexion.connect((error) => {
     console.log(error);
     return;
   }
-  console.log("BD Conectada");
+  //console.log("BD Conectada");
 });
 
 module.exports = conexion;

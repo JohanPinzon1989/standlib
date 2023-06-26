@@ -25,5 +25,5 @@ app.use(cookiesParse());
 app.use("/", require("./routes/router"));
 
 app.listen(4000, () => {
-  console.log("Server up running in port: 4000");
+  console.log("Server up running");
 });

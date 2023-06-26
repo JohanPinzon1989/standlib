@@ -38,8 +38,6 @@ exports.auth = async (req, res) => {
             });
           } else {
             const id = result[0].id;
-            console.log(id);
-            console.log(process.env.JWT_SECRETE);
             const token = jwt.sign({ Id: id }, process.env.JWT_SECRETE, {
               expiresIn: process.env.JWT_TIME_EXPIRES,
             });

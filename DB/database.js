@@ -19,7 +19,7 @@ function conmsql() {
       console.log("[db err]", err);
       setTimeout(conmsql, 200);
     } else {
-      console.log("DB conectada!");
+      //console.log("DB conectada!");
     }
   });
   conexion.on("error", (err) => {
