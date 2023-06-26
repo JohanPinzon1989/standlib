@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const conexion = require("../../../DB/dbreg");
 const { promisify } = require("util");
+const { error } = require("console");
 
 exports.auth = async (req, res) => {
   try {
@@ -67,4 +68,36 @@ exports.auth = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+exports.isAuthenticated = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      const deDecodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETE
+      );
+      conexion.query(
+        "SELECT * FROM usuarios WHERE username = ?",
+        [deDecodificada.id],
+        (error, result) => {
+          if (!result) {
+            return next();
+          }
+          req.username = result[0];
+          return next();
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      return next();
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+exports.logout = (req, res) => {
+  res.clearCookie("jwt");
+  return res.redirect("/");
 };

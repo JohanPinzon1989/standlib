@@ -7,8 +7,8 @@ const usuarios = require("../src/modulos/usuarios/rutas");
 const errors = require("../src/red/errors");
 const login = require("../src/modulos/usuarios/autenticacion");
 
-router.get("/", (req, res) => {
-  res.render("index");
+router.get("/", login.isAuthenticated, (req, res) => {
+  res.render("index", { user: req.user });
 });
 
 router.get("/login", (req, res) => {
@@ -24,5 +24,6 @@ router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);
 router.use(errors);
+router.get("/logout", login.logout);
 
 module.exports = router;
