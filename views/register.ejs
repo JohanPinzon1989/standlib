@@ -1,250 +1,69 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<!-- Basic Page Info -->
-		<meta charset="utf-8" />
-		<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+<html lang="en">
 
-		<!-- Site favicon -->
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="images/apple-touch-icon.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="32x32"
-			href="images/favicon-32x32.png"
-		/>
-		<link
-			rel="icon"
-			type="image/png"
-			sizes="16x16"
-			href="images/favicon-16x16.png"
-		/>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modernize Free</title>
+  <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
+  <link rel="stylesheet" href="assets/css/styles.min.css" />
+</head>
 
-		<!-- Mobile Specific Metas -->
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, maximum-scale=1"
-		/>
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="assets/images/logos/dark-logo.png" width="180" alt="">
+                </a>
+                <form action=" " method="POST">
+					<p class="text-center">Organizacion</p>
+                  <div class="mb-3">
+                    <label for="Nombre" class="form-label">Name de la Organizacion</label>
+                    <input type="text" class="form-control" name="Nombre" id="Nombre aria-describedby="textHelp">
+                  </div>
+				  <div class="mb-3">
+                    <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
+                    <input type="text" class="form-control" name="Num_Contacto" id="Num_Contacto" aria-describedby="textHelp">
+                  </div>
+				  <div class="mb-3">
+                    <label for="Tel_contacto" class="form-label">Numeo celular</label>
+                    <input type="text" class="form-control" name="Tel_contacto" id="Tel_contacto" aria-describedby="textHelp">
+                  </div>
+                  <div class="mb-3">
+                    <label for="Email" class="form-label">Correo contacto</label>
+                    <input type="email" class="form-control" name="Email" id="Email" aria-describedby="emailHelp">
+                  </div>
+                  <div class="mb-3">
+                    <label for="Email_facturacion" class="form-label">Correo facturacion</label>
+                    <input type="email" class="form-control" name="Email_facturacion" id="Email_facturacion" aria-describedby="emailHelp" required>
+                  </div>
+                  <div class="mb-4">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
+                    <a class="text-primary fw-bold ms-2" href="/login">Sign In</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-		<!-- Google Font -->
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
-		<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="css/core.css" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="css/icon-font.min.css"
-		/>
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"
-		></script>
-		<script
-			async
-			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258"
-			crossorigin="anonymous"
-		></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-
-			gtag("config", "G-GBZ3SGGX85");
-		</script>
-		<!-- Google Tag Manager -->
-		<script>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != "dataLayer" ? "&l=" + l : "";
-				j.async = true;
-				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, "script", "dataLayer", "GTM-NXZMQSS");
-		</script>
-		<!-- End Google Tag Manager -->
-	</head>
-	<body>
-		<div class="pre-loader">
-			<div class="pre-loader-box">
-				<div class="loader-logo">
-					<img src="images/deskapp-logo.svg" alt="" />
-				</div>
-				<div class="loader-progress" id="progress_div">
-					<div class="bar" id="bar1"></div>
-				</div>
-				<div class="percent" id="percent1">0%</div>
-				<div class="loading-text">Loading...</div>
-			</div>
-		</div>
-
-		<div class="main-container">
-			<div class="pd-ltr-20 xs-pd-20-10">
-				<div class="min-height-200px">
-				
-					<!-- Default Basic Forms Start -->
-						<div class="clearfix">
-							<div class="pull-left">
-								<h4 class="text-blue h4">Registro de usuarios</h4>
-								<p class="mb-30">Prueba registro de usuarios</p>
-							</div>
-						</div>
-						<form id="registrar" action="/api/usuarios" method="POST">
-							<div class="form-group row">
-								<label for="N-Identificacion" class="col-sm-12 col-md-2 col-form-label">Numero de identificacion</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="N_Identificacion"
-									name="N_Identificacion"
-										class="form-control"
-										type="text"
-										placeholder="Numero de identificacion"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Nombre" class="col-sm-12 col-md-2 col-form-label">Nombres</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="Nombre"
-									name="Nombre"
-										class="form-control"
-										type="text"
-										placeholder="Nombres"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Apellido" class="col-sm-12 col-md-2 col-form-label">Apellido</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="Apellido"
-									name="Apellido"
-										class="form-control"
-										type="text"
-										placeholder="Apellidos"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Email" class="col-sm-12 col-md-2 col-form-label">Correo</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="Email"
-									name="Email"
-										class="form-control"
-										placeholder="Correo electronico"
-										type="email"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Num_Fijo" class="col-sm-12 col-md-2 col-form-label">Numero telefono fijo</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="Num_Fijo"
-									name="Num_Fijo"
-										class="form-control"
-										type="text"
-										placeholder="Numero telefono fijo"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Num_Celular" class="col-sm-12 col-md-2 col-form-label">Numero de celular</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="Num_Celular"
-									name="Num_Celular"
-										class="form-control"
-										type="text"
-										placeholder="Numero de celular"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Estado" class="col-sm-12 col-md-2 col-form-label">Estado</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="Estado"
-									name="Estado"
-										class="form-control"
-										type="text"
-										value="Activo"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="Estado_Ing" class="col-sm-12 col-md-2 col-form-label">estado en ingles</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="estado_Ing"
-									name="Estado_Ing"
-										class="form-control"
-										type="text"
-										Value="Active"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="username" class="col-sm-12 col-md-2 col-form-label">Nombre de usuario</label>
-								<div class="col-sm-12 col-md-10">
-									<input id="username"
-									name="username"
-										class="form-control"
-										type="text"
-										placeholder="Nombre de usuario"
-									/>
-								</div>
-							</div>
-										
-							<div class="form-group row">
-								<label for="password" class="col-sm-12 col-md-2 col-form-label"
-									>Contraseña</label
-								>
-								<div class="col-sm-12 col-md-10">
-									<input id="password"
-										name="password"
-										class="form-control"
-										placeholder="password"
-										type="password"
-									/>
-								</div>
-							</div>
-							<button class="btn btn-primary btn-lg btn-block" type="submit">Registrar</button>
-							<a href="/login" type="button" class="btn btn-outline-primary btn-lg btn-block">login</a>
-						</form>
-					</div>
-					<!-- Input Validation End -->
-				</div>
-				<div class="footer-wrap pd-20 mb-20 card-box">
-					DeskApp - Bootstrap 4 Admin Template By
-					<a href="https://github.com/dropways" target="_blank"
-						>Ankit Hingarajiya</a
-					>
-				</div>
-			</div>
-		</div>
-		<!-- js -->
-		<script src="js/core.js"></script>
-		<script src="js/script.min.js"></script>
-		<script src="js/process.js"></script>
-		<script src="js/layout-settings.js"></script>
-		<!-- Google Tag Manager (noscript) -->
-		<noscript
-			><iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
-				height="0"
-				width="0"
-				style="display: none; visibility: hidden"
-			></iframe
-		></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-	</body>
 </html>
