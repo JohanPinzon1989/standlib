@@ -19,6 +19,10 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.4.1"
+    "mysql2": "^3.4.1",
+    "sass": "^1.54.8",
+    "apexcharts": "^3.37.0",
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.3"
   }
 }
