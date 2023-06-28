@@ -1,22 +1,26 @@
 const express = require("express");
 const router = express.Router();
 
-const conexion = require("../DB/database");
-const pais = require("../src/modulos/pais/rutas");
-const usuarios = require("../src/modulos/usuarios/rutas");
-const errors = require("../src/red/errors");
-const login = require("../src/modulos/usuarios/autenticacion");
+const conexion = require("../serv/DB/database");
+const pais = require("../serv/modulos/pais/rutas");
+const usuarios = require("../serv/modulos/usuarios/rutas");
+const errors = require("../serv/red/errors");
+const login = require("../serv/modulos/usuarios/autenticacion");
 
 router.get("/", login.isAuthenticated, (req, res) => {
-  res.render("index", { user: req.user });
+  res.render("ESP/index", { user: req.user });
 });
 
 router.get("/login", (req, res) => {
-  res.render("login", { alert: false });
+  res.render("ESP/login", { alert: false });
 });
 
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("ESP/registro_org");
+});
+
+router.get("/registerU", (req, res) => {
+  res.render("ESP/registro_usr");
 });
 
 //Router para registrar los datos

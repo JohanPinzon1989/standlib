@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-const { error } = require("../src/red/respuestas");
+const { error } = require("../red/respuestas");
 
 const conexion = mysql.createConnection({
   host: process.env.HOST,

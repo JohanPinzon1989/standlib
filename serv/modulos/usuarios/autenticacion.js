@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const conexion = require("../../../DB/dbreg");
+const conexion = require("../../DB/dbreg");
 const { promisify } = require("util");
 const { error } = require("console");
 
@@ -9,14 +9,14 @@ exports.auth = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     if (!username || !password) {
-      res.render("login", {
+      res.render("ESP/login", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Ingrese un usuario y contraseña",
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
-        ruta: "login",
+        ruta: "ESP/login",
       });
     } else {
       conexion.query(
@@ -27,14 +27,14 @@ exports.auth = async (req, res) => {
             result.length == 0 ||
             !(await bcrypt.compare(password, result[0].password))
           ) {
-            res.render("login", {
+            res.render("ESP/login", {
               alert: true,
               alertTitle: "Advertencia",
               alertMessage: "Usuario o contraseña incorrectos",
               alertIcon: "info",
               showConfirmButton: true,
               timer: false,
-              ruta: "login",
+              ruta: "ESP/login",
             });
           } else {
             const id = result[0].id;
@@ -50,7 +50,7 @@ exports.auth = async (req, res) => {
               httpOnly: true,
             };
             res.cookie("jwt", token, cookiesOptions);
-            res.render("login", {
+            res.render("ESP/login", {
               alert: true,
               alertTitle: "Conexion exitosa",
               alertMessage: "DATOS CORRECTOS!",
@@ -97,5 +97,6 @@ exports.isAuthenticated = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("jwt");
+  console.log(res.clearCookie("jwt"));
   return res.redirect("/");
 };
