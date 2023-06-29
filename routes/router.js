@@ -22,6 +22,9 @@ router.get("/register", (req, res) => {
 router.get("/registerU", (req, res) => {
   res.render("ESP/registro_usr");
 });
+router.get("/regUs", (req, res) => {
+  res.render("ESP/usuarios");
+});
 
 //Router para registrar los datos
 router.use("/api/pais", pais);

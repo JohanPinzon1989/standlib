@@ -41,6 +41,13 @@ function getAll(table) {
     });
   });
 }
+function getAllP() {
+  return new Promise((resolve, reject) => {
+    conexion.query("CALL usuariosAll ", (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
+  });
+}
 
 function find(table, id) {
   return new Promise((resolve, reject) => {
@@ -77,7 +84,7 @@ function del(table, data) {
 function query(table, consult) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      "SELECT * FROM " + table + " WHERE username = ?",
+      "SELECT * FROM " + table + " WHERE Email = ?",
       consult,
       (error, result) => {
         return error ? reject(error) : resolve(result[0]);
@@ -93,4 +100,5 @@ module.exports = {
   del,
   query,
   conmsql,
+  getAllP,
 };

@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get("/login", login);
 router.get("/", getAll);
+router.get("/p", getAllP);
 router.get("/:Id", find);
 router.post("/", agregar);
 router.put("/", del);
@@ -23,6 +24,15 @@ async function login(req, res, next) {
 async function getAll(req, res, next) {
   try {
     const items = await controlador.getAll();
+    respuetas.success(req, res, items, 200);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function getAllP(req, res, next) {
+  try {
+    const items = await controlador.getAllP();
     respuetas.success(req, res, items, 200);
   } catch (err) {
     next(err);

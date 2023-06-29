@@ -6,13 +6,13 @@ const { error } = require("console");
 
 exports.auth = async (req, res) => {
   try {
-    const username = req.body.username;
+    const email = req.body.Email;
     const password = req.body.password;
-    if (!username || !password) {
+    if (!email || !password) {
       res.render("ESP/login", {
         alert: true,
         alertTitle: "Advertencia",
-        alertMessage: "Ingrese un usuario y contraseña",
+        alertMessage: "Ingrese un correo y/o contraseña",
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
@@ -20,8 +20,8 @@ exports.auth = async (req, res) => {
       });
     } else {
       conexion.query(
-        "SELECT * FROM usuarios WHERE username = ?",
-        [username],
+        "SELECT * FROM usuarios WHERE Email = ?",
+        [email],
         async (error, result) => {
           if (
             result.length == 0 ||
@@ -30,7 +30,7 @@ exports.auth = async (req, res) => {
             res.render("ESP/login", {
               alert: true,
               alertTitle: "Advertencia",
-              alertMessage: "Usuario o contraseña incorrectos",
+              alertMessage: "Correo o contraseña incorrectos",
               alertIcon: "info",
               showConfirmButton: true,
               timer: false,
@@ -76,13 +76,13 @@ exports.isAuthenticated = async (req, res, next) => {
         process.env.JWT_SECRETE
       );
       conexion.query(
-        "SELECT * FROM usuarios WHERE username = ?",
+        "SELECT * FROM usuarios WHERE Id = ?",
         [deDecodificada.id],
         (error, result) => {
           if (!result) {
             return next();
           }
-          req.username = result[0];
+          req.Email = result[0];
           return next();
         }
       );
@@ -91,7 +91,7 @@ exports.isAuthenticated = async (req, res, next) => {
       return next();
     }
   } else {
-    res.redirect("/login");
+    res.redirect("ESP/login");
   }
 };
 

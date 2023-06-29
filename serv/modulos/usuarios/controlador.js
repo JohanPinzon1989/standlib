@@ -12,9 +12,9 @@ module.exports = function (dbInyect) {
     db = require("../../../DB/database");
   }
 
-  async function auth(username, password) {
-    console.log(username, password);
-    if (!username || password) {
+  async function auth(Email, password) {
+    console.log(Email, password);
+    if (!Email || password) {
       res.render("login", {
         alert: true,
         alertTitle: "Advertencia",
@@ -25,7 +25,7 @@ module.exports = function (dbInyect) {
         ruta: "login",
       });
     } else {
-      const data = await db.query(Table, { username: username });
+      const data = await db.query(Table, { Email: Email });
       return bcrypt.compare(password, data.password).then((resultado) => {
         if (resultado === true) {
           const id = resultado[0].Id;
@@ -61,6 +61,10 @@ module.exports = function (dbInyect) {
     return db.getAll(Table);
   }
 
+  function getAllP() {
+    return db.getAllP();
+  }
+
   function find(id) {
     return db.find(Table, id);
   }
@@ -68,21 +72,17 @@ module.exports = function (dbInyect) {
   async function agregar(body) {
     const usuario = {
       Id: body.ID,
-      N_identificacion: body.N_identificacion,
       Nombre: body.Nombre,
       Apellido: body.Apellido,
       Email: body.Email,
       Num_Fijo: body.Num_Fijo,
       Num_Celular: body.Num_Celular,
       Estado: body.Estado,
-      Estado_ing: body.Estado_ing,
-      username: body.username,
       password: await bcrypt.hash(body.password, 8),
-      //Publicidad: body.Publicidad,
-      //Tipo_Identificacion_Id: body.Tipo_Identificacion_Id,
-      //Tenant_Id: body.Tenant_Id,
-      //Estado_provincia_Id: body.Estado_provincia_Id,
-      //Perfil_Usuario_Id: body.Perfil_Usuario_Id
+      Publicidad: body.Publicidad,
+      Tenant_Id: body.Tenant_Id,
+      Estado_provincia_Id: body.Estado_provincia_Id,
+      Perfil_Usuario_Id: body.Perfil_Usuario_Id,
     };
     return db.agregar(Table, usuario);
   }
@@ -96,5 +96,6 @@ module.exports = function (dbInyect) {
     agregar,
     del,
     auth,
+    getAllP,
   };
 };
