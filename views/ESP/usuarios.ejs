@@ -1,65 +1,58 @@
 <%- include ('../partials/ESP/admi/header') %>
-<%- include ('../partials/ESP/admi/NavUsuario') %>
+  <%- include ('../partials/ESP/admi/NavUsuario') %>
 
-<div class="row">
-  <div class="col-lg-12 d-flex align-items-center">
-    <div class="card w-100">
-      <div class="card-body p-4">
-        <div class="table-responsive">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-  
-  <table class="table">
-    <thead class="table-light">
-      <tr>
-        <th ">
-          <h6 class="fw-semibold mb-0 fs-4">Id</h6>
-        </th>
-        <th ">
-          <h6 class="fw-semibold mb-0 fs-4">Nombre</h6>
-        </th>
-        <th ">
-          <h6 class="fw-semibold mb-0 fs-4">Apellido</h6>
-        </th>
-        <th ">
-          <h6 class="fw-semibold mb-0 fs-4">Correo</h6>
-        </th>
-        <th ">
-          <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% results.forEach((user)=> { %>
+    <table class="table">
+      <thead class="table-light">
         <tr>
-          <td ">
+          <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Id</h6>
+          </th>
+          <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Nombre</h6>
+          </th>
+          <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Apellido</h6>
+          </th>
+          <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Correo</h6>
+          </th>
+          <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Estado</h6>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% results.forEach((user)=> { %>
+          <tr>
+            <td ">
             <h6 ><%= user.Id %></h6>
           </td>
           <td ">
-            <h6 ><%= user.Nombre %></h6>
-          </td>
-          <td ">
+              <h6>
+                <%= user.Nombre %>
+              </h6>
+            </td>
+            <td ">
             <h6 ><%= user.Apellido %></h6>
           </td>
           <td ">
-            <h6 class="fw-semibold mb-0"><%= user.Email %></h6>
-          </td>
-          <td ">
-            <h6 class="fw-semibold mb-0"><%= user.Estado %></h6>
-          </td>
-          <td ">
-            <a type="button" class="btn btn-secondary m-1">Secondary</a>
-            <a type="button" class="btn btn-danger m-1">Danger</a>
-          </td>
-        </tr> 
-        
-        <% }) %>
-    </tbody>
-  </table>
+              <h6 class="fw-semibold mb-0">
+                <%= user.Email %>
+              </h6>
+            </td>
+            <td ">
+            <h6 class=" fw-semibold mb-0">
+              <%= user.Estado %>
+                </h6>
+            </td>
+            <td ">
+            <a type=" button" class="btn btn-secondary m-1">Secondary</a>
+              <a type="button" class="btn btn-danger m-1">Danger</a>
+            </td>
+          </tr>
 
-  <%- include ('../partials/ESP/admi/footer') %>
+          <% }) %>
+      </tbody>
+    </table>
+
+    <%- include ('../partials/ESP/admi/footer') %>

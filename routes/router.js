@@ -30,7 +30,25 @@ router.get("/us", (req, res) => {
   });
 });
 router.get("/cus", (req, res) => {
-  res.render("ESP/crearUsuarios");
+  let ep1;
+  let pu1;
+  conexion.query("SELECT * FROM estado_provincia", (error, ep) => {
+    if (error) {
+      throw error;
+    } else {
+      ep1 = ep;
+      //res.render("ESP/crearUsuarios", { ep: ep });
+    }
+  });
+  conexion.query("SELECT * FROM perfil_usuario", (error, pu) => {
+    if (error) {
+      throw error;
+    } else {
+      pu1 = pu;
+      //res.render("ESP/crearUsuarios", { pu: pu });
+    }
+  });
+  console.log(ep1);
 });
 router.get("/wp", (req, res) => {
   res.render("ESP/whitePage");

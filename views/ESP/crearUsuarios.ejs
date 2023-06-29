@@ -46,57 +46,54 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Forms</h5>
+                        <h5 class="card-title fw-semibold mb-4">Usuario nuevo</h5>
                         <div class="card">
                             <div class="card-body">
                                 <form>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp">
-                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone
-                                            else.</div>
+                                        <label for="Nombre" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" name="Nombre" id="Nombre">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <label for="Apellido" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" name="Apellido" id="Apellido">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Correo electronico</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Num_Fijo" class="form-label">Telefono fijo</label>
+                                        <input type="text" class="form-control" name="Num_Fijo" id="Num_Fijo">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Num_Celular" class="form-label">Numero celular</label>
+                                        <input type="text" class="form-control" name="Num_Celular" id="Num_Celular">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="perfil_usuario" class="form-label">Perfil Usuario</label>
+                                        <select class="form-control" name="perfil_usuario" id="perfil_usuario"
+                                            aria-describedby="text" required>
+                                            <% pu.forEach((pu1)=> { %>
+                                                <option value=<%=pu1.Id %>>
+                                                    <%= pu1.Perfil %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1">
                                     </div>
                                     <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <input value="1" type="checkbox" class="form-check-input" name="Publicidad"
+                                            id="Publicidad" checked>
+                                        <label class="form-check-label" for="Publicidad">Desea recibir
+                                            publicidad?</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                        <h5 class="card-title fw-semibold mb-4">Disabled forms</h5>
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <form>
-                                    <fieldset disabled>
-                                        <legend>Disabled fieldset example</legend>
-                                        <div class="mb-3">
-                                            <label for="disabledTextInput" class="form-label">Disabled input</label>
-                                            <input type="text" id="disabledTextInput" class="form-control"
-                                                placeholder="Disabled input">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="disabledSelect" class="form-label">Disabled select menu</label>
-                                            <select id="disabledSelect" class="form-select">
-                                                <option>Disabled select</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    id="disabledFieldsetCheck" disabled>
-                                                <label class="form-check-label" for="disabledFieldsetCheck">
-                                                    Can't check this
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </fieldset>
                                 </form>
                             </div>
                         </div>
