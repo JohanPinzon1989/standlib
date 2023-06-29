@@ -2,10 +2,12 @@ const http = require("http");
 const express = require("express");
 const dotenv = require("dotenv");
 const cookiesParse = require("cookie-parser");
+const path = require("path");
 
 const app = express();
 
 // Setar motor de plantillas
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 //Setear carpeta public para archivos externos

@@ -16,7 +16,7 @@ exports.auth = async (req, res) => {
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
-        ruta: "ESP/login",
+        ruta: "login",
       });
     } else {
       conexion.query(
@@ -34,7 +34,7 @@ exports.auth = async (req, res) => {
               alertIcon: "info",
               showConfirmButton: true,
               timer: false,
-              ruta: "ESP/login",
+              ruta: "login",
             });
           } else {
             const id = result[0].id;
@@ -76,8 +76,8 @@ exports.isAuthenticated = async (req, res, next) => {
         process.env.JWT_SECRETE
       );
       conexion.query(
-        "SELECT * FROM usuarios WHERE Id = ?",
-        [deDecodificada.id],
+        "SELECT * FROM usuarios WHERE Email = ?",
+        [deDecodificada.email],
         (error, result) => {
           if (!result) {
             return next();
@@ -91,7 +91,7 @@ exports.isAuthenticated = async (req, res, next) => {
       return next();
     }
   } else {
-    res.redirect("ESP/login");
+    res.redirect("login");
   }
 };
 

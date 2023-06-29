@@ -68,21 +68,17 @@ module.exports = function (dbInyect) {
   async function agregar(body) {
     const usuario = {
       Id: body.ID,
-      N_identificacion: body.N_identificacion,
       Nombre: body.Nombre,
       Apellido: body.Apellido,
       Email: body.Email,
       Num_Fijo: body.Num_Fijo,
       Num_Celular: body.Num_Celular,
       Estado: body.Estado,
-      Estado_ing: body.Estado_ing,
-      username: body.username,
       password: await bcrypt.hash(body.password, 8),
-      //Publicidad: body.Publicidad,
-      //Tipo_Identificacion_Id: body.Tipo_Identificacion_Id,
-      //Tenant_Id: body.Tenant_Id,
-      //Estado_provincia_Id: body.Estado_provincia_Id,
-      //Perfil_Usuario_Id: body.Perfil_Usuario_Id
+      Publicidad: body.Publicidad,
+      Tenant_Id: body.Tenant_Id,
+      Estado_provincia_Id: body.Estado_provincia_Id,
+      Perfil_Usuario_Id: body.Perfil_Usuario_Id,
     };
     return db.agregar(Table, usuario);
   }

@@ -13,7 +13,7 @@ router.put("/", del);
 
 async function login(req, res, next) {
   try {
-    const token = await controlador.login(req.body.username, req.body.password);
+    const token = await controlador.login(req.body.Email, req.body.password);
     respuetas.success(req, res, token, 200);
   } catch (err) {
     next(err);

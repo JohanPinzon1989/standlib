@@ -22,8 +22,8 @@ router.get("/register", (req, res) => {
 router.get("/registerU", (req, res) => {
   res.render("ESP/registro_usr");
 });
-router.get("/regUs", (req, res) => {
-  res.render("ESP/usuarios");
+router.get("/wp", (req, res) => {
+  res.render("ESP/whitePage");
 });
 
 //Router para registrar los datos
