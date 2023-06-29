@@ -41,6 +41,7 @@ function getAll(table) {
     });
   });
 }
+
 function getAllP() {
   return new Promise((resolve, reject) => {
     conexion.query("CALL usuariosAll ", (error, result) => {

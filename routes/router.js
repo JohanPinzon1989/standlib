@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const conexion = require("../serv/DB/database");
+const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const errors = require("../serv/red/errors");
@@ -19,8 +19,16 @@ router.get("/register", (req, res) => {
   res.render("ESP/registro_org");
 });
 
-router.get("/registerU", (req, res) => {
-  res.render("ESP/registro_usr");
+//Inicio del menu de usuarios
+router.get("/us", (req, res) => {
+  conexion.query("SELECT * FROM usuarios", (error, result) => {
+    if (error) {
+      throw error;
+    } else {
+      res.send(result);
+    }
+  });
+  //res.render("ESP/usuarios");
 });
 router.get("/wp", (req, res) => {
   res.render("ESP/whitePage");
