@@ -19,6 +19,10 @@ router.get("/register", (req, res) => {
   res.render("ESP/registro_org");
 });
 
+router.get("/vDoc", (req, res) => {
+  res.render("ESP/viewDoc");
+});
+
 //Inicio del menu de usuarios
 router.get("/us", (req, res) => {
   conexion.query("SELECT * FROM usuarios", (error, results) => {
