@@ -48,17 +48,37 @@
                         <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
                         <div class="card">
                             <div class="card-body">
-                                <form>
-                                    <div class="card-body p-2" style="margin-left: 30%;">
+                                <form action="/upload" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="Nombre" class="form-label">Nombre del documento</label>
+                                        <input type="text" class="form-control" name="Nombre" id="Nombre">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
+                                        <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Descripcion" class="form-label">Descripcion en español</label>
+                                        <input type="text" class="form-control" name="Descripcion" id="Descripcion"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                                        <input type="text" class="form-control" name="Descripcion_ing"
+                                            id="Descripcion_ing">
+                                    </div>
+                                    <div class="card-body p-2" style="margin-left: 20%;">
 
                                         <input type="file" name="pdfFile" id="pdfFile"
                                             class="btn btn-outline-danger m-1" required>
-                                        <button class="btn btn-outline-danger m-1">subir pdf</>
-
+                                        <button type="submit" class="btn btn-primary">Cargar documento</button>
                                     </div>
+
+                                </form>
+                                <div style="margin-top: 15px;">
                                     <embed id="vistaPrevia" type="application/pdf" width="100%" height="800px"
                                         aria-controls="nodownload">
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

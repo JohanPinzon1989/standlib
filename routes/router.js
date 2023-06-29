@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
 
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
+const uploades = multer({ dest: "../../../public/doc/uploades" });
 
 router.get("/", login.isAuthenticated, (req, res) => {
   res.render("ESP/index", { user: req.user });
@@ -21,6 +25,12 @@ router.get("/register", (req, res) => {
 
 router.get("/aDoc", (req, res) => {
   res.render("ESP/addDoc");
+});
+
+//cargar archivos
+router.post("/upload", uploades.single("pdfFile"), (req, res) => {
+  console.log(Nombre);
+  res.send(Nombre);
 });
 
 //Inicio del menu de usuarios
