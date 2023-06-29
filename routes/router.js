@@ -21,14 +21,16 @@ router.get("/register", (req, res) => {
 
 //Inicio del menu de usuarios
 router.get("/us", (req, res) => {
-  conexion.query("SELECT * FROM usuarios", (error, result) => {
+  conexion.query("SELECT * FROM usuarios", (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.send(result);
+      res.render("ESP/usuarios", { results: results });
     }
   });
-  //res.render("ESP/usuarios");
+});
+router.get("/cus", (req, res) => {
+  res.render("ESP/crearUsuarios");
 });
 router.get("/wp", (req, res) => {
   res.render("ESP/whitePage");
