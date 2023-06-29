@@ -19,8 +19,8 @@ router.get("/register", (req, res) => {
   res.render("ESP/registro_org");
 });
 
-router.get("/vDoc", (req, res) => {
-  res.render("ESP/viewDoc");
+router.get("/aDoc", (req, res) => {
+  res.render("ESP/addDoc");
 });
 
 //Inicio del menu de usuarios

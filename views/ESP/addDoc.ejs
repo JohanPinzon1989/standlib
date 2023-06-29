@@ -1,14 +1,12 @@
- import React, {useState} from "react";
-import { Document, Page } from "react-pdf/dist/esm/pdf.worker.entry"
-
+<%- include ('../partials/ESP/admi/header') %>
 
     <div class="body-wrapper">
-        
+        <!--  Header Start -->
         <header class="app-header">
             <nav class="navbar navbar-expand-lg navbar-light">
 
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    
+                    <%- include ('../partials/ESP/admi/NavDocumentos') %>
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
@@ -42,15 +40,25 @@ import { Document, Page } from "react-pdf/dist/esm/pdf.worker.entry"
                 </div>
             </nav>
         </header>
-        
+        <!--  Header End -->
         <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Usuario nuevo</h5>
+                        <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
                         <div class="card">
                             <div class="card-body">
-                               
+                                <form>
+                                    <div class="card-body p-2" style="margin-left: 30%;">
+
+                                        <input type="file" name="pdfFile" id="pdfFile"
+                                            class="btn btn-outline-danger m-1" required>
+                                        <button class="btn btn-outline-danger m-1">subir pdf</>
+
+                                    </div>
+                                    <embed id="vistaPrevia" type="application/pdf" width="100%" height="800px"
+                                        aria-controls="nodownload">
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -58,7 +66,5 @@ import { Document, Page } from "react-pdf/dist/esm/pdf.worker.entry"
             </div>
         </div>
     </div>
-   
-  
-
-
+    </div>
+    <%- include ('../partials/ESP/admi/footer') %>
