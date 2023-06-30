@@ -31,6 +31,9 @@ router.get("/aDoc", (req, res) => {
   res.render("ESP/addDoc");
 });
 
+router.get("/lDoc", (req, res) => {
+  res.render("ESP/listarDoc");
+});
 //Inicio del menu de usuarios
 router.get("/us", (req, res) => {
   conexion.query("SELECT * FROM usuarios", (error, results) => {
