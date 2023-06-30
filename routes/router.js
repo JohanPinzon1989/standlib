@@ -27,15 +27,15 @@ router.get("/register", (req, res) => {
   res.render("ESP/registro_org");
 });
 
-router.get("/aDoc", (req, res) => {
+router.get("/aDoc", login.isAuthenticated,(req, res) => {
   res.render("ESP/addDoc");
 });
 
-router.get("/lDoc", (req, res) => {
+router.get("/lDoc", login.isAuthenticated,(req, res) => {
   res.render("ESP/listarDoc");
 });
 //Inicio del menu de usuarios
-router.get("/us", (req, res) => {
+router.get("/us", login.isAuthenticated,(req, res) => {
   conexion.query("SELECT * FROM usuarios", (error, results) => {
     if (error) {
       throw error;
@@ -44,7 +44,7 @@ router.get("/us", (req, res) => {
     }
   });
 });
-router.get("/cus", (req, res) => {
+router.get("/cus", login.isAuthenticated,(req, res) => {
   let ep1;
   let pu1;
   conexion.query("SELECT * FROM estado_provincia", (error, results) => {
