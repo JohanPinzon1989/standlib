@@ -7,11 +7,13 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
+const documentos = require("../serv/modulos/documentos/controlador");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
-const documentos = require("../serv/modulos/documentos/rutas");
+const storage = require("../serv/modulos/documentos/load");
 const bodyParser = require("body-parser");
-const uploades = multer({ dest: "./public/doc/uploades" });
+const { agregar } = require("../serv/modulos/pais");
+const uploader = multer({ storage });
 
 router.get("/", login.isAuthenticated, (req, res) => {
   res.render("ESP/index", { user: req.user });
@@ -27,15 +29,6 @@ router.get("/register", (req, res) => {
 
 router.get("/aDoc", (req, res) => {
   res.render("ESP/addDoc");
-});
-
-//cargar archivos
-router.post("/upload", uploades.single("pdfFile"), (req, res) => {
-  fs.renameSync(
-    req.file.path,
-    req.file.path + "." + req.file.mimetype.split("/")[1]
-  );
-  router.use("/api/doc", documentos);
 });
 
 //Inicio del menu de usuarios
@@ -77,5 +70,7 @@ router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);
 router.use(errors);
 router.get("/logout", login.logout);
+//cargar archivos
+router.post("/upload", uploader.single("pdfFile"), documentos.agregar);
 
 module.exports = router;
