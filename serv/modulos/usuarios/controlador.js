@@ -14,7 +14,7 @@ module.exports = function (dbInyect) {
 
   async function auth(Email, password) {
     console.log(Email, password);
-    if (!Email || password) {
+    if (!Email || !password) {
       res.render("login", {
         alert: true,
         alertTitle: "Advertencia",
