@@ -21,20 +21,21 @@ module.exports = function (dbInyect) {
   }
 
   async function agregar(body) {
-    const usuario = {
+    var fecha = require("moment");
+    var ahora = moment().format("YYYY-MM-DD");
+
+    const documento = {
       Id: body.ID,
       Nombre: body.Nombre,
-      Apellido: body.Apellido,
-      Email: body.Email,
-      Num_Fijo: body.Num_Fijo,
-      Num_Celular: body.Num_Celular,
-      Estado: body.Estado,
-      password: await bcrypt.hash(body.password, 8),
-      Publicidad: body.Publicidad,
-      Tenant_Id: body.Tenant_Id,
-      Estado_provincia_Id: body.Estado_provincia_Id,
-      Perfil_Usuario_Id: body.Perfil_Usuario_Id,
+      Abreviacion: body.Abreviacion,
+      Descripcion: body.Descripcion,
+      Descripcion_ing: body.Descripcion_ing,
+      Fecha_carga: ahora,
+      Fecha_vigencia: "",
+      Estado: "Activo",
+      link: "",
     };
+    console.log(documento);
     return db.agregar(Table, usuario);
   }
 

@@ -9,6 +9,8 @@ const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
+const documentos = require("../serv/modulos/documentos/rutas");
+const bodyParser = require("body-parser");
 const uploades = multer({ dest: "./public/doc/uploades" });
 
 router.get("/", login.isAuthenticated, (req, res) => {
@@ -33,7 +35,7 @@ router.post("/upload", uploades.single("pdfFile"), (req, res) => {
     req.file.path,
     req.file.path + "." + req.file.mimetype.split("/")[1]
   );
-  res.send(req.file);
+  router.use("/api/doc", documentos);
 });
 
 //Inicio del menu de usuarios

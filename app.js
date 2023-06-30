@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cookiesParse = require("cookie-parser");
 const path = require("path");
+const cors = require("cors");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public/"));
 
 //Procesar datos enviados desde formularios
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

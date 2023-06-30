@@ -5,7 +5,6 @@ const controlador = require("./index");
 
 const router = express.Router();
 
-router.get("/login", login);
 router.get("/", getAll);
 router.get("/:Id", find);
 router.post("/", agregar);

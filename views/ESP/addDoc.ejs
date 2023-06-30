@@ -49,6 +49,24 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="/upload" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="Nombre" class="form-label">Nombre del documento</label>
+                                        <input type="text" class="form-control" name="Nombre" id="Nombre">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
+                                        <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Descripcion" class="form-label">Descripcion en español</label>
+                                        <input type="text" class="form-control" name="Descripcion" id="Descripcion"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                                        <input type="text" class="form-control" name="Descripcion_ing"
+                                            id="Descripcion_ing">
+                                    </div>
                                     <div class="card-body p-2" style="margin-left: 20%;">
 
                                         <input type="file" name="pdfFile" id="pdfFile"
