@@ -32,10 +32,8 @@ async function agregar(req, res, next) {
   try {
     const items = await controlador.agregar(req.body);
     if (req.body.Id == 0) {
-      res.redirect("/");
       respuetas.success(req, res, "Item guardado", 201);
     } else {
-      res.redirect("/");
       respuetas.success(req, res, "Item actualizado", 201);
     }
   } catch (err) {

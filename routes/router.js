@@ -7,7 +7,7 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
-const documentos = require("../serv/modulos/documentos/controlador");
+const { add } = require("../serv/modulos/documentos");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
@@ -71,6 +71,6 @@ router.post("/api/login", login.auth);
 router.use(errors);
 router.get("/logout", login.logout);
 //cargar archivos
-router.post("/upload", uploader.single("pdfFile"), documentos.agregar);
+router.post("/upload", uploader.single("pdfFile"), add);
 
 module.exports = router;
