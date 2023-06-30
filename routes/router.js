@@ -7,6 +7,7 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
+const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const { add } = require("../serv/modulos/documentos");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
@@ -24,7 +25,13 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/register", (req, res) => {
-  res.render("ESP/registro_org");
+  conexion.query("SELECT * FROM estado_provincia", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/registro_org", { results: results });
+    }
+  });
 });
 
 router.get("/aDoc", login.isAuthenticated,(req, res) => {
@@ -68,6 +75,8 @@ router.get("/wp", (req, res) => {
 });
 
 //Router para registrar los datos
+router.use('/api/perUser', perUser);
+router.use('/api/newClient', usuarios);
 router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);

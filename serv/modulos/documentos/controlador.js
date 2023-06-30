@@ -24,16 +24,15 @@ module.exports = function (dbInyect) {
   async function add(req, res, next) {
     const { body, file } = req;
     var fecha = require("moment");
-    var ahora = fecha().format("YYYY-MM-DD");
+    var hoy = fecha().format("YYYY-MM-DD");
 
     const documento = {
-      Id: 0,
       Nombre: body.Nombre,
       Abreviacion: body.Abreviacion,
       Descripcion: body.Descripcion,
       Descripcion_ing: body.Descripcion_ing,
-      Fecha_carga: `${ahora}`,
-      Fecha_vigencia: `${ahora}`,
+      Fecha_carga: `${hoy}`,
+      Fecha_vigencia: `${hoy}`,
       Estado: "Activo",
       link: `file/uploaders/${file.filename}`,
     };

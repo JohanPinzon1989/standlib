@@ -23,7 +23,7 @@
                 <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="assets/images/logos/dark-logo.png" width="180" alt="">
                 </a>
-                <form action=" " method="POST">
+                <form action="/api/newClient" method="POST">
 					        <p class="text-center">Registro</p>
                   <div class="mb-3">
                     <label for="Nombre_org" class="form-label">Organizacion</label>
@@ -56,22 +56,19 @@
                   <div class="mb-3">
                     <label for="Email_facturacion" class="form-label">Correo facturacion</label>
                     <input placeholder="facturacion@ejemplo.com" type="email" class="form-control" name="Email_facturacion" id="Email_facturacion" aria-describedby="emailHelp" required>
-                  </div>		
+                  </div>			          
                   <div class="mb-3">
-                    <label for="Email_facturacion" class="form-label">Correo facturacion</label>
-                    <input placeholder="facturacion@ejemplo.com" type="email" class="form-control" name="Email_facturacion" id="Email_facturacion" aria-describedby="emailHelp" required>
-                  </div>		          
-                  <div class="mb-3">
-                    <label for="Publicidad" class="form-label">Ciudad provincia</label>
-                    <select class="form-control" name="Publicidad" id="Publicidad" aria-describedby="text" required>
-                        <option value="0">Sí</option>
-                        <option value="1">No</option>
+                    <label for="EstPrv" class="form-label">Ciudad provincia</label>
+                    <select class="form-control" name="EstPrv" id="EstPrv" aria-describedby="text" required>
+                        <option selected>-- Seleccione una ciudad o provincia --</option>
+                        <% for(var count=0; count < results.length; count++) { %>
+                        <option value="<%= results[count].Id %>"><%= results[count].EstPrv %></option> <% } %>
                     </select>
                   <div class="mb-3">
                     <label for="Publicidad" class="form-label">Publicidad</label>
                     <select class="form-control" name="Publicidad" id="Publicidad" aria-describedby="text" required>
-                        <option value="0">Sí</option>
-                        <option value="1">No</option>
+                        <option value="1">Sí</option>
+                        <option value="2">No</option>
                     </select>
                   </div>				          
                   <div class="mb-4">
