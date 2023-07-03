@@ -29,6 +29,7 @@ module.exports = function (dbInyect) {
     var hoy = fecha().format("YYYY-MM-DD");
 
     const tenant = {
+      Id: null,
       Nombre_org: body.Nombre_org,
       Nom_Contacto: body.Nombre +" "+ body.Apellido,
       Dominio: body.Dominio,
@@ -50,6 +51,7 @@ module.exports = function (dbInyect) {
      }
 
     const usuario= {
+      Id: null,
       Nombre: body.Nombre,
       Apellido: body.Apellido,
       Email: body.Email,

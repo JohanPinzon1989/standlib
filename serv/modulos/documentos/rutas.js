@@ -31,7 +31,7 @@ async function find(req, res, next) {
 async function agregar(req, res, next) {
   try {
     const items = await controlador.agregar(req.body);
-    if (req.body.Id == 0) {
+    if (req.body.Id == Null) {
       respuetas.success(req, res, "Item guardado", 201);
     } else {
       respuetas.success(req, res, "Item actualizado", 201);

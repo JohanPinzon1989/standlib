@@ -1,4 +1,4 @@
-<%- include ('../partials/ESP/admi/header') %>
+<%- include ('../partials/admi/header') %>
 
     <div class="body-wrapper">
         <!--  Header Start -->
@@ -6,7 +6,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
 
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <%- include ('../partials/ESP/admi/NavDocumentos') %>
+                    <%- include ('../partials/admi/NavDocumentos') %>
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
@@ -48,7 +48,7 @@
                         <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
                         <div class="card">
                             <div class="card-body">
-                                <form action="/upload" method="POST">
+                                <form action="/upload" method="POST" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="Nombre" class="form-label">Nombre del documento</label>
                                         <input type="text" class="form-control" name="Nombre" id="Nombre">
@@ -66,6 +66,11 @@
                                         <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
                                         <input type="text" class="form-control" name="Descripcion_ing"
                                             id="Descripcion_ing">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Autor" class="form-label">Autor</label>
+                                        <input type="text" class="form-control" name="Autor"
+                                            id="Autor">
                                     </div>
                                     <div class="card-body p-2" style="margin-left: 20%;">
 
@@ -87,4 +92,4 @@
         </div>
     </div>
     </div>
-    <%- include ('../partials/ESP/admi/footer') %>
+    <%- include ('../partials/admi/footer') %>

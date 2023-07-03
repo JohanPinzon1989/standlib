@@ -71,7 +71,7 @@ module.exports = function (dbInyect) {
 
   async function agregar(body) {
     const usuario = {
-      Id: body.ID,
+      Id: null,
       Nombre: body.Nombre,
       Apellido: body.Apellido,
       Email: body.Email,

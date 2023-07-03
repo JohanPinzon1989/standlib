@@ -58,16 +58,35 @@ function find(table, id) {
   });
 }
 
-function agregar(table, data) {
+function insertar(table, data) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      "INSERT INTO " + table + " SET ? ON DUPLICATE KEY UPDATE ?",
-      [data, data],
+      "INSERT INTO " + table + " SET ?",
+      data,
       (error, result) => {
         return error ? reject(error) : resolve(result);
       }
     );
   });
+}
+function actualizar(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      "UPDATE " + table + " SET ? WHERE Id = ?",
+      [data, data.Id],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
+function agregar(table, data){
+  if(!data.Id){
+    return insertar(table,data);
+  }else{
+    return actualizar(table,data);
+  }
 }
 
 function del(table, data) {

@@ -21,12 +21,13 @@ module.exports = function (dbInyect) {
     return db.find(Table, id);
   }
 
-  async function add(req, res, next) {
+  async function add(req, res) {
     const { body, file } = req;
     var fecha = require("moment");
     var hoy = fecha().format("YYYY-MM-DD");
-
+console.log(req.file)
     const documento = {
+      id: null,
       Nombre: body.Nombre,
       Abreviacion: body.Abreviacion,
       Descripcion: body.Descripcion,
@@ -35,6 +36,7 @@ module.exports = function (dbInyect) {
       Fecha_vigencia: `${hoy}`,
       Estado: "Activo",
       link: `file/uploaders/${file.filename}`,
+      Autor: body.Autor,
     };
     console.log(documento);
     const result = await db.agregar(Table, documento);
