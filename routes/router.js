@@ -56,7 +56,7 @@ router.get("/aDoc", login.isAuthenticated,(req, res) => {
 });
 
 router.get("/lDoc", login.isAuthenticated,(req, res) => {
-  res.render("ESP/admin/listarDoc");
+  res.render("ESP/admin/listDoc");
 });
 //Inicio del menu de usuarios
 router.get("/us", login.isAuthenticated,(req, res) => {

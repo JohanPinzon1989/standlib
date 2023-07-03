@@ -40,7 +40,7 @@ console.log(req.file)
     };
     console.log(documento);
     const result = await db.agregar(Table, documento);
-    res.render("ESP/index");
+    res.render("ESP/admin/ListDoc");
   }
 
   function del(body) {
