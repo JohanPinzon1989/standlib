@@ -43,7 +43,17 @@ function findP(table, Id) {
   });
 }
 
+//Buscar tenant
+function findT(table, Id) {
+  return new Promise((resolve, reject) => {
+    conexion.query(`SELECT * FROM ${table} WHERE Nombre_org = ? `, Id, (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
+  });
+}
+
 module.exports = {
   findP,
+  findT,
   conmsql,
 };

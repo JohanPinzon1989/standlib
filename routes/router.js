@@ -7,6 +7,7 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
+const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const { add } = require("../serv/modulos/documentos");
 const errors = require("../serv/red/errors");
@@ -76,7 +77,7 @@ router.get("/wp", (req, res) => {
 
 //Router para registrar los datos
 router.use('/api/perUser', perUser);
-router.use('/api/newClient', usuarios);
+router.use('/api/newClient', newClient);
 router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);

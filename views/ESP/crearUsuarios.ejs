@@ -125,20 +125,20 @@
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="estado_provinciar" class="form-label"
+                  <label for="Estado_provincia_Id" class="form-label"
                     >Estado/Provincia</label
                   >
                   <select
                     class="form-control"
-                    name="estado_provincia"
-                    id="estado_provincia"
+                    name="Estado_provincia_Id"
+                    id="Estado_provincia_Id"
                     aria-describedby="text"
                     required
                   >
                     <option selected>--Seleccione un Estado/Provincia--</option>
                     <% for(var count=0; count < est_prv.length; count++) { %>
-                    <option value="<%= est_prv[count].Id %>">
-                      <%= est_prv[count].EstPrv %>
+                    <option value="<%= est_prv[count].Id" %>
+                      > <%= est_prv[count].EstPrv %>
                     </option>
                     <% } %>
                   </select>
