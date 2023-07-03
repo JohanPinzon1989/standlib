@@ -18,11 +18,11 @@ const { agregar } = require("../serv/modulos/pais");
 const uploader = multer({ storage });
 
 router.get("/", login.isAuthenticated, (req, res) => {
-  res.render("ESP/index", { user: req.user });
+  res.render("ESP/user/index", { user: req.user });
 });
 
 router.get("/login", (req, res) => {
-  res.render("ESP/login", { alert: false });
+  res.render("ESP/user/login", { alert: false });
 });
 
 router.get("/register", (req, res) => {
@@ -30,17 +30,26 @@ router.get("/register", (req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/registro_org", { results: results });
+      res.render("ESP/user/registro_org", { results: results });
+    }
+  });
+});
+router.get("/regUsOrg", (req, res) => {
+  conexion.query("SELECT * FROM Rol_Usuarios_Empresa", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/user/registro_org", { results: results });
     }
   });
 });
 
 router.get("/aDoc", login.isAuthenticated,(req, res) => {
-  res.render("ESP/addDoc");
+  res.render("ESP/admin/addDoc");
 });
 
 router.get("/lDoc", login.isAuthenticated,(req, res) => {
-  res.render("ESP/listarDoc");
+  res.render("ESP/admin/listarDoc");
 });
 //Inicio del menu de usuarios
 router.get("/us", login.isAuthenticated,(req, res) => {
@@ -48,7 +57,7 @@ router.get("/us", login.isAuthenticated,(req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/usuarios", { results: results });
+      res.render("ESP/admin/usuarios", { results: results });
     }
   });
 });
@@ -59,20 +68,17 @@ router.get("/cus", login.isAuthenticated,(req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/crearUsuarios", { est_prv: results });
+      res.render("ESP/user/crearUsuarios", { est_prv: results });
     }
   });
   conexion.query("SELECT * FROM perfil_usuario", (error, result) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/crearUsuarios", { per_us: result });
+      res.render("ESP/user/crearUsuarios", { per_us: result });
     }
   });
   console.log(ep1);
-});
-router.get("/wp", (req, res) => {
-  res.render("ESP/whitePage");
 });
 
 //Router para registrar los datos
