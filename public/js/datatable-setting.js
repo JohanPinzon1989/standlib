@@ -12,8 +12,8 @@ $('document').ready(function(){
 			"info": "_START_-_END_ of _TOTAL_ entries",
 			searchPlaceholder: "Search",
 			paginate: {
-				next: '<i class="ion-chevron-right"></i>',
-				previous: '<i class="ion-chevron-left"></i>'  
+				next: '<i class="ti ti-chevron-right"></i>',
+				previous: '<i class="ti ti-chevron-left"></i>'  
 			}
 		},
 	});
