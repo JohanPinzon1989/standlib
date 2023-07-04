@@ -56,7 +56,13 @@ router.get("/aDoc", login.isAuthenticated,(req, res) => {
 });
 
 router.get("/lDoc", login.isAuthenticated,(req, res) => {
-  res.render("ESP/admin/listDoc");
+  conexion.query("SELECT * FROM documentos", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/listDoc", { results: results });
+    }
+  });
 });
 //Inicio del menu de usuarios
 router.get("/us", login.isAuthenticated,(req, res) => {
