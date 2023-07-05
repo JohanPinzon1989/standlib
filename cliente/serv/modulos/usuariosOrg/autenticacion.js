@@ -46,7 +46,7 @@ exports.auth = async (req, res) => {
             const cookiesOptions = {
               expires: new Date(
                 Date.now() +
-                  process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                  process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60
               ),
               httpOnly: true,
             };
@@ -58,7 +58,7 @@ exports.auth = async (req, res) => {
               alertIcon: "success",
               showConfirmButton: true,
               timer: 800,
-              ruta: "",
+              ruta: "ia",
             });
           }
         }

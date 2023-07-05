@@ -34,14 +34,6 @@ function conmsql() {
 
 conmsql();
 
-function buscar(table, data){
-  if(!data.Id){
-    return getall(table);
-  }else{
-    return find(table,data.Id);
-  }
-}
-
 function getAll(table) {
   return new Promise((resolve, reject) => {
     conexion.query("SELECT * FROM " + table, (error, result) => {
@@ -119,5 +111,5 @@ module.exports = {
   del,
   query,
   conmsql,
-  buscar
+  find,
 };

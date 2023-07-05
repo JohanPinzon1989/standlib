@@ -87,8 +87,11 @@
                             </h6>
                         </td>
                         <td ">
-            <a href="/EUser/<%= user.Id %>" type=" button" class="btn btn-secondary m-1">Editar</a>
-                          <a type="button" class="btn btn-danger m-1">Eliminar</a>
+                          <form action="/dUser/Id" method="POST">
+                            <input type="hidden" name="Id" id="Id" value="<%= user.Id %>">
+                          <button type="submit" class="btn btn-secondary m-1">Editar</>
+                          <button type="submit" class="btn btn-danger m-1">Eliminar</>
+                          </form>
                         </td>
                       </tr>
 

@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
@@ -17,35 +16,32 @@ const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
 const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
+const controllerRouter = require('../controller/controller.admin');
 const uploader = multer({ storage });
+const router = express.Router();
 
-router.get("/", adlogin.isAuthenticated, (req, res) => {
-  res.render("ESP/user/index", { user: req.user });
-});
-//Login Clientes
-router.get("/login", (req, res) => {
-  res.render("ESP/user/login", { alert: false });
-});
+/* rutas de administracion
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 //Login Funcionarios
 router.get("/adlogin", (req, res) => {
   res.render("ESP/admin/login", { alert: false });
 });
 
-router.get("/register", (req, res) => {
-  conexion.query("SELECT * FROM estado_provincia", (error, results) => {
-    if (error) {
-      throw error;
-    } else {
-      res.render("ESP/user/registro_org", { results: results });
-    }
-  });
-});
 
+/* index de administracion
+router.get("/ia", adlogin.isAuthenticated, (req, res) => {
+  res.render("ESP/admin/index", { user: req.user });
+});*/
+
+router.get('/ia',adlogin.isAuthenticated, controllerRouter.index);
+
+//Cargar Documentos
 router.get("/aDoc", adlogin.isAuthenticated,(req, res) => {
   res.render("ESP/admin/addDoc");
 });
 
+//Lista de documentos
 router.get("/lDoc", adlogin.isAuthenticated,(req, res) => {
   conexion.query("SELECT * FROM documentos", (error, results) => {
     if (error) {
@@ -55,16 +51,8 @@ router.get("/lDoc", adlogin.isAuthenticated,(req, res) => {
     }
   });
 });
-//Inicio del menu de usuarios
-router.get("/us", login.isAuthenticated,(req, res) => {
-  conexion.query("SELECT * FROM usuarios", (error, results) => {
-    if (error) {
-      throw error;
-    } else {
-      res.render("ESP/user/usuarios", { results: results });
-    }
-  });
-});
+
+
 //Listar usuarios de Organizacion
 router.get("/lUser", adlogin.isAuthenticated,(req, res) => {
   conexion.query("SELECT * FROM usuarios_standlib", (error, results) => {
@@ -88,7 +76,57 @@ router.get("/EUser/:Id", adlogin.isAuthenticated,(req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/EditUserOrg", { results: results[0] });
+      console.log(results);
+      res.render("ESP/admin/EditUserOrg", { results: results });
+    }
+  });
+});
+
+/*Eliminar usuarios de la organizacion
+router.get("/dUser/:Id", adlogin.isAuthenticated,(req, res) => {
+  const id= req.params.Id;
+  conexion.query("DELETE FROM usuarios_standlib WHERE Id = ?",[id], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+      res.redirect("/lUser", { alert: false });
+    }
+  });
+  
+});*/
+router.get('/dUser/Id',adlogin.isAuthenticated, controllerRouter.destroy);
+
+/* Ruta de clientes
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//Login Clientes
+router.get("/login", (req, res) => {
+  res.render("ESP/user/login", { alert: false });
+});
+
+// Registro de usuarios y tenant
+router.get("/register", (req, res) => {
+  conexion.query("SELECT * FROM estado_provincia", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/user/registro_org", { results: results });
+    }
+  });
+});
+
+// index de Clientes
+router.get("/ia", adlogin.isAuthenticated, (req, res) => {
+  res.render("ESP/user/index", { user: req.user });
+});
+
+//Listado de usuarios
+router.get("/us", login.isAuthenticated,(req, res) => {
+  conexion.query("SELECT * FROM usuarios", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/user/usuarios", { results: results });
     }
   });
 });
@@ -113,10 +151,13 @@ router.get("/cus", login.isAuthenticated,(req, res) => {
   console.log(ep1);
 });
 
+
+
+
 //Router para registrar los datos
 router.use('/api/perUser', perUser);
 router.use('/api/newClient', newClient);
-router.use('/api/Us', usuariosOrg);
+router.use('/api/Us', adlogin.isAuthenticated, usuariosOrg);
 router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);
