@@ -1,5 +1,5 @@
 const express = require("express");
-const { route } = require("../../../app");
+const { route } = require("../../../cliente/app");
 const respuetas = require("../../red/respuestas");
 const controlador = require("./index");
 
