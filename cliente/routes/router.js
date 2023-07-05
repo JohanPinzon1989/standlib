@@ -19,7 +19,7 @@ const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
 const uploader = multer({ storage });
 
-router.get("/", login.isAuthenticated, (req, res) => {
+router.get("/", adlogin.isAuthenticated, (req, res) => {
   res.render("ESP/user/index", { user: req.user });
 });
 //Login Clientes
@@ -42,11 +42,11 @@ router.get("/register", (req, res) => {
   });
 });
 
-router.get("/aDoc", login.isAuthenticated,(req, res) => {
+router.get("/aDoc", adlogin.isAuthenticated,(req, res) => {
   res.render("ESP/admin/addDoc");
 });
 
-router.get("/lDoc", login.isAuthenticated,(req, res) => {
+router.get("/lDoc", adlogin.isAuthenticated,(req, res) => {
   conexion.query("SELECT * FROM documentos", (error, results) => {
     if (error) {
       throw error;
@@ -66,7 +66,7 @@ router.get("/us", login.isAuthenticated,(req, res) => {
   });
 });
 //Listar usuarios de Organizacion
-router.get("/lUser", login.isAuthenticated,(req, res) => {
+router.get("/lUser", adlogin.isAuthenticated,(req, res) => {
   conexion.query("SELECT * FROM usuarios_standlib", (error, results) => {
     if (error) {
       throw error;
@@ -77,12 +77,12 @@ router.get("/lUser", login.isAuthenticated,(req, res) => {
 });
 
 //Agregar Usuario de Organizacion
-router.get("/regUsOrg", (req, res) => {
+router.get("/regUsOrg", adlogin.isAuthenticated,(req, res) => {
   res.render("ESP/admin/regUserOrg", { alert: false });
 });
 
 //Editar usuarios de Organizacion
-router.get("/EUser/:Id", login.isAuthenticated,(req, res) => {
+router.get("/EUser/:Id", adlogin.isAuthenticated,(req, res) => {
   const id= req.params.Id;
   conexion.query("SELECT * FROM usuarios_standlib WHERE Id = ?",[id], (error, results) => {
     if (error) {
