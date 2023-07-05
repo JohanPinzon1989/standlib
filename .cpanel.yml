@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/softmatservices/repositories/
+    - export DEPLOYPATH=/home/softmatservices/standlib.com/
     - /bin/rsync -av standlib/ $DEPLOYPATH
