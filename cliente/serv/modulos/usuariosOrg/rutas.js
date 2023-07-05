@@ -6,8 +6,9 @@ const controlador = require("./index");
 const router = express.Router();
 
 router.get("/login", login);
-router.get("/", getAll);
-router.get("/:Id", find);
+//router.get("/", getAll);
+//router.get("/:Id", find);
+router.get("/", buscar);
 router.post("/", agregar);
 router.put("/", del);
 
@@ -15,6 +16,22 @@ async function login(req, res, next) {
   try {
     const token = await controlador.login(req.body.username, req.body.password);
     respuetas.success(req, res, token, 200);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function buscar(req, res, next) {
+  console.log(req.body);
+  try {
+    const items = await controlador.buscar(req.body);
+    if (req.body.Id == 0) {
+      res.redirect("/lUser");
+      respuetas.success(req, res, items, 200);
+    } else {
+      res.redirect("/EUser");
+      respuetas.success(req, res, items, 200);
+    }
   } catch (err) {
     next(err);
   }

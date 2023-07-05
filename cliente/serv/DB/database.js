@@ -34,17 +34,17 @@ function conmsql() {
 
 conmsql();
 
+function buscar(table, data){
+  if(!data.Id){
+    return getall(table);
+  }else{
+    return find(table,data.Id);
+  }
+}
+
 function getAll(table) {
   return new Promise((resolve, reject) => {
     conexion.query("SELECT * FROM " + table, (error, result) => {
-      return error ? reject(error) : resolve(result);
-    });
-  });
-}
-
-function getAllP() {
-  return new Promise((resolve, reject) => {
-    conexion.query("CALL usuariosAll ", (error, result) => {
       return error ? reject(error) : resolve(result);
     });
   });
@@ -115,10 +115,9 @@ function query(table, consult) {
 
 module.exports = {
   getAll,
-  find,
   agregar,
   del,
   query,
   conmsql,
-  getAllP,
+  buscar
 };
