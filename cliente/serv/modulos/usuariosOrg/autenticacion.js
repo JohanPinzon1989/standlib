@@ -8,6 +8,7 @@ exports.auth = async (req, res) => {
   try {
     const email = req.body.Email;
     const password = req.body.password;
+
     if (!email || !password) {
       res.render("ESP/admin/login", {
         alert: true,
@@ -19,13 +20,13 @@ exports.auth = async (req, res) => {
         ruta: "adlogin",
       });
     } else {
-      conexion.query(
+     conexion.query(
         "SELECT * FROM usuarios_standlib WHERE Email = ?",
         [email],
         async (error, result) => {
           if (
             result.length == 0 ||
-            !(await bcrypt.compare(password, result[0].password))
+            !(await bcrypt.compare(password, result[0].Password))
           ) {
             res.render("ESP/admin/login", {
               alert: true,
