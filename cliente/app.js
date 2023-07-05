@@ -28,6 +28,8 @@ app.use(cookiesParse());
 //Lammar al router
 app.use("/", require("./routes/router"));
 
-app.listen(process.env.POT_SERV, () => {
-  console.log("Server up running");
+const port = process.env.PORT_SER;
+
+app.listen(port || 4000, () => {
+  console.log("Server up running: "+port);
 });
