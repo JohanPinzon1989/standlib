@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Setear variables de entorno
-dotenv.config();
+dotenv.config({ path: "./env/.env" });
 
 //Setear las cookies
 app.use(cookiesParse());
@@ -28,6 +28,6 @@ app.use(cookiesParse());
 //Lammar al router
 app.use("/", require("./routes/router"));
 
-app.listen(process.env.POT_SERV, () => {
+app.listen(4000, () => {
   console.log("Server up running");
 });
