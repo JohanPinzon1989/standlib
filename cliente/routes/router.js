@@ -70,7 +70,7 @@ router.get("/regUsOrg", adlogin.isAuthenticated,(req, res) => {
 });
 
 //Editar usuarios de Organizacion
-router.get("/EUser/:Id", adlogin.isAuthenticated,(req, res) => {
+/*router.get("/EUser/:Id", adlogin.isAuthenticated,(req, res) => {
   const id= req.params.Id;
   conexion.query("SELECT * FROM usuarios_standlib WHERE Id = ?",[id], (error, results) => {
     if (error) {
@@ -80,22 +80,11 @@ router.get("/EUser/:Id", adlogin.isAuthenticated,(req, res) => {
       res.render("ESP/admin/EditUserOrg", { results: results });
     }
   });
-});
-
-/*Eliminar usuarios de la organizacion
-router.get("/dUser/:Id", adlogin.isAuthenticated,(req, res) => {
-  const id= req.params.Id;
-  conexion.query("DELETE FROM usuarios_standlib WHERE Id = ?",[id], (error, results) => {
-    if (error) {
-      throw error;
-    } else {
-      console.log(results);
-      res.redirect("/lUser", { alert: false });
-    }
-  });
-  
 });*/
-router.get('/dUser/Id',adlogin.isAuthenticated, controllerRouter.destroy);
+router.post('/EUser/edit', controllerRouter.edit);
+
+//Eliminar usuarios de la organizacion
+router.post('/dUser/destroy', controllerRouter.destroy);
 
 /* Ruta de clientes
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/

@@ -75,14 +75,14 @@
             <div class="card-body">
              
               <form action="/api/Us" method="POST">
-                <% if(results) { %>
+                <% for(var count=0; count < results.length; count++) { %>
                   <div class="mb-3"></div>
-                <input id="Id" name="Id" value="<%= results.Id %>" hidden />
+                <input id="Id" name="Id" value="<%= results[count].Id %>" type="hidden" />
               </div>
                 <div class="mb-3">
                   <label for="Nombre" class="form-label">Nombres</label>
                   <input
-                    value="<%= results.Nombre %>"
+                    value="<%= results[count].Nombre %>"
                     placeholder="Daniel Jose"
                     type="text"
                     class="form-control"
@@ -95,7 +95,7 @@
                 <div class="mb-3">
                   <label for="Apellido" class="form-label">Apellidos</label>
                   <input
-                    value="<%= results.Apellido %>"
+                    value="<%= results[count].Apellido %>"
                     placeholder="Jimenez Cuadro"
                     type="text"
                     class="form-control"
@@ -108,7 +108,7 @@
                 <div class="mb-3">
                   <label for="Email" class="form-label">Correo</label>
                   <input
-                    value="<%= results.Email %>"
+                    value="<%= results[count].Email %>"
                     placeholder="prueba@ejemplo.com"
                     type="email"
                     class="form-control"
@@ -127,9 +127,9 @@
                     aria-describedby="text"
                     required
                   >
-                    <option  value="Administrar" <%= results.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
-                    <option  value="Editar" <%= results.Rol=='Editar' ? "selected" : '' %> >Editar</option>
-                    <option  value="Leer" <%= results.Rol=='Leer' ? "selected" : '' %> >Leer</option>
+                    <option  value="Administrar" <%= results[count].Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
+                    <option  value="Editar" <%= results[count].Rol=='Editar' ? "selected" : '' %> >Editar</option>
+                    <option  value="Leer" <%= results[count].Rol=='Leer' ? "selected" : '' %> >Leer</option>
                   </select>
                 </div>
                 <div class="mb-3">
@@ -141,19 +141,18 @@
                     aria-describedby="text"
                     required
                   >
-                    <option  value="Activo" <%= results.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-                    <option  value="Bloqueado" <%= results.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+                    <option  value="Activo" <%= results[count].Estado=='Activo' ? "selected" : '' %> >Activo</option>
+                    <option  value="Bloqueado" <%= results[count].Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
                   </select>
                 </div>
                 <div class="mb-4">
                   <input
-                    value="<%= results.password %>"
+                    value="<%= results[count].password %>"
                     placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales"
-                    type="password"
                     class="form-control"
                     name="password"
                     id="password"
-                    hidden
+                    type="hidden"
                   />
                 </div>
                 <button
