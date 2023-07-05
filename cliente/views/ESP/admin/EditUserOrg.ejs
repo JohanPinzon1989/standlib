@@ -70,16 +70,19 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4">Registro usuarios</h5>
+          <h5 class="card-title fw-semibold mb-4">Modificar usuario</h5>
           <div class="card">
             <div class="card-body">
+             
               <form action="/api/Us" method="POST">
-                <div class="mb-3"></div>
-                <input id="Id" name="Id" value="0" hidden />
+                <% if(results) { %>
+                  <div class="mb-3"></div>
+                <input id="Id" name="Id" value="<%= results.Id %>" hidden />
               </div>
                 <div class="mb-3">
                   <label for="Nombre" class="form-label">Nombres</label>
                   <input
+                    value="<%= results.Nombre %>"
                     placeholder="Daniel Jose"
                     type="text"
                     class="form-control"
@@ -92,6 +95,7 @@
                 <div class="mb-3">
                   <label for="Apellido" class="form-label">Apellidos</label>
                   <input
+                    value="<%= results.Apellido %>"
                     placeholder="Jimenez Cuadro"
                     type="text"
                     class="form-control"
@@ -104,6 +108,7 @@
                 <div class="mb-3">
                   <label for="Email" class="form-label">Correo</label>
                   <input
+                    value="<%= results.Email %>"
                     placeholder="prueba@ejemplo.com"
                     type="email"
                     class="form-control"
@@ -122,30 +127,44 @@
                     aria-describedby="text"
                     required
                   >
-                    <option selected>-- Seleccione un rol --</option>
-                    <option value="Administrar">Administrar</option>
-                    <option value="Editar">Editar</option>
-                    <option value="Leer">Leer</option>
+                    <option  value="Administrar" <%= results.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
+                    <option  value="Editar" <%= results.Rol=='Editar' ? "selected" : '' %> >Editar</option>
+                    <option  value="Leer" <%= results.Rol=='Leer' ? "selected" : '' %> >Leer</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="Estado" class="form-label">Estado</label>
+                  <select
+                    class="form-control"
+                    name="Estado"
+                    id="Estado"
+                    aria-describedby="text"
+                    required
+                  >
+                    <option  value="Activo" <%= results.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+                    <option  value="Bloqueado" <%= results.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
                   </select>
                 </div>
                 <div class="mb-4">
-                  <label for="password" class="form-label">Contraseña</label>
                   <input
+                    value="<%= results.password %>"
                     placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales"
                     type="password"
                     class="form-control"
                     name="password"
                     id="password"
-                    required
+                    hidden
                   />
                 </div>
                 <button
                   type="submit"
                   class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
                 >
-                  Agregar
+                  Editar
                 </button>
+                <% } %>
               </form>
+              
             </div>
           </div>
         </div>

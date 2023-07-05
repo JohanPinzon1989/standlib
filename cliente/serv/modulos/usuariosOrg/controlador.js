@@ -70,6 +70,8 @@ module.exports = function (dbInyect) {
   }
 
   async function agregar(body) {
+
+    if(body.Id=="0"){
     const usuario = {
       Id: null,
       Nombre: body.Nombre,
@@ -77,9 +79,21 @@ module.exports = function (dbInyect) {
       Email: body.Email,
       password: await bcrypt.hash(body.password, 8),
       Estado: "Activo",
-      Rol_Usuarios_Empresa_Id: body.Rol
+      Rol: body.Rol
     };
     return db.agregar(Table, usuario);
+  }else{
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email,
+      password: body.password,
+      Estado: body.Estado,
+      Rol: body.Rol
+    };
+    return db.agregar(Table, usuario);
+  }
   }
 
   function del(body) {

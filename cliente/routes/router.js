@@ -41,15 +41,6 @@ router.get("/register", (req, res) => {
     }
   });
 });
-router.get("/regUsOrg", (req, res) => {
-  conexion.query("SELECT * FROM Rol_Usuarios_Empresa", (error, results) => {
-    if (error) {
-      throw error;
-    } else {
-      res.render("ESP/admin/regUserOrg", { results: results });
-    }
-  });
-});
 
 router.get("/aDoc", login.isAuthenticated,(req, res) => {
   res.render("ESP/admin/addDoc");
@@ -70,7 +61,7 @@ router.get("/us", login.isAuthenticated,(req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/usuarios", { results: results });
+      res.render("ESP/user/usuarios", { results: results });
     }
   });
 });
@@ -80,7 +71,24 @@ router.get("/lUser", login.isAuthenticated,(req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/ListUser", { results: results });
+      res.render("ESP/admin/ListUserOrg", { results: results });
+    }
+  });
+});
+
+//Agregar Usuario de Organizacion
+router.get("/regUsOrg", (req, res) => {
+  res.render("ESP/admin/regUserOrg", { alert: false });
+});
+
+//Editar usuarios de Organizacion
+router.get("/EUser/:Id", login.isAuthenticated,(req, res) => {
+  const id= req.params.Id;
+  conexion.query("SELECT * FROM usuarios_standlib WHERE Id = ?",[id], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/EditUserOrg", { results: results[0] });
     }
   });
 });
@@ -108,7 +116,7 @@ router.get("/cus", login.isAuthenticated,(req, res) => {
 //Router para registrar los datos
 router.use('/api/perUser', perUser);
 router.use('/api/newClient', newClient);
-router.use('/api/newUs', usuariosOrg);
+router.use('/api/Us', usuariosOrg);
 router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);
