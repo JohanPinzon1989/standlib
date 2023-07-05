@@ -31,5 +31,5 @@ app.use("/", require("./routes/router"));
 const port = process.env.PORT_SER;
 
 app.listen(port || 4000, () => {
-  console.log("Server up running: "+port);
+  console.log("Server up running: "+ port);
 });
