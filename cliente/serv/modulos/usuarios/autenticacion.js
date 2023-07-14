@@ -9,7 +9,7 @@ exports.auth = async (req, res) => {
     const email = req.body.Email;
     const password = req.body.password;
     if (!email || !password) {
-      res.render("ESP/login", {
+      res.render("ESP/user/login", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Ingrese un correo y/o contraseña",
@@ -27,7 +27,7 @@ exports.auth = async (req, res) => {
             result.length == 0 ||
             !(await bcrypt.compare(password, result[0].password))
           ) {
-            res.render("ESP/login", {
+            res.render("ESP/user/login", {
               alert: true,
               alertTitle: "Advertencia",
               alertMessage: "Correo o contraseña incorrectos",
@@ -50,14 +50,14 @@ exports.auth = async (req, res) => {
               httpOnly: true,
             };
             res.cookie("jwt", token, cookiesOptions);
-            res.render("ESP/login", {
+            res.render("ESP/user/login", {
               alert: true,
               alertTitle: "Conexion exitosa",
               alertMessage: "DATOS CORRECTOS!",
               alertIcon: "success",
               showConfirmButton: true,
               timer: 800,
-              ruta: "",
+              ruta: "ia",
             });
           }
         }
@@ -97,5 +97,5 @@ exports.isAuthenticated = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.redirect("/");
+  return res.redirect("login");
 };
