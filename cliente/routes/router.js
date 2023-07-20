@@ -43,7 +43,7 @@ router.get("/aDoc", adlogin.isAuthenticated,(req, res) => {
 
 //Lista de documentos
 router.get("/lDoc", adlogin.isAuthenticated,(req, res) => {
-  conexion.query("SELECT * FROM documentos", (error, results) => {
+  conexion.query("SELECT * FROM documentos WHERE Estado = 'Activo' ", (error, results) => {
     if (error) {
       throw error;
     } else {
@@ -52,6 +52,18 @@ router.get("/lDoc", adlogin.isAuthenticated,(req, res) => {
   });
 });
 
+// Ver documento
+/*router.post("/VDoc/ver", adlogin.isAuthenticated,(req, res) => {
+  const Id = req.params.Id;
+  conexion.query("SELECT * FROM documentos WHERE Id = ?",[Id], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/verDoc", { results: results });
+    }
+  });
+});*/
+router.post('/VDoc/ver', controllerRouter.rDoc);
 
 //Listar usuarios de Organizacion
 router.get("/lUser", adlogin.isAuthenticated,(req, res) => {
@@ -85,6 +97,19 @@ router.post('/EUser/edit', controllerRouter.edit);
 
 //Eliminar usuarios de la organizacion
 router.post('/dUser/destroy', controllerRouter.destroy);
+
+//Lista de Clientes
+router.get("/cli", adlogin.isAuthenticated,(req, res) => {
+  conexion.query("SELECT * FROM tenant WHERE Estado = 'Activo' ", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/prductClientes", { results: results });
+    }
+  });
+});
+
+
 
 /* Ruta de clientes
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/

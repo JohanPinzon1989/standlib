@@ -29,6 +29,23 @@ function edit(req,res){
     });
 });
 }
+
+//Leer doc
+function rDoc(req,res){
+  const data= req.body;
+  console.log(data.Id)
+  req.getConnection((err,conn)=>{
+  conn.query("SELECT * FROM documentos WHERE Id = ?",[data.Id], (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      console.log(results);
+     return res.render("ESP/admin/verDoc",{results});
+    }
+  });
+});
+}
+
 function update(req,res){
     const data= req.body;
     req.getConnection((err,conn)=>{
@@ -49,4 +66,5 @@ module.exports ={
     destroy: destroy,
     edit: edit,
     update: update,
+    rDoc: rDoc,
 }
