@@ -89,21 +89,9 @@
                           <%= user.Estado %>
                             </h6>
                         </td>
-                        <td ">
-                          <form action="/EUser/edit" method="POST">
-                          <input type="hidden" name="Id" id="Id" value="<%= user.Id %>">
-                          <input type="hidden" name="Nombre" id="Nombre" value="<%= user.Nombre %>">
-                          <input type="hidden" name="Apellido" id="Apellido" value="<%= user.Apellido %>">
-                          <input type="hidden" name="Email" id="Email" value="<%= user.Email %>">
-                          <input type="hidden" name="Password" id="Password" value="<%= user.Password %>">
-                          <input type="hidden" name="Estado" id="Estado" value="<%= user.Estado %>">
-                          <input type="hidden" name="Rol" id="Rol" value="<%= user.Rol %>">
-                          <button type="submit" class="btn btn-secondary m-1">Editar</>
-                          </form>
-                          <form action="/dUser/destroy" method="POST">
-                          <input type="hidden" name="Id" id="Id" value="<%= user.Id %>">
-                          <button type="submit" class="btn btn-danger m-1">Eliminar</>
-                          </form>
+                        <td >
+                          <a href="/EUser/<%= user.Id %>" class="btn btn-secondary m-1">Editar</>                 
+                          <a href="/dUser/<%= user.Id %>" onclick="return confirm('¿Esta seguro de eliminar?');" type="submit" class="btn btn-danger m-1">Eliminar</>
                         </td>
                       </tr>
 
