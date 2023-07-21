@@ -48,25 +48,14 @@ router.get("/aDoc", adlogin.isAuthenticated, (req, res) => {
 });
 
 //Lista de documentos
-router.get("/lDoc", adlogin.isAuthenticated, (req, res) => {
-  let documents;
-  let indust;
+router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
   conexion.query("SELECT * FROM documentos", (error, results) => {
     if (error) {
       throw error;
     } else {
-      documents = results;
+      res.render("ESP/admin/listDoc", { results: results });
     }
   });
-
-  conexion.query("SELECT * FROM industria", (error, results) => {
-    if (error) {
-      throw error;
-    } else {
-      indust = results;
-    }
-  });
-  res.render("ESP/admin/listDoc", { results: documents, ind: indust });
 });
 
 // Ver documento

@@ -94,44 +94,74 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% for(var count=0; count < results.length; count++) { %>
+                  <% results.forEach((doc)=> { %>
                   <tr>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0"><%= results[count].Id %></h6>
+                      <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
                     </td>
                     <td class="border-bottom-0">
                       <h6 class="fw-semibold mb-1">
-                        <%= results[count].Nombre %>
+                        <%= doc.Nombre %>
                       </h6>
                       <span class="fw-normal"
-                        >Autor: <%= results[count].Abreviacion %></span
+                        >Autor: <%= doc.Abreviacion %></span
                       >
                     </td>
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"><%= results[count].Autor %></p>
+                      <p class="mb-0 fw-normal"><%= doc.Autor %></p>
                     </td>
                     <td class="border-bottom-0">
                       <div class="d-flex align-items-center gap-2">
-                        <% if(results[count].Estado == "Activo"){ %>
+                        <% if(doc.Estado == "Activo"){ %>
                         <span class="badge bg-success rounded-3 fw-semibold"
-                          ><%= results[count].Estado %></span
+                          ><%= doc.Estado %></span
                         >
                     <% }else { %>
                         <span class="badge bg-danger rounded-3 fw-semibold"
-                        ><%= results[count].Estado %></span
+                        ><%= doc.Estado %></span
                     <% } %>
                       </div>
                     </td>
                     <td>
-                      <a class="text-primary fw-bold ms-2" href="/<%= results[count].Link %>#toolbar=0"
+                      <!--<a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>"
                         >Leer</a
                       >
-                    
-                        <a type="button" class="btn btn-primary m-1">Eliminar</a>
-                        <a type="button" class="btn btn-success m-1">Editar</a>                    
+                      <a type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a>
+                        <a type="button" class="btn btn-primary m-1" >Eliminar</a>-->
+                        <div class="btn-group dropend">
+                          <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a></li>
+                            <li><a type="button" class="dropdown-item" >Eliminar</a></li>
+                          </ul>
+                        </div>       
                     </td>
                     <td>
-                      <div class="modal fade" id="Modal<%= results[count].Id %>" data-bs-backdrop="static"></data-bs-backdrop>>
+                      <!-- Modal de lectura -->
+                      <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title"><%= doc.Nombre %></h5>
+                              <button class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                              <object
+                                type="application/pdf"
+                                data="/<%= doc.LinkDoc %>"
+                                width="100%"
+                                height="100%"
+                              >
+                              </object>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Modal de edicion -->
+                      <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
                         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -139,7 +169,7 @@
                               <button class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
-                              <form action="/upload" method="POST" enctype="multipart/form-data">
+                              <form action="" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="Nombre" class="form-label">Nombre del documento</label>
                                     <input type="text" class="form-control" name="Nombre" id="Nombre">
@@ -167,20 +197,7 @@
                                     <input type="text" class="form-control" name="Autor"
                                         id="Autor">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="Industria" class="form-label">Industria</label>
-                                    <select
-                                      class="form-control"
-                                      name="Industria"
-                                      id="Industria"
-                                      aria-describedby="text"
-                                      required
-                                    >
-                                      <option selected>-- Seleccione una opcion --</option>
-                                      <% for(var count=0; count < ind.length; count++) { %>
-                                      <option value="<%= results[count].Id %>"><%= ind[count].Industria %></option><% } %>
-                                    </select>
-                                </div>
+                              
                                 <div class="mb-3">
                                     <label for="Pago" class="form-label">Documento pago?</label>
                                     <select
@@ -198,16 +215,18 @@
 
                             </div>
                             <div class="modal-footer">
-                              <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                               <button class="btn btn-secondary" type="submit">Guardar</button>
+                            </form>
+                              <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                              
                             </div>
-                          </form>
+                          
                           </div>
                         </div>
                       </div>
                     </td>
                   </tr>
-                  <% } %>
+                  <% }) %>
                 </tbody>
               </table>
             </div>
