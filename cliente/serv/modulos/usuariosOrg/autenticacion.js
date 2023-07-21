@@ -20,7 +20,7 @@ exports.auth = async (req, res) => {
         ruta: "adlogin",
       });
     } else {
-     conexion.query(
+      conexion.query(
         "SELECT * FROM usuarios_standlib WHERE Email = ?",
         [email],
         async (error, result) => {
@@ -45,8 +45,7 @@ exports.auth = async (req, res) => {
             console.log("Token: " + token);
             const cookiesOptions = {
               expires: new Date(
-                Date.now() +
-                  process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60
+                Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60
               ),
               httpOnly: true,
             };
