@@ -68,7 +68,7 @@ router.get("/lDoc", adlogin.isAuthenticated, (req, res) => {
 router.post("/VDoc/ver", adlogin.isAuthenticated, controllerRouter.rDoc);
 
 //Listar usuarios de Organizacion
-router.get("/lUser", (req, res) => {
+router.get("/lUser", adlogin.isAuthenticated, (req, res) => {
   conexion.query("SELECT * FROM usuarios_standlib", (error, results) => {
     if (error) {
       throw error;
@@ -82,28 +82,6 @@ router.get("/lUser", (req, res) => {
 router.get("/regUsOrg", (req, res) => {
   res.render("ESP/admin/regUserOrg", { alert: false });
 });
-
-//Editar usuarios de Organizacion
-router.get("/EUser/:Id", adlogin.isAuthenticated, (req, res) => {
-  const Id = req.params.Id;
-  conexion.query(
-    "SELECT * FROM usuarios_standlib WHERE Id = ?",
-    [Id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        res.render("ESP/admin/EditUserOrg", {
-          user: results[0],
-        });
-      }
-    }
-  );
-});
-//router.get("/EUser", adlogin.isAuthenticated, (req, res) => {
-//res.render("ESP/admin/EditUserOrg", { alert: false });
-//});
-//router.post("/EUser/edit", adlogin.isAuthenticated, controllerRouter.edit);
 
 //Eliminar usuarios de la organizacion
 router.post(

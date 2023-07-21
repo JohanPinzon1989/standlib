@@ -95,7 +95,6 @@ module.exports = function (dbInyect) {
         Nombre: body.Nombre,
         Apellido: body.Apellido,
         Email: body.Email,
-        password: body.password,
         Estado: body.Estado,
         Rol: body.Rol,
       };

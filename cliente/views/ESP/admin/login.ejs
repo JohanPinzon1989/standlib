@@ -41,7 +41,7 @@
                       alt=""
                     />
                   </a>
-                  <p class="text-center">emblema de la compañia</p>
+                  <p class="text-center">Funcionarios</p>
                   <form id="login" action="/api/alogin" method="POST">
                     <div class="mb-3">
                       <label for="Email" class="form-label"
@@ -71,23 +71,24 @@
                       class="d-flex align-items-center justify-content-between mb-4"
                     >
                       <div class="form-check">
-                        <input
+                        <!-- <input
                           class="form-check-input primary"
                           type="checkbox"
                           value=""
                           id="flexCheckChecked"
                           checked
-                        />
+                        />-->
                         <label
                           class="form-check-label text-dark"
                           for="flexCheckChecked"
                         >
-                          Recordar en este dipositivo?
+                          No eres un funcionario? da click en el siguiente
+                          enlace:
                         </label>
+                        <a class="text-primary fw-bold" href="/login"
+                          >Login Usuarios</a
+                        >
                       </div>
-                      <a class="text-primary fw-bold" href="#"
-                        >Forgot Password ?</a
-                      >
                     </div>
                     <button
                       type="submit"

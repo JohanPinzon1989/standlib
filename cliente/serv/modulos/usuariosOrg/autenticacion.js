@@ -10,7 +10,7 @@ exports.auth = async (req, res) => {
     const password = req.body.password;
 
     if (!email || !password) {
-      res.render("ESP/admin/login", {
+      res.render("ESP/login", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Ingrese un correo y/o contraseña",
@@ -28,7 +28,7 @@ exports.auth = async (req, res) => {
             result.length == 0 ||
             !(await bcrypt.compare(password, result[0].Password))
           ) {
-            res.render("ESP/admin/login", {
+            res.render("ESP/login", {
               alert: true,
               alertTitle: "Advertencia",
               alertMessage: "Correo o contraseña incorrectos",
@@ -50,7 +50,7 @@ exports.auth = async (req, res) => {
               httpOnly: true,
             };
             res.cookie("jwt", token, cookiesOptions);
-            res.render("ESP/admin/login", {
+            res.render("ESP/login", {
               alert: true,
               alertTitle: "Conexion exitosa",
               alertMessage: "DATOS CORRECTOS!",

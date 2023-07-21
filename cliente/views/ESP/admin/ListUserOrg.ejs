@@ -205,18 +205,7 @@
                                     <option  value="Activo" <%= user.Estado=='Activo' ? "selected" : '' %> >Activo</option>
                                     <option  value="Bloqueado" <%= user.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
                                   </select>
-                                </div>
-                                <div class="mb-3">
-                                  <input
-                                    value="<%= user.password %>"
-                                    placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales"
-                                    class="form-control"
-                                    name="password"
-                                    id="password"
-                                    type="hidden"
-                                  />
-                                </div>
-                              
+                                </div>                   
                             </div>
                             <div class="modal-footer">
                               <button class="btn btn-danger" data-bs-dismiss="modal">cancelar</button>
