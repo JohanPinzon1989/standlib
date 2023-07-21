@@ -48,6 +48,7 @@
                         <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
                         <div class="card">
                             <div class="card-body">
+                                
                                 <form action="/upload" method="POST" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="Nombre" class="form-label">Nombre del documento</label>
@@ -56,6 +57,10 @@
                                     <div class="mb-3">
                                         <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
                                         <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Version" class="form-label">Version del documento</label>
+                                        <input type="text" class="form-control" name="Version" id="Version">
                                     </div>
                                     <div class="mb-3">
                                         <label for="Descripcion" class="form-label">Descripcion en español</label>
@@ -72,6 +77,34 @@
                                         <input type="text" class="form-control" name="Autor"
                                             id="Autor">
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="Industria" class="form-label">Industria</label>
+                                        <select
+                                          class="form-control"
+                                          name="Industria"
+                                          id="Industria"
+                                          aria-describedby="text"
+                                          required
+                                        >
+                                          <option selected>-- Seleccione una opcion --</option>
+                                          <% for(var count=0; count < results.length; count++) { %>
+                                          <option value="<%= results[count].Id %>"><%= results[count].Industria %></option><% } %>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Pago" class="form-label">Documento pago?</label>
+                                        <select
+                                          class="form-control"
+                                          name="Pago"
+                                          id="Pago"
+                                          aria-describedby="text"
+                                          required
+                                        >
+                                          <option selected>-- Seleccione una opcion --</option>
+                                          <option value="SI">Si</option>
+                                          <option value="NO">No</option>
+                                        </select>
+                                      </div>
                                     <div class="card-body p-2" style="margin-left: 20%;">
 
                                         <input type="file" name="pdfFile" id="pdfFile"
@@ -80,6 +113,7 @@
                                     </div>
 
                                 </form>
+                                
                                 <div style="margin-top: 15px;">
                                     <embed id="vistaPrevia" type="application/pdf" width="100%" height="800px"
                                         aria-controls="nodownload">

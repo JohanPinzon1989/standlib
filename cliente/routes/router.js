@@ -10,6 +10,7 @@ const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const { add } = require("../serv/modulos/documentos");
+const docu = require("../serv/modulos/documentos/rutas");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
@@ -37,21 +38,35 @@ router.get("/ia", adlogin.isAuthenticated, controllerRouter.index);
 
 //Cargar Documentos
 router.get("/aDoc", adlogin.isAuthenticated, (req, res) => {
-  res.render("ESP/admin/addDoc");
+  conexion.query("SELECT * FROM industria", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/addDoc", { results: results });
+    }
+  });
 });
 
 //Lista de documentos
 router.get("/lDoc", adlogin.isAuthenticated, (req, res) => {
-  conexion.query(
-    "SELECT * FROM documentos WHERE Estado = 'Activo' ",
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        res.render("ESP/admin/listDoc", { results: results });
-      }
+  let documents;
+  let indust;
+  conexion.query("SELECT * FROM documentos", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      documents = results;
     }
-  );
+  });
+
+  conexion.query("SELECT * FROM industria", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      indust = results;
+    }
+  });
+  res.render("ESP/admin/listDoc", { results: documents, ind: indust });
 });
 
 // Ver documento
