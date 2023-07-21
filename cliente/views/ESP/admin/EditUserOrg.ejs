@@ -1,10 +1,129 @@
-<%- include ('../partials/admi/header') %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      content-type="text/javascript"
+    />
+    <title>Modernize Free</title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/logos/faviconlog.png"
+    />
+    <link rel="stylesheet" href="assets/css/styles.min.css" />
+  </head>
+
+  <body>
+    <!--  Body Wrapper -->
+    <div
+      class="page-wrapper"
+      id="main-wrapper"
+      data-layout="vertical"
+      data-navbarbg="skin6"
+      data-sidebartype="full"
+      data-sidebar-position="fixed"
+      data-header-position="fixed"
+    >
+      <!-- Sidebar Start -->
+      <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div>
+          <div
+            class="brand-logo d-flex align-items-center justify-content-between"
+          >
+            <a href="/ia" class="text-nowrap logo-img">
+              <img src="assets/images/logos/dark-logo.png" width="180" alt="" />
+            </a>
+            <div
+              class="close-btn d-xl-none d-block sidebartoggler cursor-pointer"
+              id="sidebarCollapse"
+            >
+              <i class="ti ti-x fs-8"></i>
+            </div>
+          </div>
+          <!-- Sidebar navigation-->
+          <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+            <ul id="sidebarnav">
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">Home</span>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="/ia" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-layout-dashboard"></i>
+                  </span>
+                  <span class="hide-menu">Dashboard</span>
+                </a>
+              </li>
+              <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">UI COMPONENTS</span>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="/lUser" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-user-plus"></i>
+                  </span>
+                  <span class="hide-menu">Usuarios</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="/lDoc" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-file-description"></i>
+                  </span>
+                  <span class="hide-menu">Documentos</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="/cli" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-alert-circle"></i>
+                  </span>
+                  <span class="hide-menu">Planes Clientes</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="2" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-cards">..</i>
+                  </span>
+                  <span class="hide-menu">.</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link" href="9" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-typography"></i>
+                  </span>
+                  <span class="hide-menu">.</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+      </aside>
+      <!--  Sidebar End -->
+    </div>
 <div class="body-wrapper">
   <!--  Header Start -->
   <header class="app-header">
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-        <%- include ('../partials/admi/NavUsuario') %>
+        <div class="card-body p-2" style="margin-left: 30%">
+  <a href="/lUser" type="button" class="btn btn-outline-danger m-1"
+    >Listar Usuarios</a
+  >
+  <a href="/regUsOrg" type="button" class="btn btn-outline-danger m-1"
+    >Agregar usuarios</a
+  >
+</div>
         <ul
           class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
         >
@@ -75,8 +194,8 @@
             <div class="card-body">
              
               <form action="/api/Us" method="POST">
-                <% (user) { %>
-                  <div class="mb-3"></div>
+                <% if (user) { %>
+                  <div class="mb-3">
                 <input id="Id" name="Id" value="<%= user.Id %>" type="hidden" />
               </div>
                 <div class="mb-3">
@@ -172,4 +291,18 @@
   </div>
 </div>
 
-<%- include ('../partials/admi/footer') %>
+<script async src="assets/libs/jquery/dist/jquery.min.js"  defer></script>
+<script async src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"  defer></script>
+<script async src="assets/js/sidebarmenu.js"  defer></script>
+<script async src="assets/js/app.min.js"  defer></script>
+<script async src="assets/libs/apexcharts/dist/apexcharts.min.js"  defer></script>
+<script async src="assets/libs/simplebar/dist/simplebar.js"  defer></script>
+<script async src="assets/js/dashboard.js"  defer></script>
+<script async src="js/scripts.js"  defer></script>
+<script async src="assets/js/app.min.js"  defer></script>
+<script async src="assets/js/doc.js"  defer></script>
+
+
+</body>
+
+</html>

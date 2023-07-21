@@ -50,15 +50,23 @@ function find(table, id) {
   });
 }
 
-function insertar(table, data) {
+function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      "INSERT INTO " + table + " SET ?",
-      data,
+      `SELECT * FROM ${table} WHERE Email= ?`,
+      email,
       (error, result) => {
         return error ? reject(error) : resolve(result);
       }
     );
+  });
+}
+
+function insertar(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query("INSERT INTO " + table + " SET ?", data, (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
   });
 }
 function actualizar(table, data) {
@@ -73,11 +81,11 @@ function actualizar(table, data) {
   });
 }
 
-function agregar(table, data){
-  if(!data.Id){
-    return insertar(table,data);
-  }else{
-    return actualizar(table,data);
+function agregar(table, data) {
+  if (!data.Id) {
+    return insertar(table, data);
+  } else {
+    return actualizar(table, data);
   }
 }
 
@@ -112,4 +120,5 @@ module.exports = {
   query,
   conmsql,
   find,
+  findUsOrg,
 };

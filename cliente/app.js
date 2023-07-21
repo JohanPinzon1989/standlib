@@ -9,11 +9,20 @@ const { mysql } = require("./config");
 const myconnection = require("express-myconnection");
 const mysql2 = require("mysql2");
 const routers = require("./routes/router");
+const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
 
 const app = express();
 
 //Setear carpeta public para archivos externos
 app.use(express.static("public/"));
+app.use(
+  expressCspHeader({
+    policies: {
+      "default-src": [expressCspHeader.NONE],
+      "img-src": [expressCspHeader.SELF],
+    },
+  })
+);
 
 // Setar motor de plantillas
 app.set("view engine", "ejs");

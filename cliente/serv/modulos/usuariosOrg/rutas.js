@@ -20,7 +20,6 @@ async function login(req, res, next) {
   }
 }
 
-
 async function getAll(req, res, next) {
   try {
     const items = await controlador.getAll();

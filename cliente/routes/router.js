@@ -93,7 +93,9 @@ router.get("/EUser/:Id", adlogin.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
-        res.render("ESP/admin/EditUserOrg", { user: results[0] });
+        res.render("ESP/admin/EditUserOrg", {
+          user: results[0],
+        });
       }
     }
   );
