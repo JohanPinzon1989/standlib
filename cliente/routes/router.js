@@ -10,16 +10,23 @@ const { actualizarUc, actualizarUcP } = require("../serv/modulos/usuarios");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
-const { add, actualizar, actualizarD } = require("../serv/modulos/documentos");
+const {
+  add,
+  actualizar,
+  actualizarD,
+  actualizarI,
+} = require("../serv/modulos/documentos");
 const { actualizarT } = require("../serv/modulos/tenant");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
+const storageI = require("../serv/modulos/documentos/Loadimg");
 const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
 const controllerRouter = require("../controller/controller.admin");
 const uploader = multer({ storage });
+const uploaderI = multer({ storageI });
 const router = express.Router();
 
 /* rutas de administracion
@@ -30,12 +37,18 @@ router.get("/adlogin", (req, res) => {
   res.render("ESP/admin/login", { alert: false });
 });
 
-/* index de administracion
+// index de administracion
 router.get("/ia", adlogin.isAuthenticated, (req, res) => {
-  res.render("ESP/admin/index", { user: req.user });
-});*/
+  conexion.query("SELECT * FROM documentos", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/index", { results: results });
+    }
+  });
+});
 
-router.get("/ia", adlogin.isAuthenticated, controllerRouter.index);
+//router.get("/ia", adlogin.isAuthenticated, controllerRouter.index);
 
 //Cargar Documentos
 router.get("/aDoc", adlogin.isAuthenticated, (req, res) => {
@@ -222,6 +235,8 @@ router.post("/upload", uploader.single("pdfFile"), add);
 router.post("/update", actualizar);
 //reemplazar archivos
 router.post("/uploadD", uploader.single("pdfFile"), actualizarD);
+//Cargar imagen documento
+router.post("/uploadI", uploaderI.single("pdfFile"), actualizarI);
 //actualizar tenant
 router.post("/uploadTen", actualizarT);
 
