@@ -62,7 +62,7 @@
                     <select class="form-control" name="EstPrv" id="EstPrv" aria-describedby="text" required>
                         <option selected>-- Seleccione una ciudad o provincia --</option>
                         <% for(var count=0; count < results.length; count++) { %>
-                        <option value="<%= results[count].Id %>"><%= results[count].EstPrv %></option> <% } %>
+                        <option value="<%= results[count].CiudadProvincia %>"><%= results[count].CiudadProvincia %></option> <% } %>
                     </select>
                   <div class="mb-3">
                     <label for="Publicidad" class="form-label">Publicidad</label>

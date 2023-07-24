@@ -117,13 +117,23 @@ router.get("/login", (req, res) => {
 
 // Registro de usuarios y tenant
 router.get("/register", (req, res) => {
-  conexion.query("SELECT * FROM estado_provincia", (error, results) => {
+  conexion.query("SELECT * FROM pais_estadoprovincia", (error, results) => {
     if (error) {
       throw error;
     } else {
       res.render("ESP/user/registro_org", { results: results });
     }
   });
+});
+
+//Mensaje Dominio existente desde el registro de dominio
+router.get("/Md", (req, res) => {
+  res.render("ESP/user/mensajeDom", { alert: false });
+});
+
+//Mensaje Usuario existente desde el registro de dominio
+router.get("/Mu", (req, res) => {
+  res.render("ESP/user/mensajeUS", { alert: false });
 });
 
 // index de Clientes

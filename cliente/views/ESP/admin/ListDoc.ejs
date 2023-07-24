@@ -73,7 +73,7 @@
           <h5 class="card-title fw-semibold mb-4">Listado de documentos</h5>
           <div class="card">
             <div class="card-body">
-              <table class="table text-nowrap mb-0 align-middle">
+              <table class="table table-bordered table-responsive-xxl">
                 <thead class="text-dark fs-4">
                   <tr>
                     <th class="border-bottom-0">
@@ -104,7 +104,7 @@
                         <%= doc.Nombre %>
                       </h6>
                       <span class="fw-normal"
-                        >Autor: <%= doc.Abreviacion %></span
+                        >Abreviacion: <%= doc.Abreviacion %></span
                       >
                     </td>
                     <td class="border-bottom-0">
@@ -123,108 +123,102 @@
                       </div>
                     </td>
                     <td>
-                      <!--<a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>"
-                        >Leer</a
-                      >
-                      <a type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a>
-                        <a type="button" class="btn btn-primary m-1" >Eliminar</a>-->
                         <div class="btn-group dropend">
                           <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                           </button>
                           <ul class="dropdown-menu">
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
                             <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a></li>
-                            <li><a type="button" class="dropdown-item" >Eliminar</a></li>
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Remplazar archivo</a></li>
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Eliminar</a></li>
                           </ul>
                         </div>       
                     </td>
-                    <td>
-                      <!-- Modal de lectura -->
-                      <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static">
-                        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"><%= doc.Nombre %></h5>
-                              <button class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                              <object
-                                type="application/pdf"
-                                data="/<%= doc.LinkDoc %>"
-                                width="100%"
-                                height="100%"
-                              >
-                              </object>
-                            </div>
+                    <!-- Modal de lectura -->
+                    <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
+                      <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><%= doc.Nombre %></h5>
+                            <button class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+                            <object
+                              type="application/pdf"
+                              data="/<%= doc.LinkDoc %>"
+                              width="100%"
+                              height="100%"
+                            >
+                            </object>
                           </div>
                         </div>
                       </div>
+                    </div>
 
-                      <!-- Modal de edicion -->
-                      <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
-                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Editar registro</h5>
-                              <button class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                              <form action="" method="POST" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label for="Nombre" class="form-label">Nombre del documento</label>
-                                    <input type="text" class="form-control" name="Nombre" id="Nombre">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
-                                    <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Version" class="form-label">Version del documento</label>
-                                    <input type="text" class="form-control" name="Version" id="Version">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Descripcion" class="form-label">Descripcion en español</label>
-                                    <input type="text" class="form-control" name="Descripcion" id="Descripcion"
-                                        aria-describedby="emailHelp">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
-                                    <input type="text" class="form-control" name="Descripcion_ing"
-                                        id="Descripcion_ing">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Autor" class="form-label">Autor</label>
-                                    <input type="text" class="form-control" name="Autor"
-                                        id="Autor">
-                                </div>
-                              
-                                <div class="mb-3">
-                                    <label for="Pago" class="form-label">Documento pago?</label>
-                                    <select
-                                      class="form-control"
-                                      name="Pago"
-                                      id="Pago"
-                                      aria-describedby="text"
-                                      required
-                                    >
-                                      <option selected>-- Seleccione una opcion --</option>
-                                      <option value="SI">Si</option>
-                                      <option value="NO">No</option>
-                                    </select>
-                                  </div>
-
-                            </div>
-                            <div class="modal-footer">
-                              <button class="btn btn-secondary" type="submit">Guardar</button>
-                            </form>
-                              <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                              
-                            </div>
-                          
+                    <!-- Modal de edicion -->
+                    <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
+                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Editar registro</h5>
+                            <button class="btn-close" data-bs-dismiss="modal"></button>
                           </div>
+                          <div class="modal-body">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                              <div class="mb-3">
+                                  <label for="Nombre" class="form-label">Nombre del documento</label>
+                                  <input type="text" class="form-control" name="Nombre" id="Nombre">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
+                                  <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="Version" class="form-label">Version del documento</label>
+                                  <input type="text" class="form-control" name="Version" id="Version">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="Descripcion" class="form-label">Descripcion en español</label>
+                                  <input type="text" class="form-control" name="Descripcion" id="Descripcion"
+                                      aria-describedby="emailHelp">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                                  <input type="text" class="form-control" name="Descripcion_ing"
+                                      id="Descripcion_ing">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="Autor" class="form-label">Autor</label>
+                                  <input type="text" class="form-control" name="Autor"
+                                      id="Autor">
+                              </div>
+                            
+                              <div class="mb-3">
+                                  <label for="Pago" class="form-label">Documento pago?</label>
+                                  <select
+                                    class="form-control"
+                                    name="Pago"
+                                    id="Pago"
+                                    aria-describedby="text"
+                                    required
+                                  >
+                                    <option selected>-- Seleccione una opcion --</option>
+                                    <option value="SI">Si</option>
+                                    <option value="NO">No</option>
+                                  </select>
+                                </div>
+
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-secondary" type="submit">Guardar</button>
+                          </form>
+                            <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            
+                          </div>
+                        
                         </div>
                       </div>
-                    </td>
+                    </div>
                   </tr>
                   <% }) %>
                 </tbody>

@@ -50,12 +50,21 @@ async function findP(req, res, next) {
 async function agregar(req, res, next) {
   try {
     const items = await controlador.agregar(req.body);
+    console.log(req.body.Id);
+    console.log(items.Id);
     if (req.body.Id == 0) {
-      res.redirect("/");
+      res.redirect("/login");
       respuetas.success(req, res, "Item guardado", 201);
     } else {
-      res.redirect("/");
-      respuetas.success(req, res, "Item actualizado", 201);
+      if (items.Id == 1) {
+        res.redirect("/Md");
+        respuetas.success(req, res, "Item actualizado", 201);
+      } else {
+        if (req.body > 0) {
+          res.redirect("/Mu");
+          respuetas.success(req, res, "Item actualizado", 201);
+        }
+      }
     }
   } catch (err) {
     next(err);
