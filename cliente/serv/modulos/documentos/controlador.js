@@ -74,7 +74,7 @@ module.exports = function (dbInyect) {
   }
 
   async function actualizar(req, res) {
-    const { body, file } = req;
+    const { body } = req;
     var fecha = require("moment");
     var hoy = fecha().format("YYYY-MM-DD");
     const documento = {
@@ -92,6 +92,18 @@ module.exports = function (dbInyect) {
     const result = await db.actualizar(Table, documento);
     res.redirect("/lDoc");
   }
+  async function actualizarD(req, res) {
+    const { body, file } = req;
+    console.log(file);
+    var fecha = require("moment");
+    var hoy = fecha().format("YYYY-MM-DD");
+    const documento = {
+      Id: body.Id,
+      linkDoc: `file/uploaders/${file.filename}`,
+    };
+    const result = await db.actualizar(Table, documento);
+    res.redirect("/lDoc");
+  }
 
   function del(body) {
     return db.del(Table, body.Id);
@@ -102,5 +114,6 @@ module.exports = function (dbInyect) {
     add,
     del,
     actualizar,
+    actualizarD,
   };
 };

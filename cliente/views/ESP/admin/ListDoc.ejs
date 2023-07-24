@@ -242,12 +242,14 @@
                             <button class="btn-close" data-bs-dismiss="modal"></button>
                           </div>
                           <div class="modal-body">
-
+                            <form action="/uploadD" method="POST" enctype="multipart/form-data">
+                              <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
                               <input type="file" name="pdfFile" id="pdfFile"
                                   class="btn btn-outline-danger m-1" required>                         
                           </div>
                           <div class="modal-footer">
                             <button type="submit" class="btn btn-secondary">Cargar documento</button>
+                          </form>
                             <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
                           </div>
                         </div>
