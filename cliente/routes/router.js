@@ -88,11 +88,20 @@ router.get("/regUsOrg", (req, res) => {
 });
 
 //Eliminar usuarios de la organizacion
-router.post(
-  "/dUser/destroy",
-  adlogin.isAuthenticated,
-  controllerRouter.destroy
-);
+router.get("/dUser/:Id", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  conexion.query(
+    "DELETE FROM usuarios_standlib WHERE Id = ?",
+    [Id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.redirect("/lUser");
+      }
+    }
+  );
+});
 
 //Lista de Clientes
 router.get("/cli", adlogin.isAuthenticated, (req, res) => {
