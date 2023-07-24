@@ -80,6 +80,18 @@ function actualizar(table, data) {
     );
   });
 }
+function actualizard(table, data) {
+  return new Promise((resolve, reject) => {
+    console.log(data);
+    conexion.query(
+      "UPDATE " + table + " SET ? WHERE Id = ?",
+      [data, data.Id],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 function agregar(table, data) {
   if (!data.Id) {
@@ -121,4 +133,6 @@ module.exports = {
   conmsql,
   find,
   findUsOrg,
+  actualizar,
+  actualizard,
 };

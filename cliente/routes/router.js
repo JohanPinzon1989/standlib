@@ -9,8 +9,7 @@ const usuarios = require("../serv/modulos/usuarios/rutas");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
-const { add } = require("../serv/modulos/documentos");
-const docu = require("../serv/modulos/documentos/rutas");
+const { add, actualizar } = require("../serv/modulos/documentos");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
@@ -193,5 +192,6 @@ router.use(errors);
 router.get("/logout", login.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
+router.post("/update", uploader.single("pdfFile"), actualizar);
 
 module.exports = router;

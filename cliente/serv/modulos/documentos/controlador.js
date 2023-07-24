@@ -32,7 +32,6 @@ module.exports = function (dbInyect) {
       induE = ind[count].Industria;
       induI = ind[count].Industria_ing;
     }
-    console.log(body.Id);
     if (body.Id == null) {
       const documento = {
         id: null,
@@ -50,7 +49,6 @@ module.exports = function (dbInyect) {
         Industria_ing: induI,
         Pago: body.Pago,
       };
-      console.log(documento);
       const result = await db.agregar(Table, documento);
       res.render("ESP/admin/index");
     } else {
@@ -70,10 +68,29 @@ module.exports = function (dbInyect) {
         Industria_ing: induI,
         Pago: body.Pago,
       };
-      console.log(documento);
       const result = await db.agregar(Table, documento);
       res.render("ESP/admin/index");
     }
+  }
+
+  async function actualizar(req, res) {
+    const { body, file } = req;
+    var fecha = require("moment");
+    var hoy = fecha().format("YYYY-MM-DD");
+    const documento = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Abreviacion: body.Abreviacion,
+      Version: body.Version,
+      Descripcion: body.Descripcion,
+      Descripcion_ing: body.Descripcion_ing,
+      Fecha_carga: `${hoy}`,
+      Estado: body.Estado,
+      Autor: body.Autor,
+      Pago: body.Pago,
+    };
+    const result = await db.actualizar(Table, documento);
+    res.redirect("/lDoc");
   }
 
   function del(body) {
@@ -84,5 +101,6 @@ module.exports = function (dbInyect) {
     find,
     add,
     del,
+    actualizar,
   };
 };
