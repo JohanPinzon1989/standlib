@@ -7,7 +7,7 @@
     "dev": "nodemon /app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Johan Enrique Pinzon",
   "license": "ISC",
   "dependencies": {
     "apexcharts": "^3.37.0",

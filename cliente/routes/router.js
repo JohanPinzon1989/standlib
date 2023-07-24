@@ -10,6 +10,7 @@ const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const { add, actualizar, actualizarD } = require("../serv/modulos/documentos");
+const { actualizarT } = require("../serv/modulos/tenant");
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
@@ -104,16 +105,13 @@ router.get("/dUser/:Id", adlogin.isAuthenticated, (req, res) => {
 
 //Lista de Clientes
 router.get("/cli", adlogin.isAuthenticated, (req, res) => {
-  conexion.query(
-    "SELECT * FROM tenant WHERE Estado = 'Activo' ",
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        res.render("ESP/admin/prductClientes", { results: results });
-      }
+  conexion.query("SELECT * FROM tenant", (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/listTenant", { results: results });
     }
-  );
+  });
 });
 
 /* Ruta de clientes
@@ -192,7 +190,11 @@ router.use(errors);
 router.get("/logout", login.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
+//actualizar datos de archivos
 router.post("/update", actualizar);
+//reemplazar archivos
 router.post("/uploadD", uploader.single("pdfFile"), actualizarD);
+//actualizar tenant
+router.post("/uploadTen", actualizarT);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const Table = "tenat";
+const Table = "tenant";
 
 module.exports = function (dbInyect) {
   let db = dbInyect;
@@ -22,10 +22,27 @@ module.exports = function (dbInyect) {
   function del(body) {
     return db.del(Table, body.Id);
   }
+
+  async function actualizarT(req, res) {
+    const { body } = req;
+    const tenant = {
+      Id: body.Id,
+      Nombre_org: body.Nombre_org,
+      Nom_Contacto: body.Nom_Contacto,
+      Dominio: body.Dominio,
+      Tel_contacto: body.Tel_contacto,
+      Email: body.Email,
+      Email_facturacion: body.Email_facturacion,
+      Estado: body.Estado,
+    };
+    const result = await db.actualizar(Table, tenant);
+    res.redirect("/cli");
+  }
   return {
     getAll,
     find,
     agregar,
     del,
+    actualizarT,
   };
 };
