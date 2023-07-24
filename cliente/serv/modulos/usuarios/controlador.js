@@ -87,6 +87,33 @@ module.exports = function (dbInyect) {
     return db.agregar(Table, usuario);
   }
 
+  async function actualizarUc(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email,
+      Num_Fijo: body.Num_Fijo,
+      Num_Celular: body.Num_Celular,
+      Estado: body.Estado,
+      Estado_ing: body.Estado_ing,
+      Perfil: body.Perfil,
+      Publicidad: body.Publicidad,
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/Tcli");
+  }
+  async function actualizarUcP(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      password: await bcrypt.hash(body.password, 8),
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/Tcli");
+  }
+
   function del(body) {
     return db.del(Table, body.Id);
   }
@@ -97,5 +124,7 @@ module.exports = function (dbInyect) {
     del,
     auth,
     getAllP,
+    actualizarUc,
+    actualizarUcP,
   };
 };

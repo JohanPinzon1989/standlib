@@ -6,13 +6,14 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
+const { actualizarUc, actualizarUcP } = require("../serv/modulos/usuarios");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const { add, actualizar, actualizarD } = require("../serv/modulos/documentos");
 const { actualizarT } = require("../serv/modulos/tenant");
 const errors = require("../serv/red/errors");
-const login = require("../serv/modulos/usuariosOrg/autenticacion");
+const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
 const bodyParser = require("body-parser");
@@ -117,7 +118,9 @@ router.get("/cli", adlogin.isAuthenticated, (req, res) => {
 //Lista de Clientes
 router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
   conexion.query(
-    `select * from usuarios inner join tenant
+    `select usuarios.Id, usuarios.Nombre, usuarios.Apellido, usuarios.Email, usuarios.Num_Fijo, usuarios.Num_Celular, usuarios.Estado, usuarios.Estado_ing,
+    usuarios.password, usuarios.Perfil, usuarios.Publicidad, tenant.Nombre_Org
+    from usuarios inner join tenant
     on tenant.Id = usuarios.Tenant_Id and tenant.Estado = "Activo"
     order by tenant.Nombre_org asc`,
     (error, results) => {
@@ -200,7 +203,13 @@ router.use("/api/newClient", newClient);
 router.use("/api/Us", usuariosOrg);
 router.use("/api/pais", pais);
 router.use("/api/usuarios", usuarios);
+//Actualizar datos de usuario cliente
+router.use("/actualizarUc", actualizarUc);
+//Actualizar contraseña usuario cliente
+router.use("/actualizarUcP", actualizarUcP);
+// Login clientes
 router.post("/api/login", login.auth);
+// Login funcionarios
 router.post("/api/alogin", adlogin.auth);
 router.use(errors);
 //Logout usuarios
