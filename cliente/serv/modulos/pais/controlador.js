@@ -1,4 +1,4 @@
-const Table = "pais";
+const Table = "pais_EstadoProvincia";
 
 module.exports = function (dbInyect) {
   let db = dbInyect;

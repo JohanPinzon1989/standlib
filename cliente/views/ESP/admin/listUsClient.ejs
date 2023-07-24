@@ -70,7 +70,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title fw-semibold mb-4">
-            Listado de tenant clientes
+            Listado Usuarios clientes
           </h5>
           
               <table class="table table-bordered">
@@ -80,10 +80,13 @@
                       <h6 class="fw-semibold mb-0 fs-4">Id</h6>
                     </th>
                     <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Nombre Organizacion</h6>
+                      <h6 class="fw-semibold mb-0 fs-4">Organizacion</h6>
                     </th>
                     <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Dominio</h6>
+                      <h6 class="fw-semibold mb-0 fs-4">Nombre Usuario</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Correo</h6>
                     </th>
                     <th>
                       <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
@@ -103,10 +106,10 @@
                       <h6><%= tenant.Nombre_org %></h6>
                     </td>
                     <td>
-                      <h6><%= tenant.Dominio %></h6>
+                      <h6><%= tenant.Nombre+" "+ tenant.Apellido %></h6>
                     </td>
                     <td>
-                      <h6 class="fw-semibold mb-0"><%= tenant.Estado %></h6>
+                      <h6 class="fw-semibold mb-0"><%= tenant.Email %></h6>
                     </td>
                     <td >
                         <div class="btn-group dropend">
@@ -184,7 +187,7 @@
                               <div class="mb-3">
                                 <label for="Email" class="form-label">Correo de contacto</label>
                                 <input
-                                  value="<%= tenant.EmailT %>"
+                                  value="<%= tenant.Email %>"
                                   placeholder="standlib.com"
                                   type="text"
                                   class="form-control"
@@ -289,7 +292,7 @@
                               <div class="mb-3">
                                 <label for="Email" class="form-label">Correo de contacto</label>
                                 <input
-                                  value="<%= tenant.EmailT %>"
+                                  value="<%= tenant.Email %>"
                                   placeholder="standlib.com"
                                   type="text"
                                   class="form-control"

@@ -12,7 +12,7 @@ const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const { add, actualizar, actualizarD } = require("../serv/modulos/documentos");
 const { actualizarT } = require("../serv/modulos/tenant");
 const errors = require("../serv/red/errors");
-const login = require("../serv/modulos/usuarios/autenticacion");
+const login = require("../serv/modulos/usuariosOrg/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
 const bodyParser = require("body-parser");
@@ -103,7 +103,7 @@ router.get("/dUser/:Id", adlogin.isAuthenticated, (req, res) => {
   );
 });
 
-//Lista de Clientes
+//Lista tenat de Clientes
 router.get("/cli", adlogin.isAuthenticated, (req, res) => {
   conexion.query("SELECT * FROM tenant", (error, results) => {
     if (error) {
@@ -112,6 +112,22 @@ router.get("/cli", adlogin.isAuthenticated, (req, res) => {
       res.render("ESP/admin/listTenant", { results: results });
     }
   });
+});
+
+//Lista de Clientes
+router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios inner join tenant
+    on tenant.Id = usuarios.Tenant_Id and tenant.Estado = "Activo"
+    order by tenant.Nombre_org asc`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("ESP/admin/listUsClient", { results: results });
+      }
+    }
+  );
 });
 
 /* Ruta de clientes
@@ -187,7 +203,10 @@ router.use("/api/usuarios", usuarios);
 router.post("/api/login", login.auth);
 router.post("/api/alogin", adlogin.auth);
 router.use(errors);
+//Logout usuarios
 router.get("/logout", login.logout);
+//Logout usuarios
+router.get("/adlogout", adlogin.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
 //actualizar datos de archivos

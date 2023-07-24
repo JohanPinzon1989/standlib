@@ -31,7 +31,7 @@ module.exports = function (dbInyect) {
       Nom_Contacto: body.Nom_Contacto,
       Dominio: body.Dominio,
       Tel_contacto: body.Tel_contacto,
-      Email: body.Email,
+      EmailT: body.Email,
       Email_facturacion: body.Email_facturacion,
       Estado: body.Estado,
     };
