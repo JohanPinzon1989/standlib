@@ -15,14 +15,14 @@ module.exports = function (dbInyect) {
   async function auth(Email, password) {
     console.log(Email, password);
     if (!Email || !password) {
-      res.render("login", {
+      res.render("adlogin", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Ingrese un usuario y contraseña",
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
-        ruta: "login",
+        ruta: "adlogin",
       });
     } else {
       const data = await db.query(Table, { Email: Email });
@@ -40,7 +40,7 @@ module.exports = function (dbInyect) {
             httpOnly: true,
           };
           res.cookie("jwt", token, cookiesOptions);
-          res.render("login", {
+          res.render("adlogin", {
             alert: true,
             alertTitle: "Conexion exitosa",
             alertMessage: "DATOS CORRECTOS!",
@@ -70,16 +70,36 @@ module.exports = function (dbInyect) {
   }
 
   async function agregar(body) {
-    const usuario = {
-      Id: null,
-      Nombre: body.Nombre,
-      Apellido: body.Apellido,
-      Email: body.Email,
-      password: await bcrypt.hash(body.password, 8),
-      Estado: "Activo",
-      Rol_Usuarios_Empresa_Id: body.Rol
-    };
-    return db.agregar(Table, usuario);
+    if (body.Id == "0") {
+      const usuario = {
+        Id: null,
+        Nombre: body.Nombre,
+        Apellido: body.Apellido,
+        Email: body.Email,
+        password: await bcrypt.hash(body.password, 8),
+        Estado: "Activo",
+        Rol: body.Rol,
+      };
+      const us = await db.findUsOrg(Table, usuario.Email);
+      let UsOrg;
+      for (var count = 0; count < us.length; count++) {
+        UsOrg = us[count].Email;
+      }
+      if (UsOrg == usuario.Email) {
+      } else {
+        return db.agregar(Table, usuario);
+      }
+    } else {
+      const usuario = {
+        Id: body.Id,
+        Nombre: body.Nombre,
+        Apellido: body.Apellido,
+        Email: body.Email,
+        Estado: body.Estado,
+        Rol: body.Rol,
+      };
+      return db.agregar(Table, usuario);
+    }
   }
 
   function del(body) {

@@ -42,14 +42,6 @@ function getAll(table) {
   });
 }
 
-function getAllP() {
-  return new Promise((resolve, reject) => {
-    conexion.query("CALL usuariosAll ", (error, result) => {
-      return error ? reject(error) : resolve(result);
-    });
-  });
-}
-
 function find(table, id) {
   return new Promise((resolve, reject) => {
     conexion.query(`SELECT * FROM ${table} WHERE Id=${id}`, (error, result) => {
@@ -58,15 +50,23 @@ function find(table, id) {
   });
 }
 
-function insertar(table, data) {
+function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      "INSERT INTO " + table + " SET ?",
-      data,
+      `SELECT * FROM ${table} WHERE Email= ?`,
+      email,
       (error, result) => {
         return error ? reject(error) : resolve(result);
       }
     );
+  });
+}
+
+function insertar(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query("INSERT INTO " + table + " SET ?", data, (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
   });
 }
 function actualizar(table, data) {
@@ -80,12 +80,24 @@ function actualizar(table, data) {
     );
   });
 }
+function actualizard(table, data) {
+  return new Promise((resolve, reject) => {
+    console.log(data);
+    conexion.query(
+      "UPDATE " + table + " SET ? WHERE Id = ?",
+      [data, data.Id],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
-function agregar(table, data){
-  if(!data.Id){
-    return insertar(table,data);
-  }else{
-    return actualizar(table,data);
+function agregar(table, data) {
+  if (!data.Id) {
+    return insertar(table, data);
+  } else {
+    return actualizar(table, data);
   }
 }
 
@@ -115,10 +127,12 @@ function query(table, consult) {
 
 module.exports = {
   getAll,
-  find,
   agregar,
   del,
   query,
   conmsql,
-  getAllP,
+  find,
+  findUsOrg,
+  actualizar,
+  actualizard,
 };

@@ -8,8 +8,9 @@ exports.auth = async (req, res) => {
   try {
     const email = req.body.Email;
     const password = req.body.password;
+
     if (!email || !password) {
-      res.render("ESP/admin/login", {
+      res.render("ESP/login", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Ingrese un correo y/o contraseña",
@@ -25,9 +26,9 @@ exports.auth = async (req, res) => {
         async (error, result) => {
           if (
             result.length == 0 ||
-            !(await bcrypt.compare(password, result[0].password))
+            !(await bcrypt.compare(password, result[0].Password))
           ) {
-            res.render("ESP/admin/login", {
+            res.render("ESP/login", {
               alert: true,
               alertTitle: "Advertencia",
               alertMessage: "Correo o contraseña incorrectos",
@@ -44,20 +45,19 @@ exports.auth = async (req, res) => {
             console.log("Token: " + token);
             const cookiesOptions = {
               expires: new Date(
-                Date.now() +
-                  process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60
               ),
               httpOnly: true,
             };
             res.cookie("jwt", token, cookiesOptions);
-            res.render("ESP/admin/login", {
+            res.render("ESP/login", {
               alert: true,
               alertTitle: "Conexion exitosa",
               alertMessage: "DATOS CORRECTOS!",
               alertIcon: "success",
               showConfirmButton: true,
               timer: 800,
-              ruta: "",
+              ruta: "ia",
             });
           }
         }
@@ -97,5 +97,5 @@ exports.isAuthenticated = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.redirect("/adlogin");
+  return res.redirect("adlogin");
 };

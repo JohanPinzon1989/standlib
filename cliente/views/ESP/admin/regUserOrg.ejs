@@ -51,7 +51,7 @@
                   <p class="mb-0 fs-3">My Task</p>
                 </a>
                 <a
-                  href="/logout"
+                  href="/adlogout"
                   class="btn btn-outline-primary mx-3 mt-2 d-block"
                   >Logout</a
                 >
@@ -73,7 +73,10 @@
           <h5 class="card-title fw-semibold mb-4">Registro usuarios</h5>
           <div class="card">
             <div class="card-body">
-              <form action="/api/newUs" method="POST">
+              <form action="/api/Us" method="POST">
+                <div class="mb-3"></div>
+                <input id="Id" name="Id" value="0" hidden />
+              </div>
                 <div class="mb-3">
                   <label for="Nombre" class="form-label">Nombres</label>
                   <input
@@ -120,11 +123,9 @@
                     required
                   >
                     <option selected>-- Seleccione un rol --</option>
-                    <% for(var count=0; count < results.length; count++) { %>
-                    <option value="<%= results[count].Id %>">
-                      <%= results[count].Rol %>
-                    </option>
-                    <% } %>
+                    <option value="Administrar">Administrar</option>
+                    <option value="Editar">Editar</option>
+                    <option value="Leer">Leer</option>
                   </select>
                 </div>
                 <div class="mb-4">

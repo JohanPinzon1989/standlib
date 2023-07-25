@@ -39,6 +39,7 @@ async function find(req, res, next) {
 }
 
 async function agregar(req, res, next) {
+  console.log(req.body);
   try {
     const items = await controlador.agregar(req.body);
     if (req.body.Id == 0) {
@@ -56,6 +57,7 @@ async function agregar(req, res, next) {
 async function del(req, res, next) {
   try {
     const items = await controlador.del(req.body);
+    res.redirect("/lUser");
     respuetas.success(req, res, "Item eliminado", 200);
   } catch (err) {
     next(err);

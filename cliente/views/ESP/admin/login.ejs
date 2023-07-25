@@ -41,8 +41,8 @@
                       alt=""
                     />
                   </a>
-                  <p class="text-center">emblema de la compañia</p>
-                  <form id="login" action="/api/alogin" method="POST">
+                  <p class="text-center">Funcionarios</p>
+                  <form id="alogin" action="/api/alogin" method="POST">
                     <div class="mb-3">
                       <label for="Email" class="form-label"
                         >Correo electronico</label
@@ -64,29 +64,31 @@
                         class="form-control"
                         name="password"
                         id="password"
+                        required
                       />
                     </div>
                     <div
                       class="d-flex align-items-center justify-content-between mb-4"
                     >
                       <div class="form-check">
-                        <input
+                        <!-- <input
                           class="form-check-input primary"
                           type="checkbox"
                           value=""
                           id="flexCheckChecked"
                           checked
-                        />
+                        />-->
                         <label
                           class="form-check-label text-dark"
                           for="flexCheckChecked"
                         >
-                          Remeber this Device
+                          No eres un funcionario? da click en el siguiente
+                          enlace:
                         </label>
+                        <a class="text-primary fw-bold" href="/login"
+                          >Login Usuarios</a
+                        >
                       </div>
-                      <a class="text-primary fw-bold" href="./index.html"
-                        >Forgot Password ?</a
-                      >
                     </div>
                     <button
                       type="submit"

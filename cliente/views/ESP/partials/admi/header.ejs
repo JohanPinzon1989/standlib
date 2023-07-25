@@ -2,15 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      content-type="text/javascript"
+    />
     <title>Modernize Free</title>
     <link
       rel="shortcut icon"
       type="image/png"
       href="assets/images/logos/faviconlog.png"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="assets/css/styles.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
@@ -31,7 +40,7 @@
           <div
             class="brand-logo d-flex align-items-center justify-content-between"
           >
-            <a href="/" class="text-nowrap logo-img">
+            <a href="/ia" class="text-nowrap logo-img">
               <img src="assets/images/logos/dark-logo.png" width="180" alt="" />
             </a>
             <div
@@ -49,7 +58,7 @@
                 <span class="hide-menu">Home</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="/" aria-expanded="false">
+                <a class="sidebar-link" href="/ia" aria-expanded="false">
                   <span>
                     <i class="ti ti-layout-dashboard"></i>
                   </span>
@@ -61,7 +70,7 @@
                 <span class="hide-menu">UI COMPONENTS</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="/us" aria-expanded="false">
+                <a class="sidebar-link" href="/lUser" aria-expanded="false">
                   <span>
                     <i class="ti ti-user-plus"></i>
                   </span>
@@ -77,76 +86,60 @@
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="3" aria-expanded="false">
+                <a class="sidebar-link" href="/cli" aria-expanded="false">
                   <span>
                     <i class="ti ti-alert-circle"></i>
                   </span>
-                  <span class="hide-menu">.</span>
+                  <span class="hide-menu">Planes Clientes</span>
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="2" aria-expanded="false">
+                <a class="sidebar-link" href="/Tcli" aria-expanded="false">
                   <span>
                     <i class="ti ti-cards"></i>
                   </span>
-                  <span class="hide-menu">.</span>
+                  <span class="hide-menu">Usuarios cliente</span>
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="9" aria-expanded="false">
+                <a class="sidebar-link" href="/cli" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-abacus"></i>
+                  </span>
+                  <span class="hide-menu">Tenat clientes</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-expanded="false"
+                  aria-expanded="false"
+                >
                   <span>
                     <i class="ti ti-typography"></i>
                   </span>
-                  <span class="hide-menu">.</span>
+                  <span class="hide-menu">Datos de referencia</span>
                 </a>
-              </li>
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">AUTH</span>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="/login" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-login"></i>
-                  </span>
-                  <span class="hide-menu">Login</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="/register" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-user-plus"></i>
-                  </span>
-                  <span class="hide-menu">Register</span>
-                </a>
-              </li>
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">EXTRA</span>
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link"
-                  href="./icon-tabler.html"
-                  aria-expanded="false"
+                <ul
+                  class="dropdown-menu"
+                  style="
+                    list-style: none;
+                    border-left: 2px solid rgb(177, 173, 173);
+                    border-right: 2px solid rgb(177, 173, 173);
+                    border-top: 2px solid rgb(177, 173, 173);
+                    border-block: 2px solid rgb(177, 173, 173);
+                  "
                 >
-                  <span>
-                    <i class="ti ti-mood-happy"></i>
-                  </span>
-                  <span class="hide-menu">Icons</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link"
-                  href="./sample-page.html"
-                  aria-expanded="false"
-                >
-                  <span>
-                    <i class="ti ti-aperture"></i>
-                  </span>
-                  <span class="hide-menu">Sample Page</span>
-                </a>
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
               </li>
             </ul>
           </nav>

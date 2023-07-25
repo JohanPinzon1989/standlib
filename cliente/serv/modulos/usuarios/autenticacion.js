@@ -57,7 +57,7 @@ exports.auth = async (req, res) => {
               alertIcon: "success",
               showConfirmButton: true,
               timer: 800,
-              ruta: "",
+              ruta: "ia",
             });
           }
         }
@@ -97,5 +97,5 @@ exports.isAuthenticated = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.redirect("/");
+  return res.redirect("login");
 };
