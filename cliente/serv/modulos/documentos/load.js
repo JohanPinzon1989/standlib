@@ -3,12 +3,19 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../../public/file/uploaders"));
+    if (file.mimetype.split("/")[0] == "image") {
+      cb(null, path.join(__dirname, "../../../public/file/img"));
+    } else {
+      cb(null, path.join(__dirname, "../../../public/file/uploaders"));
+    }
   },
-  
+
   filename: function (req, file, cb) {
     //cb(null, `${Date.now()}.${file.mimetype.split("/")[1]}`);
-    cb(null, `${file.originalname.split(".")[0]}.${file.mimetype.split("/")[1]}`);
+    cb(
+      null,
+      `${file.originalname.split(".")[0]}.${file.mimetype.split("/")[1]}`
+    );
   },
 });
 

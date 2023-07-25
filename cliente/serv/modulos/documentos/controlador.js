@@ -111,7 +111,7 @@ module.exports = function (dbInyect) {
     var hoy = fecha().format("YYYY-MM-DD");
     const documento = {
       Id: body.Id,
-      LinkImagen: `file/uploaders/${file.filename}`,
+      LinkImagen: `file/img/${file.filename}`,
     };
     const result = await db.actualizar(Table, documento);
     res.redirect("/lDoc");

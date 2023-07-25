@@ -21,12 +21,10 @@ const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
-const storageI = require("../serv/modulos/documentos/Loadimg");
-const bodyParser = require("body-parser");
+//const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
 const controllerRouter = require("../controller/controller.admin");
 const uploader = multer({ storage });
-const uploaderI = multer({ storageI });
 const router = express.Router();
 
 /* rutas de administracion
@@ -43,6 +41,7 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
     if (error) {
       throw error;
     } else {
+      console.log(results);
       res.render("ESP/admin/index", { results: results });
     }
   });
@@ -236,7 +235,7 @@ router.post("/update", actualizar);
 //reemplazar archivos
 router.post("/uploadD", uploader.single("pdfFile"), actualizarD);
 //Cargar imagen documento
-router.post("/uploadI", uploaderI.single("pdfFile"), actualizarI);
+router.post("/uploadI", uploader.single("pdfFile"), actualizarI);
 //actualizar tenant
 router.post("/uploadTen", actualizarT);
 
