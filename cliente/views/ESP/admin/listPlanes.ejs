@@ -162,6 +162,14 @@
                       </li>
                       <li>
                         <a
+                          type="button"
+                          class="dropdown-item"
+                          href="/docFact/<%= factura.Id %>,<%= factura.Tenant_Id %>"
+                          >Eliminar</a
+                        >
+                      </li>
+                      <li>
+                        <a
                         type="button"
                         class="dropdown-item"
                         onclick="mostrarModal(<%= factura.Id %>)"

@@ -68,7 +68,11 @@
   >
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Normas <br /><br /></h5>
+        <% if(email) { %>
+        <h5 class="card-title fw-semibold mb-4">
+          Normas <%= emai.Emai %><br /><br />
+        </h5>
+        <% } %>
         <div class="row row-cols-1 row-cols-md-6 g-4">
           <% results.forEach((doc) => { %>
           <div>

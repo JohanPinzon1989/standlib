@@ -42,9 +42,6 @@ app.use(bodyParser.json());
 //Setear variables de entorno
 dotenv.config();
 
-//Setear las cookies
-app.use(cookiesParse());
-
 app.use(
   myconnection(
     mysql2,
@@ -60,8 +57,21 @@ app.use(
   )
 );
 
+//Setear las cookies
+app.use(cookiesParse());
+
 //Lammar al router
 app.use("/", routers);
+
+//evitar acceso a la pagina usando el boton de back
+app.use(function (req, res, next) {
+  if (!req.user)
+    res.header(
+      "Cache-Control",
+      "private, no-cache, nostorage, must-revalidate"
+    );
+  next();
+});
 
 const port = process.env.PORT_SER;
 

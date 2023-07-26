@@ -39,11 +39,12 @@ router.get("/adlogin", (req, res) => {
 
 // index de administracion
 router.get("/ia", adlogin.isAuthenticated, (req, res) => {
+  console.log(req.Email);
   conexion.query("SELECT * FROM documentos", (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/index", { results: results });
+      res.render("ESP/admin/index", { email: req.Email, results: results });
     }
   });
 });
@@ -97,7 +98,7 @@ router.get("/lUser", adlogin.isAuthenticated, (req, res) => {
 });
 
 //Agregar Usuario de Organizacion
-router.get("/regUsOrg", (req, res) => {
+router.get("/regUsOrg", adlogin.isAuthenticated, (req, res) => {
   res.render("ESP/admin/regUserOrg", { alert: false });
 });
 
@@ -168,11 +169,15 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
                   if (error) {
                     throw error;
                   } else {
-                    res.render("ESP/admin/listPlanes", {
-                      fact: results,
-                      docu: results2,
-                      ten: results3,
-                    });
+                    res.render(
+                      "ESP/admin/listPlanes",
+                      adlogin.isAuthenticated,
+                      {
+                        fact: results,
+                        docu: results2,
+                        ten: results3,
+                      }
+                    );
                   }
                 }
               );
@@ -185,7 +190,7 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
 });
 
 //Agregar Factura
-router.get("/regFact", (req, res) => {
+router.get("/regFact", adlogin.isAuthenticated, (req, res) => {
   conexion.query(
     `select * from tenant where Estado = "Activo" order by Nombre_org asc`,
     (error, results) => {
@@ -222,6 +227,28 @@ router.get("/delFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
             }
           }
         );
+      }
+    }
+  );
+});
+
+//agregar o eliminar asignacion
+router.get("/docFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  const It = req.params.It;
+  const asigDocFact = {
+    IdFactura: Id,
+    IdTenant: It,
+  };
+  conexion.query(
+    `select * from facturacion_documentos where IdTenant = ? AND order by Nombre_org asc`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("ESP/admin/asigDocument", adlogin.isAuthenticated, {
+          results: results,
+        });
       }
     }
   );
