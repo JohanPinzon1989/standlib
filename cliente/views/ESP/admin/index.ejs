@@ -66,34 +66,37 @@
     class="container-fluid"
     style="overflow: scroll; height: calc(115vh - 80px)"
   >
-    <div class="container-fluid">
-      <h2 class="modal-title">Gratis <br /><br /></h2>
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        <% results.forEach((doc) => { %>
-        <div>
-          <div class="col">
-            <div class="card h-25">
-              <img
-                src="/<%= doc.LinkImagen %>"
-                class="card-img-top"
-                height="200px"
-              />
-              <div class="card-body">
-                <h5 class="card-title"><%= doc.Nombre %></h5>
-                <p class="card-text"><%= doc.Descripcion %></p>
-              </div>
-              <div
-                class="card-footer card text-center mb-3"
-                style="width: 18rem"
-              >
-                <a href="#" class="btn btn-primary">Leer</a>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Normas <br /><br /></h5>
+        <div class="row row-cols-1 row-cols-md-6 g-4">
+          <% results.forEach((doc) => { %>
+          <div>
+            <div class="col">
+              <div class="card h-25">
+                <img
+                  src="/<%= doc.LinkImagen %>"
+                  class="card-img-top"
+                  height="170px"
+                />
+                <div class="card-body">
+                  <h5 class="card-title"><%= doc.Nombre %></h5>
+                  <p class="card-text"><%= doc.Descripcion %></p>
+                </div>
+                <div
+                  class="card-footer card text-center mb-3"
+                  style="width: 14rem"
+                >
+                  <a href="#" class="btn btn-primary">Leer</a>
+                </div>
               </div>
             </div>
           </div>
+          <% }) %>
         </div>
-        <% }) %>
       </div>
     </div>
   </div>
+
   <%-include('../partials/admi/footer') %>
 </div>

@@ -24,6 +24,7 @@ const storage = require("../serv/modulos/documentos/load");
 //const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
 const controllerRouter = require("../controller/controller.admin");
+const { mysql } = require("../config");
 const uploader = multer({ storage });
 const router = express.Router();
 
@@ -41,7 +42,6 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
     if (error) {
       throw error;
     } else {
-      console.log(results);
       res.render("ESP/admin/index", { results: results });
     }
   });
@@ -139,7 +139,47 @@ router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
+        console.log(results);
         res.render("ESP/admin/listUsClient", { results: results });
+      }
+    }
+  );
+});
+
+//Lista de Facturacion
+router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select Id,Tenant_Id, NumFactura, date_format(Fecha_inicio, "%Y-%m-%d") as Fecha_inicio, date_format(Fecha_fin, "%Y-%m-%d") as Fecha_fin,
+    Estado, CostoUSD, CostoCOP from hostorial_facturacion order by Fecha_inicio asc`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        conexion.query(
+          `select * from documentos order by Nombre asc`,
+          (error, results2) => {
+            if (error) {
+              throw error;
+            } else {
+              conexion.query(
+                `select * from tenant order by Nombre_org asc`,
+                (error, results3) => {
+                  if (error) {
+                    throw error;
+                  } else {
+                    console.log(results);
+                    console.log(results2);
+                    res.render("ESP/admin/listPlanes", {
+                      fact: results,
+                      docu: results2,
+                      ten: results3,
+                    });
+                  }
+                }
+              );
+            }
+          }
+        );
       }
     }
   );

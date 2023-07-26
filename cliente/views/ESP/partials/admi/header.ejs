@@ -14,6 +14,10 @@
       href="assets/images/logos/faviconlog.png"
     />
     <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+    />
+    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
@@ -23,15 +27,20 @@
   </head>
 
   <body>
-    <!--  Body Wrapper -->
+    <button
+      class="btn btn-primary ti ti-list-check"
+      type="button"
+      style="height: 50px; font-size: large"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasExample"
+      aria-controls="offcanvasExample"
+    ></button>
+
     <div
-      class="page-wrapper"
-      id="main-wrapper"
-      data-layout="vertical"
-      data-navbarbg="skin6"
-      data-sidebartype="full"
-      data-sidebar-position="fixed"
-      data-header-position="fixed"
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel"
     >
       <!-- Sidebar Start -->
       <aside class="left-sidebar">
@@ -86,7 +95,7 @@
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="/cli" aria-expanded="false">
+                <a class="sidebar-link" href="/Fcli" aria-expanded="false">
                   <span>
                     <i class="ti ti-alert-circle"></i>
                   </span>

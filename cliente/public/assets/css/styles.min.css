@@ -9548,7 +9548,7 @@ fieldset:disabled .btn {
 .offcanvas.offcanvas-start {
   top: 0;
   left: 0;
-  width: var(--bs-offcanvas-width);
+  width: 270px;
   border-right: var(--bs-offcanvas-border-width) solid
     var(--bs-offcanvas-border-color);
   -webkit-transform: translateX(-100%);
@@ -20225,7 +20225,7 @@ fieldset:disabled .btn {
   /*max-width: 1200px;
   margin: 0 auto;*/
   padding: 1%;
-  padding-left: 14.5%;
+  /*padding-left: 14.5%;*/
   -webkit-transition: 0.2s ease-in;
   transition: 0.2s ease-in;
 }

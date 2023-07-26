@@ -1,0 +1,285 @@
+<%- include ('../partials/admi/header') -%>
+<div class="body-wrapper">
+  <!--  Header Start -->
+  <header class="app-header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+        <ul
+          class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
+        >
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link nav-icon-hover"
+              href="javascript:void(0)"
+              id="drop2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="assets/images/profile/tenant-1.jpg"
+                alt=""
+                width="35"
+                height="35"
+                class="rounded-circle"
+              />
+            </a>
+            <div
+              class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+              aria-labelledby="drop2"
+            >
+              <div class="message-body">
+                <a
+                  href="javascript:void(0)"
+                  class="d-flex align-items-center gap-2 dropdown-item"
+                >
+                  <i class="ti ti-tenant fs-6"></i>
+                  <p class="mb-0 fs-3">My Profile</p>
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  class="d-flex align-items-center gap-2 dropdown-item"
+                >
+                  <i class="ti ti-mail fs-6"></i>
+                  <p class="mb-0 fs-3">My Account</p>
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  class="d-flex align-items-center gap-2 dropdown-item"
+                >
+                  <i class="ti ti-list-check fs-6"></i>
+                  <p class="mb-0 fs-3">My Task</p>
+                </a>
+                <a
+                  href="/adlogout"
+                  class="btn btn-outline-primary mx-3 mt-2 d-block"
+                  >Logout</a
+                >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!--  Header End -->
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">
+            Listado de tenant clientes
+          </h5>
+
+          <table class="table table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>
+                  <h6 class="fw-semibold mb-0 fs-4">Id</h6>
+                </th>
+                <th>
+                  <h6 class="fw-semibold mb-0 fs-4">Factura</h6>
+                </th>
+                <th>
+                  <h6 class="fw-semibold mb-0 fs-4">Fecha de inicio</h6>
+                </th>
+                <th>
+                  <h6 class="fw-semibold mb-0 fs-4">Fecha de finalizacion</h6>
+                </th>
+                <th>
+                  <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
+                </th>
+                <th>
+                  <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% fact.forEach((factura)=> { %>
+              <tr>
+                <td>
+                  <h6><%= factura.Id %></h6>
+                </td>
+                <td>
+                  <h6><%= factura.NumFactura %></h6>
+                </td>
+                <td>
+                  <h6><%= factura.Fecha_inicio %></h6>
+                </td>
+                <td>
+                  <h6 class="fw-semibold mb-0"><%= factura.Fecha_fin %></h6>
+                </td>
+                <td>
+                  <h6 class="fw-semibold mb-0"><%= factura.Estado %></h6>
+                </td>
+                <td>
+                  <div class="btn-group dropend" style="width: 8rem">
+                    <button
+                      class="btn btn-secondary ti ti-list-check"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      data-bs-auto-close="true"
+                      aria-expanded="false"
+                    ></button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          type="button"
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#ModalLect<%= factura.Id %>"
+                          >Leer</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          type="button"
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#Modal<%= factura.Id %>"
+                          >Editar</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                
+              </tr>
+ <!--Editar factura-->
+ <div class="modal fade" id="Modal<%= factura.Id %>" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar factura N° <%= factura.NumFactura %></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/uploadTen" method="POST">
+          <input id="Id" name="Id" value="<%= factura.Id %>" type="hidden" />
+          <% ten.forEach((tenant)=> { if(tenant.Id == factura.Tenant_Id) { %>
+          <div class="mb-3">
+            <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
+            <input
+              value="<%= tenant.Nombre_org %>"
+              placeholder="STANDLIB SAS"
+              type="text"
+              class="form-control"
+              name="Nombre_org"
+              id="Nombre_org"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <% }}) %>
+          <div class="mb-3">
+            <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
+            <input
+              value="<%= factura.Nombre_org %>"
+              placeholder="STANDLIB SAS"
+              type="text"
+              class="form-control"
+              name="Nombre_org"
+              id="Nombre_org"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Dominio" class="form-label">Dominio</label>
+            <input
+              value="<%= factura.Dominio %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Dominio"
+              id="Dominio"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
+            <input
+              value="<%= factura.Nom_Contacto %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Nom_Contacto"
+              id="Nom_Contacto"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
+            <input
+              value="<%= factura.Tel_contacto %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Tel_contacto"
+              id="Tel_contacto"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Email" class="form-label">Correo de contacto</label>
+            <input
+              value="<%= factura.EmailT %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Email"
+              id="Email"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
+            <input
+              value="<%= factura.Email_facturacion %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Email_facturacion"
+              id="Email_facturacion"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Estado" class="form-label">Estado</label>
+            <select
+              class="form-control"
+              name="Estado"
+              id="Estado"
+              aria-describedby="text"
+              required
+            >
+              <option  value="Activo" <%= factura.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+              <option  value="Bloqueado" <%= factura.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+            </select>
+          </div>                   
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="submit">Guardar</button>
+      </form>
+        <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+
+<%- include ('../partials/admi/footer') -%>
