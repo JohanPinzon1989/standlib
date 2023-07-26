@@ -199,8 +199,11 @@ router.get("/regFact", (req, res) => {
 });
 
 //Eliminar factura
-router.get("/delFact/:Id", adlogin.isAuthenticated, (req, res) => {
+router.get("/delFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
   const Id = req.params.Id;
+  const It = req.params.It;
+
+  console.log(Id, It);
   conexion.query(
     "DELETE FROM Historial_facturacion WHERE Id = ?",
     [Id],
@@ -208,7 +211,17 @@ router.get("/delFact/:Id", adlogin.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
-        res.redirect("/Fcli");
+        conexion.query(
+          "DELETE FROM facturacion_documentos WHERE IdTenant = ? AND IdFactura = ?",
+          [It, Id],
+          (error, results) => {
+            if (error) {
+              throw error;
+            } else {
+              res.redirect("/Fcli");
+            }
+          }
+        );
       }
     }
   );

@@ -156,7 +156,7 @@
                         <a
                           type="button"
                           class="dropdown-item"
-                          href="/delFact/<%= factura.Id %>,<%= factura.Tenant_Id %>"
+                          href="/delFact/<%= factura.Id %>"
                           >Eliminar</a
                         >
                       </li>
@@ -164,8 +164,9 @@
                         <a
                         type="button"
                         class="dropdown-item"
-                        onclick="mostrarModal(<%= factura.Id %>)"
-                        >EJ enviar datos</a
+                        data-bs-toggle="modal"
+                        data-bs-target="#tablaModal"
+                        >Asignar por documentos</a
                         >
                       </li>
                     </ul>
@@ -396,6 +397,45 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="tablaModal" tabindex="-1" aria-labelledby="tablaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="tablaModalLabel">Tabla con Checkboxes</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Seleccionar</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>1</td>
+                          <td>Elemento 1</td>
+                          <td><input type="checkbox"></td>
+                      </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Elemento 2</td>
+                          <td><input type="checkbox"></td>
+                      </tr>
+                      <!-- Añadir más filas según necesites -->
+                  </tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+      </div>
+  </div>
+</div>
               <% }) %>
             </tbody>
           </table>
@@ -403,9 +443,5 @@
       </div>
   </div>
 </div>
- <!-- Enlaces a los scripts de Bootstrap 5 y jQuery -->
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
 <%- include ('../partials/admi/footer') -%>

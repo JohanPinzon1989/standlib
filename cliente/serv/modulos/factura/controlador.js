@@ -44,19 +44,53 @@ module.exports = function (dbInyect) {
     const result = await db.actualizar(Table, factura);
     res.redirect("/Fcli");
   }
+
   async function asignarF(req, res) {
     const { body } = req;
     console.log(body);
+
+    //Capturar los dos ultimos registros
     const dataArray = Object.entries(body);
-    console.log(dataArray);
-    dataArray.forEach(([key, value]) => {
-      console.log(`Clave: ${key}, Valor: ${value}`);
-    });
+    const lastTwoElements = dataArray.slice(-2);
+    const updatedDataObj = Object.fromEntries(lastTwoElements);
 
-    // Utilizar splice para eliminar los dos últimos elementos
-    dataArray.splice(-2);
+    // Capturar los datos de los documentos
+    const dataArray1 = Object.entries(body);
+    dataArray1.splice(-2);
+    const updatedDataObj1 = Object.fromEntries(dataArray1);
 
-    console.log(dataArray);
+    //Ordenar los datos de documentos
+    const dataObj = updatedDataObj1;
+
+    for (const key in dataObj) {
+      if (dataObj.hasOwnProperty(key)) {
+        const value = await dataObj[key];
+
+        //Capturar los datos a registrar
+        const asignacion = await {
+          Id: null,
+          IdTenant: updatedDataObj.IdTenant,
+          IdDocumentos: key,
+          IdFactura: updatedDataObj.IdFactura,
+        };
+        console.log(asignacion);
+
+        //Valida si el doscumento ya fue asignado
+        const asig = await db.findAD("facturacion_documentos", asignacion);
+        let docFact;
+        for (var count = 0; count < asig.length; count++) {
+          docFact = await asig[count].Id;
+        }
+        console.log(docFact);
+        if (docFact > 0) {
+          console.log("ya fue asignado");
+        } else {
+          //Enviar datos a Base de Datos
+          const result = await db.agregar("facturacion_documentos", asignacion);
+        }
+      }
+    }
+    res.redirect("/Fcli");
   }
 
   async function delF(body) {

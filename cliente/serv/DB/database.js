@@ -50,6 +50,18 @@ function find(table, id) {
   });
 }
 
+//Valida asignacion de documento
+function findAD(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE IdTenant=${body.IdTenant} AND IdDocumentos=${body.IdDocumentos} AND IdFactura=${body.IdFactura}`,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
 function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(
@@ -135,4 +147,5 @@ module.exports = {
   findUsOrg,
   actualizar,
   actualizard,
+  findAD,
 };
