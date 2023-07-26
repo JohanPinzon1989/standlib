@@ -15,8 +15,20 @@ module.exports = function (dbInyect) {
     return db.find(Table, id);
   }
 
-  function agregarF(body) {
-    return db.agregar(Table, body);
+  async function agregarF(req, res) {
+    const { body } = req;
+    const factura = {
+      Id: null,
+      Tenant_Id: body.Nombre_org,
+      NumFactura: body.NumFactura,
+      Fecha_inicio: body.Fecha_inicio,
+      Fecha_fin: body.Fecha_fin,
+      Estado: body.Estado,
+      CostoUSD: body.CostoUSD,
+      CostoCOP: body.CostoCOP,
+    };
+    const result = await db.agregar(Table, factura);
+    res.redirect("/Fcli");
   }
   async function actualizarF(req, res) {
     const { body } = req;

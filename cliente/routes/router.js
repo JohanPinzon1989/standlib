@@ -184,6 +184,20 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
   );
 });
 
+//Agregar Factura
+router.get("/regFact", (req, res) => {
+  conexion.query(
+    `select * from tenant where Estado = "Activo" order by Nombre_org asc`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("ESP/admin/crearFactura", { results: results });
+      }
+    }
+  );
+});
+
 //Eliminar factura
 router.get("/delFact/:Id", adlogin.isAuthenticated, (req, res) => {
   const Id = req.params.Id;

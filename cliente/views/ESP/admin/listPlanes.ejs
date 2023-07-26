@@ -4,6 +4,7 @@
   <header class="app-header">
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+        <%- include ('../partials/admi/NavFacturacion') %>
         <ul
           class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
         >
@@ -242,8 +243,8 @@
               aria-describedby="text"
               disabled
             >
-              <option  value="Vigente" <%= factura.Estado=='Vigente' ? "selected" : '' %> >Vigente</option>
-              <option  value="Vencido" <%= factura.Estado=='Vencido' ? "selected" : '' %> >Vencido</option>
+              <option  value="Activo" <%= factura.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+              <option  value="Inactivo" <%= factura.Estado=='Inactivo' ? "selected" : '' %> >Inactivo</option>
             </select>
           </div>                   
       </div>
