@@ -7,7 +7,7 @@ const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const { actualizarUc, actualizarUcP } = require("../serv/modulos/usuarios");
-const { agregarF, actualizarF } = require("../serv/modulos/factura");
+const { agregarF, actualizarF, asignarF } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
@@ -311,5 +311,7 @@ router.post("/uploadTen", actualizarT);
 router.post("/addFact", agregarF);
 //actualizar factura
 router.post("/uploadFact", actualizarF);
+//asignar docuentos a factura
+router.post("/regDocFact", asignarF);
 
 module.exports = router;

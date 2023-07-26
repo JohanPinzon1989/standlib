@@ -1,3 +1,5 @@
+const { Console } = require("console");
+
 const Table = "Historial_facturacion";
 
 module.exports = function (dbInyect) {
@@ -42,6 +44,20 @@ module.exports = function (dbInyect) {
     const result = await db.actualizar(Table, factura);
     res.redirect("/Fcli");
   }
+  async function asignarF(req, res) {
+    const { body } = req;
+    console.log(body);
+    const dataArray = Object.entries(body);
+    console.log(dataArray);
+    dataArray.forEach(([key, value]) => {
+      console.log(`Clave: ${key}, Valor: ${value}`);
+    });
+
+    // Utilizar splice para eliminar los dos últimos elementos
+    dataArray.splice(-2);
+
+    console.log(dataArray);
+  }
 
   async function delF(body) {
     const result = await db.del(Table, body.Id);
@@ -53,5 +69,6 @@ module.exports = function (dbInyect) {
     agregarF,
     delF,
     actualizarF,
+    asignarF,
   };
 };
