@@ -118,216 +118,215 @@
                             </ul>
                           </div>
                     </td>
-                    <!--Editar Tenant-->
-                    <div class="modal fade" id="Modal<%= tenant.Id %>" data-bs-backdrop="static">
-                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Editar registro</h5>
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-                            <form action="/uploadTen" method="POST">
-                              <input id="Id" name="Id" value="<%= tenant.Id %>" type="hidden" />
-                              <div class="mb-3">
-                                <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
-                                <input
-                                  value="<%= tenant.Nombre_org %>"
-                                  placeholder="STANDLIB SAS"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nombre_org"
-                                  id="Nombre_org"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Dominio" class="form-label">Dominio</label>
-                                <input
-                                  value="<%= tenant.Dominio %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Dominio"
-                                  id="Dominio"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
-                                <input
-                                  value="<%= tenant.Nom_Contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nom_Contacto"
-                                  id="Nom_Contacto"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
-                                <input
-                                  value="<%= tenant.Tel_contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Tel_contacto"
-                                  id="Tel_contacto"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email" class="form-label">Correo de contacto</label>
-                                <input
-                                  value="<%= tenant.EmailT %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email"
-                                  id="Email"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
-                                <input
-                                  value="<%= tenant.Email_facturacion %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email_facturacion"
-                                  id="Email_facturacion"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Estado" class="form-label">Estado</label>
-                                <select
-                                  class="form-control"
-                                  name="Estado"
-                                  id="Estado"
-                                  aria-describedby="text"
-                                  required
-                                >
-                                  <option  value="Activo" <%= tenant.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-                                  <option  value="Bloqueado" <%= tenant.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
-                                </select>
-                              </div>                   
-                          </div>
-                          <div class="modal-footer">
-                            <button class="btn btn-secondary" type="submit">Guardar</button>
-                          </form>
-                            <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!--Leer datos de Tenant-->
-                    <div class="modal fade" id="ModalLect<%= tenant.Id %>" data-bs-backdrop="static">
-                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-                              <input id="Id" name="Id" value="<%= tenant.Id %>" type="hidden" disabled/>
-                              <div class="mb-3">
-                                <label for="Nombre_org" class="form-label" >Nombre Organizacion</label>
-                                <input
-                                  value="<%= tenant.Nombre_org %>"
-                                  placeholder="STANDLIB SAS"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nombre_org"
-                                  id="Nombre_org" disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Dominio" class="form-label">Dominio</label>
-                                <input
-                                  value="<%= tenant.Dominio %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Dominio"
-                                  id="Dominio"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
-                                <input
-                                  value="<%= tenant.Nom_Contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nom_Contacto"
-                                  id="Nom_Contacto"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
-                                <input
-                                  value="<%= tenant.Tel_contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Tel_contacto"
-                                  id="Tel_contacto"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email" class="form-label">Correo de contacto</label>
-                                <input
-                                  value="<%= tenant.EmailT %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email"
-                                  id="Email"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
-                                <input
-                                  value="<%= tenant.Email_facturacion %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email_facturacion"
-                                  id="Email_facturacion"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Estado" class="form-label">Estado</label>
-                                <input
-                                  value="<%= tenant.Estado %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Estado"
-                                  id="Estado"
-                                  disabled
-                                />
-                              </div>                  
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </tr>
-
+<!--Editar Tenant-->
+<div class="modal fade" id="Modal<%= tenant.Id %>" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar registro</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/uploadTen" method="POST">
+          <input id="Id" name="Id" value="<%= tenant.Id %>" type="hidden" />
+          <div class="mb-3">
+            <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
+            <input
+              value="<%= tenant.Nombre_org %>"
+              placeholder="STANDLIB SAS"
+              type="text"
+              class="form-control"
+              name="Nombre_org"
+              id="Nombre_org"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Dominio" class="form-label">Dominio</label>
+            <input
+              value="<%= tenant.Dominio %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Dominio"
+              id="Dominio"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
+            <input
+              value="<%= tenant.Nom_Contacto %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Nom_Contacto"
+              id="Nom_Contacto"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
+            <input
+              value="<%= tenant.Tel_contacto %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Tel_contacto"
+              id="Tel_contacto"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Email" class="form-label">Correo de contacto</label>
+            <input
+              value="<%= tenant.EmailT %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Email"
+              id="Email"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
+            <input
+              value="<%= tenant.Email_facturacion %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Email_facturacion"
+              id="Email_facturacion"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Estado" class="form-label">Estado</label>
+            <select
+              class="form-control"
+              name="Estado"
+              id="Estado"
+              aria-describedby="text"
+              required
+            >
+              <option  value="Activo" <%= tenant.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+              <option  value="Bloqueado" <%= tenant.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+            </select>
+          </div>                   
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="submit">Guardar</button>
+      </form>
+        <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!--Leer datos de Tenant-->
+<div class="modal fade" id="ModalLect<%= tenant.Id %>" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+          <input id="Id" name="Id" value="<%= tenant.Id %>" type="hidden" disabled/>
+          <div class="mb-3">
+            <label for="Nombre_org" class="form-label" >Nombre Organizacion</label>
+            <input
+              value="<%= tenant.Nombre_org %>"
+              placeholder="STANDLIB SAS"
+              type="text"
+              class="form-control"
+              name="Nombre_org"
+              id="Nombre_org" disabled
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Dominio" class="form-label">Dominio</label>
+            <input
+              value="<%= tenant.Dominio %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Dominio"
+              id="Dominio"
+              disabled
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
+            <input
+              value="<%= tenant.Nom_Contacto %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Nom_Contacto"
+              id="Nom_Contacto"
+              disabled
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
+            <input
+              value="<%= tenant.Tel_contacto %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Tel_contacto"
+              id="Tel_contacto"
+              disabled
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Email" class="form-label">Correo de contacto</label>
+            <input
+              value="<%= tenant.EmailT %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Email"
+              id="Email"
+              disabled
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
+            <input
+              value="<%= tenant.Email_facturacion %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Email_facturacion"
+              id="Email_facturacion"
+              disabled
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Estado" class="form-label">Estado</label>
+            <input
+              value="<%= tenant.Estado %>"
+              placeholder="standlib.com"
+              type="text"
+              class="form-control"
+              name="Estado"
+              id="Estado"
+              disabled
+            />
+          </div>                  
+      </div>
+    </div>
+  </div>
+</div>
                   <% }) %>
                 </tbody>
               </table>

@@ -7,6 +7,7 @@ const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const { actualizarUc, actualizarUcP } = require("../serv/modulos/usuarios");
+const { agregarF, actualizarF } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
@@ -150,7 +151,7 @@ router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
 router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
   conexion.query(
     `select Id,Tenant_Id, NumFactura, date_format(Fecha_inicio, "%Y-%m-%d") as Fecha_inicio, date_format(Fecha_fin, "%Y-%m-%d") as Fecha_fin,
-    Estado, CostoUSD, CostoCOP from hostorial_facturacion order by Fecha_inicio asc`,
+    Estado, CostoUSD, CostoCOP from historial_facturacion order by Fecha_inicio asc`,
     (error, results) => {
       if (error) {
         throw error;
@@ -167,8 +168,6 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
                   if (error) {
                     throw error;
                   } else {
-                    console.log(results);
-                    console.log(results2);
                     res.render("ESP/admin/listPlanes", {
                       fact: results,
                       docu: results2,
@@ -180,6 +179,22 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
             }
           }
         );
+      }
+    }
+  );
+});
+
+//Eliminar factura
+router.get("/delFact/:Id", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  conexion.query(
+    "DELETE FROM Historial_facturacion WHERE Id = ?",
+    [Id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.redirect("/Fcli");
       }
     }
   );
@@ -278,5 +293,9 @@ router.post("/uploadD", uploader.single("pdfFile"), actualizarD);
 router.post("/uploadI", uploader.single("pdfFile"), actualizarI);
 //actualizar tenant
 router.post("/uploadTen", actualizarT);
+//Crear factura
+router.post("/addFact", agregarF);
+//actualizar factura
+router.post("/uploadFact", actualizarF);
 
 module.exports = router;
