@@ -169,15 +169,11 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
                   if (error) {
                     throw error;
                   } else {
-                    res.render(
-                      "ESP/admin/listPlanes",
-                      adlogin.isAuthenticated,
-                      {
-                        fact: results,
-                        docu: results2,
-                        ten: results3,
-                      }
-                    );
+                    res.render("ESP/admin/listPlanes", {
+                      fact: results,
+                      docu: results2,
+                      ten: results3,
+                    });
                   }
                 }
               );
@@ -233,7 +229,7 @@ router.get("/delFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
 });
 
 //agregar o eliminar asignacion
-router.get("/docFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
+router.use("/docFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
   const Id = req.params.Id;
   const It = req.params.It;
   const asigDocFact = {
@@ -241,17 +237,29 @@ router.get("/docFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
     IdTenant: It,
   };
   conexion.query(
-    `select * from facturacion_documentos where IdTenant = ? AND order by Nombre_org asc`,
+    `SELECT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,
+    t.Id as IdT, t.Nombre_org as NomOrg,
+    fd.Id as IdF, fd.NumFactura, fd.Fecha_inicio as FechaInicio, fd.Fecha_fin as FechaFin
+    FROM facturacion_documentos as f 
+    inner join historial_facturacion as fd on f.IdFactura = fd.Id
+    inner join tenant as t on f.IdTenant = t.Id
+    inner join documentos as d on f.IdDocumentos = d.Id
+    where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? and fd.Id= ? order by d.Nombre asc;`,
+    [It, Id],
     (error, results) => {
       if (error) {
         throw error;
       } else {
-        res.render("ESP/admin/asigDocument", adlogin.isAuthenticated, {
-          results: results,
+        res.render("ESP/admin/asigDocument", {
+          fact: results,
         });
       }
     }
   );
+});
+
+router.get("/modAsc", (req, res) => {
+  res.render("ESP/admin/asigDocument");
 });
 
 /* Ruta de clientes
@@ -283,7 +291,7 @@ router.get("/Mu", (req, res) => {
 });
 
 // index de Clientes
-router.get("/ia", adlogin.isAuthenticated, (req, res) => {
+router.get("/iu", login.isAuthenticated, (req, res) => {
   res.render("ESP/user/index", { user: req.user });
 });
 

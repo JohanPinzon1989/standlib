@@ -20005,7 +20005,7 @@ fieldset:disabled .btn {
   width: 100%;
   background: #fff;
   padding: 0 25px;
-  padding-left: 14.5%;
+  /*padding-left: 14.5%;*/
 }
 
 .app-header .container-fluid,

@@ -64,15 +64,13 @@
   </header>
   <!--  Header End -->
   <div
-  class="container-fluid"
-  style="overflow: scroll; height: calc(115vh - 80px)"
->
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4">
-            Listado de facturas
-          </h5>
+    class="container-fluid"
+    style="overflow: scroll; height: calc(115vh - 80px)"
+  >
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">Listado de facturas</h5>
 
           <table class="table table-bordered">
             <thead class="table-light">
@@ -162,247 +160,25 @@
                       </li>
                       <li>
                         <a
-                        type="button"
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        data-bs-target="#tablaModal"
-                        >Asignar por documentos</a
+                          type="button"
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#tablaModal"
+                          >Asignar por documentos</a
                         >
                       </li>
                     </ul>
                   </div>
                 </td>
-                
               </tr>
-<!--Ver datos de factura factura-->
- <div class="modal fade" id="ModalLect<%= factura.Id %>" data-bs-backdrop="static">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Factura N° <%= factura.NumFactura %></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        
-          <input id="Id" name="Id" value="<%= factura.Id %>" type="hidden" />
-          <% ten.forEach((tenant)=> { if(tenant.Id == factura.Tenant_Id) { %>
-          <div class="mb-3">
-            <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
-            <input
-              value="<%= tenant.Nombre_org %>"
-              type="text"
-              class="form-control"
-              name="Nombre_org"
-              id="Nombre_org"
-              disabled
-            />
-          </div>
-          <% }}) %>
-          <div class="mb-3">
-            <label for="Fecha_inicio" class="form-label">Fecha de inicio</label>
-            <input
-              value="<%= factura.Fecha_inicio%>"
-              type="date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              class="form-control"
-              name="Fecha_inicio"
-              id="Fecha_inicio"
-              disabled
-            />
-          </div>
-          <div class="mb-3">
-            <label for="Fecha_fin" class="form-label">Fecha de finalizacion</label>
-            <input
-              value="<%= factura.Fecha_fin %>"
-              type="date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              class="form-control"
-              name="Fecha_fin"
-              id="Fecha_fin"
-              disabled
-            />
-          </div>
-          <div class="mb-3">
-            <label for="CostoUSD class="form-label">Valor en dolares</label>
-            <input
-              value="<%= factura.CostoUSD %>"
-              type="number"
-              step="0.01"
-              class="form-control"
-              name="CostoUSD"
-              id="CostoUSD"
-              disabled
-            />
-            <span class="validity"></span>
-          </div>
-          <div class="mb-3">
-            <label for="CostoCOP" class="form-label">Valor en Pesos Colombianos</label>
-            <input
-              value="<%= factura.CostoCOP %>"
-              type="number"
-              step="0.01"
-              class="form-control"
-              name="CostoCOP"
-              id="CostoCOP"
-              disabled
-            />
-            <span class="validity"></span>
-          </div>
-          <div class="mb-3">
-            <label for="Estado" class="form-label">Estado</label>
-            <select
-              class="form-control"
-              name="Estado"
-              id="Estado"
-              disabled
-            >
-              <option  value="Activo" <%= factura.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-              <option  value="Inactivo" <%= factura.Estado=='Inactivo' ? "selected" : '' %> >Inactivo</option>
-            </select>
-          </div>                   
-      </div>
-    </div>
-  </div>
-</div>
- <!--Editar factura-->
- <div class="modal fade" id="Modal<%= factura.Id %>" data-bs-backdrop="static">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar factura N° <%= factura.NumFactura %></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/uploadFact" method="POST">
-          <input id="Id" name="Id" value="<%= factura.Id %>" type="hidden" />
-          <% ten.forEach((tenant)=> { if(tenant.Id == factura.Tenant_Id) { %>
-          <div class="mb-3">
-            <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
-            <input
-              value="<%= tenant.Nombre_org %>"
-              type="text"
-              class="form-control"
-              name="Nombre_org"
-              id="Nombre_org"
-              disabled
-            />
-          </div>
-          <% }}) %>
-          <div class="mb-3">
-            <label for="Fecha_inicio" class="form-label">Fecha de inicio</label>
-            <input
-              value="<%= factura.Fecha_inicio%>"
-              type="date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              class="form-control"
-              name="Fecha_inicio"
-              id="Fecha_inicio"
-              aria-describedby="textHelp"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="Fecha_fin" class="form-label">Fecha de finalizacion</label>
-            <input
-              value="<%= factura.Fecha_fin %>"
-              type="date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              class="form-control"
-              name="Fecha_fin"
-              id="Fecha_fin"
-              aria-describedby="textHelp"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="CostoUSD class="form-label">Valor en dolares</label>
-            <input
-              value="<%= factura.CostoUSD %>"
-              type="number"
-              step="0.01"
-              class="form-control"
-              name="CostoUSD"
-              id="CostoUSD"
-              aria-describedby="textHelp"
-              required
-            />
-            <span class="validity"></span>
-          </div>
-          <div class="mb-3">
-            <label for="CostoCOP" class="form-label">Valor en Pesos Colombianos</label>
-            <input
-              value="<%= factura.CostoCOP %>"
-              type="number"
-              step="0.01"
-              class="form-control"
-              name="CostoCOP"
-              id="CostoCOP"
-              aria-describedby="textHelp"
-              required
-            />
-            <span class="validity"></span>
-          </div>
-          <div class="mb-3">
-            <label for="Estado" class="form-label">Estado</label>
-            <select
-              class="form-control"
-              name="Estado"
-              id="Estado"
-              aria-describedby="text"
-              disabled
-            >
-              <option  value="Activo" <%= factura.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-              <option  value="Inactivo" <%= factura.Estado=='Inactivo' ? "selected" : '' %> >Inactivo</option>
-            </select>
-          </div>                   
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="submit">Guardar</button>
-      </form>
-        <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
- <!--Asignar documento-->
- <div class="modal fade" id="ModalAd<%= factura.Id %>" data-bs-backdrop="static">
-  <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Asignar documentos a factura N° <%= factura.NumFactura %></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/regDocFact" method="POST">
-          <input id="Id" name="IdFactura" value="<%= factura.Id %>" type="hidden" />
-          <input id="Id" name="IdTenant" value="<%= factura.Tenant_Id %>" type="hidden" />
-          <div class="row row-cols-1 row-cols-md-6 g-4">
-            <% docu.forEach((documentos)=> { %>
-          <div class="col">
-            <label for="<%= documentos.Id %>" class="form-label">
-            <input type="checkbox" name="<%= documentos.Id %>" id="<%= documentos.Id %>" value="<%= documentos.Nombre %>" class="form-label"><%= documentos.Nombre %>
-          </label>
-        </div>
-        <% }) %>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="submit">Guardar</button>
-      </form>
-        <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
 
               <% }) %>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
   </div>
-</div>
 
-<%- include ('../partials/admi/footer') -%>
+  <%- include ('../partials/admi/footer') -%>
+</div>

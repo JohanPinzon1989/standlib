@@ -57,7 +57,7 @@ exports.auth = async (req, res) => {
               alertIcon: "success",
               showConfirmButton: true,
               timer: 800,
-              ruta: "ia",
+              ruta: "iu",
             });
           }
         }
