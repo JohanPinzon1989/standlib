@@ -292,18 +292,37 @@ router.get("/Mu", (req, res) => {
 
 // index de Clientes
 router.get("/iu", login.isAuthenticated, (req, res) => {
-  res.render("ESP/user/index", { user: req.user });
-});
-
-//Listado de usuarios
-router.get("/us", login.isAuthenticated, (req, res) => {
-  conexion.query("SELECT * FROM usuarios", (error, results) => {
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/user/usuarios", { results: results });
+      res.render("ESP/user/index", { results: results });
     }
   });
+  
+});
+
+
+//Listado de usuarios
+router.get("/us", login.isAuthenticated, (req, res) => {
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      conexion.query("SELECT * FROM usuarios", (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/user/usuarios", {usuario: results, results: results1 });
+        }
+      });
+    }
+  });
+ 
 });
 
 router.get("/cus", login.isAuthenticated, (req, res) => {

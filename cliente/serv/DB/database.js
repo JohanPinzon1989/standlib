@@ -49,6 +49,13 @@ function find(table, id) {
     });
   });
 }
+function findTU(table, id) {
+  return new Promise((resolve, reject) => {
+    conexion.query(`SELECT * FROM ${table} WHERE IdC = ${id}`, (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
+  });
+}
 
 //Valida asignacion de documento
 function findAD(table, body) {
@@ -65,7 +72,7 @@ function findAD(table, body) {
 function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      `SELECT * FROM ${table} WHERE Email= ?`,
+      `SELECT * FROM ${table} WHERE ?`,
       email,
       (error, result) => {
         return error ? reject(error) : resolve(result);
@@ -124,6 +131,17 @@ function del(table, data) {
     );
   });
 }
+function delt(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      "DELETE FROM " + table + " WHERE Token = ?",
+      data,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 function query(table, consult) {
   return new Promise((resolve, reject) => {
@@ -148,4 +166,7 @@ module.exports = {
   actualizar,
   actualizard,
   findAD,
+  insertar,
+  delt,
+  findTU
 };

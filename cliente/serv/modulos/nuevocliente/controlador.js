@@ -33,14 +33,14 @@ module.exports = function (dbInyect) {
       Nom_Contacto: body.Nombre + " " + body.Apellido,
       Dominio: body.Dominio,
       Tel_contacto: body.Num_Fijo,
-      Email: body.Email,
+      EmailT: body.Email,
       Email_facturacion: body.Email_facturacion,
       Estado: "Activo",
       Fecha_creacion: `${hoy}`,
     };
 
-    const ften = await db.findUsOrg("tenant", tenant.Email);
-    const fus = await db.findUsOrg("usuarios", tenant.Email);
+    const ften = await db.findUsOrg("tenant", [EmailT= tenant.EmailT]);
+    const fus = await db.findUsOrg("usuarios", [Email= tenant.EmailT]);
     let Id;
     for (var count = 0; count < ften.length; count++) {
       Id = ften[count].Id;
@@ -58,7 +58,7 @@ module.exports = function (dbInyect) {
       console.log(Id);
       if (Id > 0) {
         console.log(u);
-        return await db.findUsOrg("usuarios", tenant.Email);
+        return await db.findUsOrg("usuarios", [Email= tenant.EmailT]);
       } else {
         const ten = await db.agregar("tenant", tenant);
         console.log(ten.insertId);
@@ -78,7 +78,7 @@ module.exports = function (dbInyect) {
           Tenant_Id: ten.insertId,
           Estado_provincia: body.EstPrv,
         };
-        return await db.agregar("usuarios", usuario);
+        return db.agregar("usuarios", usuario);
       }
     }
   }
