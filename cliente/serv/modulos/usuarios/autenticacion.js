@@ -58,7 +58,7 @@ exports.auth = async (req, res) => {
               IdTenant : us.Tenant_Id,
               Token : token
             }
-
+console.log(ct)
             const i = await connec.findTU("controlcon", us.Id)
             let vi;
             for (var count = 0; count < i.length; count++) {
@@ -66,7 +66,7 @@ exports.auth = async (req, res) => {
             }
             let ins
             if(vi!=null){
-              ins = await connec.actualizar("controlcon",ct)
+              ins = await connec.actualizarTU("controlcon",ct)
             }else{
               ins = await connec.insertar("controlcon",ct)
             }

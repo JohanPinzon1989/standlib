@@ -99,6 +99,17 @@ function actualizar(table, data) {
     );
   });
 }
+function actualizarTU(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      "UPDATE " + table + " SET ? WHERE IdC = ?",
+      [data, data.IdC],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 function actualizard(table, data) {
   return new Promise((resolve, reject) => {
     console.log(data);
@@ -168,5 +179,6 @@ module.exports = {
   findAD,
   insertar,
   delt,
-  findTU
+  findTU,
+  actualizarTU
 };

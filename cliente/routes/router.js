@@ -44,7 +44,7 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/index", { email: req.Email, results: results });
+      res.render("ESP/admin/index", { results: results });
     }
   });
 });
@@ -328,6 +328,37 @@ router.get("/us", login.isAuthenticated, (req, res) => {
   });
  
 });
+
+// Listar documentos Administrador y Editor
+//Lista de documentos
+router.get("/norA", adlogin.isAuthenticated, function (req, res) {
+  let c
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query(`SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,
+      t.Id as IdT, t.Nombre_org as NomOrg
+      FROM facturacion_documentos as f 
+      inner join historial_facturacion as fd on f.IdFactura = fd.Id
+      inner join tenant as t on f.IdTenant = t.Id
+      inner join documentos as d on f.IdDocumentos = d.Id
+      where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Nombre asc`, c, (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/user/ListDoc", {usuario: results, results: results1 });
+        }
+      });
+    }
+  });
+});
+
 
 router.get("/cus", login.isAuthenticated, (req, res) => {
   let ep1;
