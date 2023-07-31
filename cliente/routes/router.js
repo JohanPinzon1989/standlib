@@ -307,13 +307,17 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
 
 //Listado de usuarios
 router.get("/us", login.isAuthenticated, (req, res) => {
+  let c
   conexion.query(`select * from usuarios as u
   inner join controlcon as c
   where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      conexion.query("SELECT * FROM usuarios", (error, results1) => {
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query("SELECT * FROM usuarios where Tenant_Id = ?", c, (error, results1) => {
         if (error) {
           throw error;
         } else {

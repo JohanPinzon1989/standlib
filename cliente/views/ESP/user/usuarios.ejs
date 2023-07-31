@@ -1,6 +1,7 @@
 <%- include ('../partials/User/header') %>
-<div class="body-wrapper">
-  <%- include ('../partials/User/barLat') %>
+
+<% usuario.forEach((puser)=> { 
+  if (puser.Perfil == "Administrador") {%>
   <!--  Header Start -->
   <%- include ('../partials/User/head') %>
   <!--  Header End -->
@@ -72,6 +73,98 @@
       </div>
     </div>
   </div>
+<% }else{
+  if (puser.Perfil == "Editor") { %>
+    <!--  Header Start -->
+  <%- include ('../partials/User/headED') %>
+  <!--  Header End -->
+    <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Listado de usuarios</h5>
+            <div class="card">
+              <div class="card-body">
+                <table class="table">
+                  <thead class="table-light">
+                    <tr>
+                      <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Id</h6>
+                      </th>
+                      <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Nombre</h6>
+                      </th>
+                      <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Apellido</h6>
+                      </th>
+                      <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Correo</h6>
+                      </th>
+                      <th ">
+          <h6 class=" fw-semibold mb-0 fs-4">Estado</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% results.forEach((user)=> { %>
+                      <tr>
+                        <td ">
+            <h6 ><%= user.Id %></h6>
+          </td>
+          <td ">
+                          <h6>
+                            <%= user.Nombre %>
+                          </h6>
+                        </td>
+                        <td ">
+            <h6 ><%= user.Apellido %></h6>
+          </td>
+          <td ">
+                          <h6 class="fw-semibold mb-0">
+                            <%= user.Email %>
+                          </h6>
+                        </td>
+                        <td ">
+            <h6 class=" fw-semibold mb-0">
+                          <%= user.Estado %>
+                            </h6>
+                        </td>
+                        <td ">
+            <a type=" button" class="btn btn-secondary m-1">Editar</a>
+                          <a type="button" class="btn btn-danger m-1">Eliminar</a>
+                        </td>
+                      </tr>
 
+                      <% }) %>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }else { %>
+    <%- include ('../partials/User/headLE') %>
+<!--  Header End -->
+<div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4"></h5>
+        <div class="card">
+          <div class="card-body">
+            <h1> no tiene los permisos requeridos</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  
+<% }}}) %>
 
   <%-include('../partials/User/footer') %>
