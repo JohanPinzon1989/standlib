@@ -298,7 +298,7 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/user/index", { results: results });
+      res.render("ESP/user/index", { usuario: results });
     }
   });
   
@@ -330,7 +330,6 @@ router.get("/us", login.isAuthenticated, (req, res) => {
 });
 
 // Listar documentos Administrador y Editor
-//Lista de documentos
 router.get("/norA", adlogin.isAuthenticated, function (req, res) {
   let c
   conexion.query(`select * from usuarios as u
@@ -342,7 +341,7 @@ router.get("/norA", adlogin.isAuthenticated, function (req, res) {
       for (var count = 0; count < results.length; count++) {
         c = results[count].Tenant_Id;
       }
-      conexion.query(`SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,
+      conexion.query(`SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc,
       t.Id as IdT, t.Nombre_org as NomOrg
       FROM facturacion_documentos as f 
       inner join historial_facturacion as fd on f.IdFactura = fd.Id
@@ -353,6 +352,37 @@ router.get("/norA", adlogin.isAuthenticated, function (req, res) {
           throw error;
         } else {
           res.render("ESP/user/ListDoc", {usuario: results, results: results1 });
+        }
+      });
+    }
+  });
+});
+
+//Lista de Facturacion
+router.get("/Pc", adlogin.isAuthenticated, (req, res) => {
+  let c
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query(`select Id,Tenant_Id, NumFactura, date_format(Fecha_inicio, "%Y-%m-%d") as Fecha_inicio, date_format(Fecha_fin, "%Y-%m-%d") as Fecha_fin,
+      Estado, CostoUSD, CostoCOP from historial_facturacion where Tenant_Id = ? order by Fecha_inicio asc`, c, (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          conexion.query("SELECT * FROM tenant WHERE Id = ?", c ,(error, results2) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/user/listPlanes", {usuario: results, fact: results1, ten: results2 });
+            }
+          });
+          
         }
       });
     }

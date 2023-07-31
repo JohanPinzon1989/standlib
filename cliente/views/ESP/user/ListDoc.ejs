@@ -32,7 +32,7 @@
                     <h6 class="fw-semibold mb-0">Autor</h6>
                   </th>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Estado</h6>
+                    <h6 class="fw-semibold mb-0">Version</h6>
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Acciones</h6>
@@ -43,30 +43,21 @@
                 <% results.forEach((doc)=> { %>
                 <tr>
                   <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
+                    <h6 class="fw-semibold mb-0"><%= doc.IdD %></h6>
                   </td>
                   <td class="border-bottom-0">
                     <h6 class="fw-semibold mb-1">
-                      <%= doc.Nombre %>
+                      <%= doc.NombDoc %>
                     </h6>
                   </td>
                   <td class="border-bottom-0">
-                    <p class="mb-0 fw-normal"><%= doc.Abreviacion %></p>
+                    <p class="mb-0 fw-normal"><%= doc.dAbrev %></p>
                   </td>
                   <td class="border-bottom-0">
                     <p class="mb-0 fw-normal"><%= doc.Autor %></p>
                   </td>
                   <td class="border-bottom-0">
-                    <div class="d-flex align-items-center gap-2">
-                      <% if(doc.Estado == "Activo"){ %>
-                      <span class="badge bg-success rounded-3 fw-semibold"
-                        ><%= doc.Estado %></span
-                      >
-                  <% }else { %>
-                      <span class="badge bg-danger rounded-3 fw-semibold"
-                      ><%= doc.Estado %></span
-                  <% } %>
-                    </div>
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
                   </td>
                   <td>
                       <div class="btn-group dropend">
@@ -74,9 +65,7 @@
                         </button>
                         <ul class="dropdown-menu">
                           <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRem<%= doc.Id %>">Remplazar archivo</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalImg<%= doc.Id %>">Cargar imagen</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Asignar</a></li>
                         </ul>
                       </div>       
                   </td>
@@ -101,7 +90,7 @@
                     </div>
                   </div>
 
-                  <!-- Modal de edicion -->
+                  <!-- Modal de asignacion-->
                   <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                       <div class="modal-content">
@@ -175,52 +164,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Modal remplazar-->
-                  <div class="modal fade" id="ModalRem<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadD" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar documento</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Cargar imagen del documento-->
-                  <div class="modal fade" id="ModalImg<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadI" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar Imagen</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </tr>
                 <% }) %>
               </tbody>
@@ -231,7 +174,7 @@
     </div>
   </div>
 </div>
-</div>
+
 
     <% }else{ 
       if(user.Perfil == "Editor" ){ %>
@@ -266,7 +209,7 @@
                     <h6 class="fw-semibold mb-0">Autor</h6>
                   </th>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Estado</h6>
+                    <h6 class="fw-semibold mb-0">Version</h6>
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Acciones</h6>
@@ -277,30 +220,21 @@
                 <% results.forEach((doc)=> { %>
                 <tr>
                   <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
+                    <h6 class="fw-semibold mb-0"><%= doc.IdD %></h6>
                   </td>
                   <td class="border-bottom-0">
                     <h6 class="fw-semibold mb-1">
-                      <%= doc.Nombre %>
+                      <%= doc.NombDoc %>
                     </h6>
                   </td>
                   <td class="border-bottom-0">
-                    <p class="mb-0 fw-normal"><%= doc.Abreviacion %></p>
+                    <p class="mb-0 fw-normal"><%= doc.dAbrev %></p>
                   </td>
                   <td class="border-bottom-0">
                     <p class="mb-0 fw-normal"><%= doc.Autor %></p>
                   </td>
                   <td class="border-bottom-0">
-                    <div class="d-flex align-items-center gap-2">
-                      <% if(doc.Estado == "Activo"){ %>
-                      <span class="badge bg-success rounded-3 fw-semibold"
-                        ><%= doc.Estado %></span
-                      >
-                  <% }else { %>
-                      <span class="badge bg-danger rounded-3 fw-semibold"
-                      ><%= doc.Estado %></span
-                  <% } %>
-                    </div>
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
                   </td>
                   <td>
                       <div class="btn-group dropend">
@@ -308,9 +242,7 @@
                         </button>
                         <ul class="dropdown-menu">
                           <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRem<%= doc.Id %>">Remplazar archivo</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalImg<%= doc.Id %>">Cargar imagen</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Asignar</a></li>
                         </ul>
                       </div>       
                   </td>
@@ -335,7 +267,7 @@
                     </div>
                   </div>
 
-                  <!-- Modal de edicion -->
+                  <!-- Modal de asignacion-->
                   <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                       <div class="modal-content">
@@ -409,52 +341,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Modal remplazar-->
-                  <div class="modal fade" id="ModalRem<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadD" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar documento</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Cargar imagen del documento-->
-                  <div class="modal fade" id="ModalImg<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadI" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar Imagen</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </tr>
                 <% }) %>
               </tbody>
@@ -464,7 +350,6 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 
      <% }else { %>
