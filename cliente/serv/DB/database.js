@@ -57,11 +57,23 @@ function findTU(table, id) {
   });
 }
 
-//Valida asignacion de documento
+//Valida asignacion de documento Factura
 function findAD(table, body) {
   return new Promise((resolve, reject) => {
     conexion.query(
       `SELECT * FROM ${table} WHERE IdTenant=${body.IdTenant} AND IdDocumentos=${body.IdDocumentos} AND IdFactura=${body.IdFactura}`,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
+//Valida asignacion de documento Usuario
+function findADU(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE IdUsuario=${body.IdUsuario} AND IdDocumentos=${body.IdDocumentos}`,
       (error, result) => {
         return error ? reject(error) : resolve(result);
       }
@@ -191,5 +203,6 @@ module.exports = {
   delt,
   findTU,
   actualizarTU,
-  findUsCli
+  findUsCli,
+  findADU
 };

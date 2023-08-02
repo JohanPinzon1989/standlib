@@ -18,6 +18,7 @@ const {
   actualizarI,
 } = require("../serv/modulos/documentos");
 const { actualizarT } = require("../serv/modulos/tenant");
+const {asignarDocUC } = require("../serv/modulos/documentosUsuario")
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
@@ -410,6 +411,63 @@ router.get("/norA", adlogin.isAuthenticated, function (req, res) {
   });
 });
 
+// Asignar documentos Administrador y Editor
+router.get("/asnor", adlogin.isAuthenticated, function (req, res) {
+  let c
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query(`SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc,
+      t.Id as IdT, t.Nombre_org as NomOrg
+      FROM facturacion_documentos as f 
+      inner join historial_facturacion as fd on f.IdFactura = fd.Id
+      inner join tenant as t on f.IdTenant = t.Id
+      inner join documentos as d on f.IdDocumentos = d.Id
+      where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Nombre asc`, c, (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          conexion.query("SELECT * FROM usuarios where Tenant_Id = ?", c, (error, results2) => {
+            if (error) {
+              throw error;
+            } else {
+              conexion.query(`SELECT DISTINCT  d.Industria
+              FROM facturacion_documentos as f 
+              inner join historial_facturacion as fd on f.IdFactura = fd.Id
+              inner join tenant as t on f.IdTenant = t.Id
+              inner join documentos as d on f.IdDocumentos = d.Id
+              where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Industria asc;`, c, (error, results3) => {
+                if (error) {
+                  throw error;
+                } else {
+                  conexion.query(`SELECT DISTINCT  d.Autor
+                  FROM facturacion_documentos as f 
+                  inner join historial_facturacion as fd on f.IdFactura = fd.Id
+                  inner join tenant as t on f.IdTenant = t.Id
+                  inner join documentos as d on f.IdDocumentos = d.Id
+                  where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Autor asc;`, c, (error, results4) => {
+                    if (error) {
+                      throw error;
+                    } else {
+                      res.render("ESP/user/asignarDocumentos", {usuario: results, documentos: results1, usuarios: results2, industria: results3, autor: results4 });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
 // Listar documentos Lector
 router.get("/norL", adlogin.isAuthenticated, function (req, res) {
   let c
@@ -563,5 +621,7 @@ router.post("/addFact", agregarF);
 router.post("/uploadFact", actualizarF);
 //asignar docuentos a factura
 router.post("/regDocFact", asignarF);
+//asignar docuentos a Usuario por documento
+router.post("/regDocUS", asignarDocUC);
 
 module.exports = router;
