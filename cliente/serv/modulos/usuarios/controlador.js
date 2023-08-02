@@ -99,6 +99,44 @@ module.exports = function (dbInyect) {
   }
   }
 
+  async function actualizarCU(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email,
+      Num_Fijo: body.Num_Fijo,
+      Num_Celular: body.Num_Celular,
+      Estado: body.Estado,
+      Estado_ing: body.Estado_ing,
+      Perfil: body.Perfil,
+      Publicidad: body.Publicidad,
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/us");
+  }
+
+  async function actualizarUcP(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      password: await bcrypt.hash(body.password, 8),
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/Tcli");
+  }
+
+  async function actualizarCcP(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      password: await bcrypt.hash(body.password, 8),
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/us");
+  }
+
   async function actualizarUc(req, res) {
     const { body } = req;
     const usuario = {
@@ -138,5 +176,7 @@ module.exports = function (dbInyect) {
     getAllP,
     actualizarUc,
     actualizarUcP,
+    actualizarCcP,
+    actualizarCU
   };
 };

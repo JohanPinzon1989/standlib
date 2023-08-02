@@ -6,7 +6,7 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas")
-const { actualizarUc, actualizarUcP, agregarCLi } = require("../serv/modulos/usuarios");
+const { actualizarUc, actualizarUcP, agregarCLi, actualizarCU, actualizarCcP} = require("../serv/modulos/usuarios");
 const { agregarF, actualizarF, asignarF } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
@@ -365,6 +365,21 @@ router.get("/addus", login.isAuthenticated, (req, res) => {
   });
  
 });
+//Eliminar usuarios de la organizacion
+router.get("/dUserCLI/:Id", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  conexion.query(
+    "DELETE FROM usuarios WHERE Id = ?",
+    [Id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.redirect("/us");
+      }
+    }
+  );
+});
 
 // Listar documentos Administrador y Editor
 router.get("/norA", adlogin.isAuthenticated, function (req, res) {
@@ -456,8 +471,12 @@ router.use("/api/pais", pais);
 router.use("/api/usuarios", agregarCLi);
 //Actualizar datos de usuario cliente
 router.use("/actualizarUc", actualizarUc);
+//Actualizar datos de usuario desde un cliente
+router.use("/actualizarCU", actualizarCU);
 //Actualizar contraseña usuario cliente
 router.use("/actualizarUcP", actualizarUcP);
+//Actualizar contraseña usuario desde un cliente
+router.use("/actualizarCcP", actualizarCcP);
 // Login clientes
 router.post("/api/login", login.auth);
 // Login funcionarios
