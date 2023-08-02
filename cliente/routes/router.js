@@ -17,7 +17,7 @@ const {
   actualizarD,
   actualizarI,
 } = require("../serv/modulos/documentos");
-const { actualizarT } = require("../serv/modulos/tenant");
+const { actualizarT, actualizarTC } = require("../serv/modulos/tenant");
 const {asignarDocUC, asignarIndUC, asignarAutUC } = require("../serv/modulos/documentosUsuario")
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
@@ -557,27 +557,30 @@ router.get("/perfC", login.isAuthenticated, (req, res) => {
   });
  
 });
-
-
-router.get("/cus", login.isAuthenticated, (req, res) => {
-  let ep1;
-  let pu1;
-  conexion.query("SELECT * FROM estado_provincia", (error, results) => {
+// Formulario edicion datos tenant usuario logueado Administrador
+router.get("/edtCli", login.isAuthenticated, (req, res) => {
+  let c
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/user/crearUsuarios", { est_prv: results });
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query("SELECT * FROM tenant where Id = ?", c, (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+              res.render("ESP/user/editTenant", {usuario: results, results: results1});
+        }
+      });
     }
   });
-  conexion.query("SELECT * FROM perfil_usuario", (error, result) => {
-    if (error) {
-      throw error;
-    } else {
-      res.render("ESP/user/crearUsuarios", { per_us: result });
-    }
-  });
-  console.log(ep1);
+ 
 });
+
 
 //Router para registrar los datos
 router.use("/api/perUser", perUser);
@@ -609,6 +612,8 @@ router.get("/adlogout", adlogin.logout);
 router.post("/upload", uploader.single("pdfFile"), add);
 //actualizar datos de archivos
 router.post("/update", actualizar);
+//actualizar datos de tenant por el cliente
+router.post("/estTenCli", actualizarTC);
 //reemplazar archivos
 router.post("/uploadD", uploader.single("pdfFile"), actualizarD);
 //Cargar imagen documento
