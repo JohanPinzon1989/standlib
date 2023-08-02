@@ -80,6 +80,17 @@ function findADU(table, body) {
     );
   });
 }
+//Buscar documentos deacuerdo a la industria
+function findIdsDU(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE Industria = '${body.Industria}' `,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
@@ -204,5 +215,6 @@ module.exports = {
   findTU,
   actualizarTU,
   findUsCli,
-  findADU
+  findADU,
+  findIdsDU
 };

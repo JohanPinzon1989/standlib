@@ -18,7 +18,7 @@ const {
   actualizarI,
 } = require("../serv/modulos/documentos");
 const { actualizarT } = require("../serv/modulos/tenant");
-const {asignarDocUC } = require("../serv/modulos/documentosUsuario")
+const {asignarDocUC, asignarIndUC } = require("../serv/modulos/documentosUsuario")
 const errors = require("../serv/red/errors");
 const login = require("../serv/modulos/usuarios/autenticacion");
 const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
@@ -623,5 +623,7 @@ router.post("/uploadFact", actualizarF);
 router.post("/regDocFact", asignarF);
 //asignar docuentos a Usuario por documento
 router.post("/regDocUS", asignarDocUC);
+//asignar docuentos a Usuario por Industria
+router.post("/regIndUS", asignarIndUC);
 
 module.exports = router;

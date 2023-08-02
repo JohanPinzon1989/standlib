@@ -106,22 +106,25 @@
             </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <div class="mb-3 centre text-center" >
-                <label for="Usuarios" class="form-label">Usuarios 
-                <select
-                  class="form-control"
-                  name="Usuarios"
-                  id="Usuarios"
-                  aria-describedby="text"
-                  required
-                >
-                  <option selected>-- Seleccione un usuario --</option>
-                  <% usuarios.forEach((usr)=> { %>
-                  <option value="<%= usr.Id %>"><%= usr.Nombre%> <%= usr.Apellido %></option>
-                  <% }) %>
-                </select>
-              </label>
-              </div>
+            <form action="/regIndUS" method="POST">
+                <div class="d-flex align-items-center justify-content-center centre text-center" >
+                  <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <select
+                    class="form-control" style="width: 35%;"
+                    name="Usuarios"
+                    id="Usuarios"
+                    aria-describedby="text"
+                    required
+                  >
+                    <option selected>-- Seleccione un usuario --</option>
+                    <% usuarios.forEach((usr)=> { %>
+                    <option value="<%= usr.Id %>"><%= usr.Nombre%> <%= usr.Apellido %></option>
+                    <% }) %>
+                  </select>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-secondary">Asignar</button>
+                </div><br>
+
             <div class="accordion-body">
                 <div class="row row-cols-1 row-cols-md-6 g-4"></div>
                 <% industria.forEach((ind)=> { %>
@@ -135,6 +138,7 @@
                 <% }) %>
                 <div class="row row-cols-1 row-cols-md-6 g-4"></div>
             </div>
+            </form>
         </div>
         </div>
         <!--Acordion por Organismo-->
