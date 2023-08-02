@@ -6,7 +6,7 @@ const multer = require("multer");
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas")
-const { actualizarUc, actualizarUcP, agregarCLi, actualizarCU, actualizarCcP} = require("../serv/modulos/usuarios");
+const { actualizarUc, actualizarUcP, agregarCLi, actualizarCU, actualizarCcP, actualizarPC} = require("../serv/modulos/usuarios");
 const { agregarF, actualizarF, asignarF } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
@@ -303,7 +303,7 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
   });
   
 });
-// index de Clientes
+// Mensaje de correo ya registrado
 router.get("/mue", login.isAuthenticated, (req, res) => {
   conexion.query(`select * from usuarios as u
   inner join controlcon as c
@@ -470,6 +470,36 @@ router.get("/Pc", adlogin.isAuthenticated, (req, res) => {
   });
 });
 
+// Formulario edicion datos usuario logueado
+router.get("/perfC", login.isAuthenticated, (req, res) => {
+  let c
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query("SELECT * FROM usuarios where Tenant_Id = ?", c, (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          conexion.query("SELECT * FROM pais_estadoprovincia order by Departament asc", c, (error, results2) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/user/editCuenta", {usuario: results, results: results1, pep: results2 });
+            }
+          });
+        }
+      });
+    }
+  });
+ 
+});
+
 
 router.get("/cus", login.isAuthenticated, (req, res) => {
   let ep1;
@@ -502,6 +532,8 @@ router.use("/api/usuarios", agregarCLi);
 router.use("/actualizarUc", actualizarUc);
 //Actualizar datos de usuario desde un cliente
 router.use("/actualizarCU", actualizarCU);
+//Actualizar datos de usuario logueado
+router.use("/actualizarPC", actualizarPC);
 //Actualizar contraseña usuario cliente
 router.use("/actualizarUcP", actualizarUcP);
 //Actualizar contraseña usuario desde un cliente

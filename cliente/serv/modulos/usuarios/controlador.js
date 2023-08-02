@@ -117,6 +117,22 @@ module.exports = function (dbInyect) {
     res.redirect("/us");
   }
 
+  async function actualizarPC(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email,
+      Num_Fijo: body.Num_Fijo,
+      Num_Celular: body.Num_Celular,
+      Publicidad: body.Publicidad,
+      Estado_provincia: body.Estado_provincia
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/iu");
+  }
+
   async function actualizarUcP(req, res) {
     const { body } = req;
     const usuario = {
@@ -177,6 +193,7 @@ module.exports = function (dbInyect) {
     actualizarUc,
     actualizarUcP,
     actualizarCcP,
-    actualizarCU
+    actualizarCU,
+    actualizarPC
   };
 };
