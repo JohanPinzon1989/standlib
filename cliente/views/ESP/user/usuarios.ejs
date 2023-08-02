@@ -4,6 +4,7 @@
   if (puser.Perfil == "Administrador") {%>
   <!--  Header Start -->
   <%- include ('../partials/User/head') %>
+  <%- include ('../partials/user/NavUsuario') %>
   <!--  Header End -->
     <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
       <div class="container-fluid">
@@ -77,6 +78,7 @@
   if (puser.Perfil == "Editor") { %>
     <!--  Header Start -->
   <%- include ('../partials/User/headED') %>
+  <%- include ('../partials/user/NavUsuario') %>
   <!--  Header End -->
     <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
       <div class="container-fluid">

@@ -80,6 +80,17 @@ function findUsOrg(table, email) {
     );
   });
 }
+function findUsCli(table, email) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE Email=?`,
+      email,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 function insertar(table, data) {
   return new Promise((resolve, reject) => {
@@ -112,7 +123,6 @@ function actualizarTU(table, data) {
 }
 function actualizard(table, data) {
   return new Promise((resolve, reject) => {
-    console.log(data);
     conexion.query(
       "UPDATE " + table + " SET ? WHERE Id = ?",
       [data, data.Id],
@@ -180,5 +190,6 @@ module.exports = {
   insertar,
   delt,
   findTU,
-  actualizarTU
+  actualizarTU,
+  findUsCli
 };

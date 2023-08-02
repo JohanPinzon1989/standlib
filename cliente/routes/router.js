@@ -5,8 +5,8 @@ const multer = require("multer");
 
 const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
-const usuarios = require("../serv/modulos/usuarios/rutas");
-const { actualizarUc, actualizarUcP } = require("../serv/modulos/usuarios");
+const usuarios = require("../serv/modulos/usuarios/rutas")
+const { actualizarUc, actualizarUcP, agregarCLi } = require("../serv/modulos/usuarios");
 const { agregarF, actualizarF, asignarF } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
@@ -303,6 +303,19 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
   });
   
 });
+// index de Clientes
+router.get("/mue", login.isAuthenticated, (req, res) => {
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/user/MessageUserExist", { usuario: results });
+    }
+  });
+  
+});
 
 
 //Listado de usuarios
@@ -322,6 +335,30 @@ router.get("/us", login.isAuthenticated, (req, res) => {
           throw error;
         } else {
           res.render("ESP/user/usuarios", {usuario: results, results: results1 });
+        }
+      });
+    }
+  });
+ 
+});
+
+//Formulario registro de usuarios
+router.get("/addus", login.isAuthenticated, (req, res) => {
+  let c
+  conexion.query(`select * from usuarios as u
+  inner join controlcon as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      for (var count = 0; count < results.length; count++) {
+        c = results[count].Tenant_Id;
+      }
+      conexion.query("SELECT * FROM pais_estadoprovincia order by Departament asc", c, (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/user/regUsuario", {usuario: results, results: results1 });
         }
       });
     }
@@ -415,7 +452,8 @@ router.use("/api/perUser", perUser);
 router.use("/api/newClient", newClient);
 router.use("/api/Us", usuariosOrg);
 router.use("/api/pais", pais);
-router.use("/api/usuarios", usuarios);
+//Agregar usuarios cliente
+router.use("/api/usuarios", agregarCLi);
 //Actualizar datos de usuario cliente
 router.use("/actualizarUc", actualizarUc);
 //Actualizar contraseña usuario cliente
