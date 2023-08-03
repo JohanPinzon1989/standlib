@@ -40,12 +40,13 @@ router.get("/adlogin", (req, res) => {
 
 // index de administracion
 router.get("/ia", adlogin.isAuthenticated, (req, res) => {
-  console.log(req.Email);
-  conexion.query("SELECT * FROM documentos", (error, results) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/index", { results: results });
+      res.render("ESP/admin/index", { usuario: results });
     }
   });
 });
@@ -54,22 +55,39 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
 
 //Cargar Documentos
 router.get("/aDoc", adlogin.isAuthenticated, (req, res) => {
-  conexion.query("SELECT * FROM industria", (error, results) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/addDoc", { results: results });
+      conexion.query("SELECT * FROM industria", (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/admin/addDoc", {usuario: results, results: results1 });
+        }
+      });
     }
   });
+  
 });
 
 //Lista de documentos
 router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
-  conexion.query("SELECT * FROM documentos", (error, results) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/listDoc", { results: results });
+      conexion.query("SELECT * FROM documentos", (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/admin/listDoc", { usuario: results, results: results1 });
+        }
+      });
     }
   });
 });
@@ -89,18 +107,34 @@ router.post("/VDoc/ver", adlogin.isAuthenticated, controllerRouter.rDoc);
 
 //Listar usuarios de Organizacion
 router.get("/lUser", adlogin.isAuthenticated, (req, res) => {
-  conexion.query("SELECT * FROM usuarios_standlib", (error, results) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/ListUserOrg", { results: results });
+      conexion.query("SELECT * FROM usuarios_standlib", (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/admin/ListUserOrg", {usuario: results, results: results1 });
+        }
+      });
     }
   });
 });
 
 //Agregar Usuario de Organizacion
 router.get("/regUsOrg", adlogin.isAuthenticated, (req, res) => {
-  res.render("ESP/admin/regUserOrg", { alert: false });
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      res.render("ESP/admin/regUserOrg", { usuario: results });
+    }
+  });
 });
 
 //Eliminar usuarios de la organizacion
@@ -121,32 +155,49 @@ router.get("/dUser/:Id", adlogin.isAuthenticated, (req, res) => {
 
 //Lista tenat de Clientes
 router.get("/cli", adlogin.isAuthenticated, (req, res) => {
-  conexion.query("SELECT * FROM tenant", (error, results) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.render("ESP/admin/listTenant", { results: results });
+      conexion.query("SELECT * FROM tenant", (error, results1) => {
+        if (error) {
+          throw error;
+        } else {
+          res.render("ESP/admin/listTenant", { usuario: results, results: results1 });
+        }
+      });
     }
   });
+  
 });
 
 //Lista de Clientes
 router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
-  conexion.query(
-    `select usuarios.Id, usuarios.Nombre, usuarios.Apellido, usuarios.Email, usuarios.Num_Fijo, usuarios.Num_Celular, usuarios.Estado, usuarios.Estado_ing,
-    usuarios.password, usuarios.Perfil, usuarios.Publicidad, tenant.Nombre_Org
-    from usuarios inner join tenant
-    on tenant.Id = usuarios.Tenant_Id and tenant.Estado = "Activo"
-    order by tenant.Nombre_org asc`,
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        console.log(results);
-        res.render("ESP/admin/listUsClient", { results: results });
-      }
+
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
+      conexion.query(
+        `select usuarios.Id, usuarios.Nombre, usuarios.Apellido, usuarios.Email, usuarios.Num_Fijo, usuarios.Num_Celular, usuarios.Estado, usuarios.Estado_ing,
+        usuarios.password, usuarios.Perfil, usuarios.Publicidad, tenant.Nombre_Org
+        from usuarios inner join tenant
+        on tenant.Id = usuarios.Tenant_Id and tenant.Estado = "Activo"
+        order by tenant.Nombre_org asc`,
+        (error, results1) => {
+          if (error) {
+            throw error;
+          } else {
+            res.render("ESP/admin/listUsClient", {usuario: results, results: results1 });
+          }
+        }
+      );
     }
-  );
+  });
 });
 
 //Lista de Facturacion
@@ -433,7 +484,7 @@ router.get("/asnor", adlogin.isAuthenticated, function (req, res) {
         if (error) {
           throw error;
         } else {
-          conexion.query("SELECT * FROM usuarios where Tenant_Id = ?", c, (error, results2) => {
+          conexion.query(`SELECT * FROM usuarios where Tenant_Id = ? and Perfil = "Lector"`, c, (error, results2) => {
             if (error) {
               throw error;
             } else {

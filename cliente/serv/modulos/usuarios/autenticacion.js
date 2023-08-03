@@ -58,7 +58,7 @@ exports.auth = async (req, res) => {
               IdTenant : us.Tenant_Id,
               Token : token
             }
-console.log(ct)
+            console.log(ct)
             const i = await connec.findTU("controlcon", us.Id)
             let vi;
             for (var count = 0; count < i.length; count++) {
