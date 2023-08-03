@@ -1,184 +1,220 @@
-<%- include ('../partials/admi/header') -%>
-<div class="body-wrapper">
+<%- include ('../partials/admi/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
   <!--  Header Start -->
-  <header class="app-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-        <%- include ('../partials/admi/NavFacturacion') %>
-        <ul
-          class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
-        >
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link nav-icon-hover"
-              href="javascript:void(0)"
-              id="drop2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="assets/images/profile/tenant-1.jpg"
-                alt=""
-                width="35"
-                height="35"
-                class="rounded-circle"
-              />
-            </a>
-            <div
-              class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-              aria-labelledby="drop2"
-            >
-              <div class="message-body">
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-tenant fs-6"></i>
-                  <p class="mb-0 fs-3">My Profile</p>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-mail fs-6"></i>
-                  <p class="mb-0 fs-3">My Account</p>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-list-check fs-6"></i>
-                  <p class="mb-0 fs-3">My Task</p>
-                </a>
-                <a
-                  href="/adlogout"
-                  class="btn btn-outline-primary mx-3 mt-2 d-block"
-                  >Logout</a
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
+  <%- include ('../partials/admi/head') %>
   <!--  Header End -->
+  <%- include ('../partials/admi/NavFacturacion') %>
+  
   <div
-    class="container-fluid"
-    style="overflow: scroll; height: calc(115vh - 80px)"
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
   >
-    <div class="container-fluid">
+      <div class="container-fluid">
       <div class="card">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4">Listado de facturas</h5>
-
-          <table class="table table-bordered">
-            <thead class="table-light">
-              <tr>
-                <th>
-                  <h6 class="fw-semibold mb-0 fs-4">Id</h6>
-                </th>
-                <th>
-                  <h6 class="fw-semibold mb-0 fs-4">Factura</h6>
-                </th>
-                <th>
-                  <h6 class="fw-semibold mb-0 fs-4">Fecha de inicio</h6>
-                </th>
-                <th>
-                  <h6 class="fw-semibold mb-0 fs-4">Fecha de finalizacion</h6>
-                </th>
-                <th>
-                  <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
-                </th>
-                <th>
-                  <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <% fact.forEach((factura)=> { %>
-              <tr>
-                <td>
-                  <h6><%= factura.Id %></h6>
-                </td>
-                <td>
-                  <h6><%= factura.NumFactura %></h6>
-                </td>
-                <td>
-                  <h6><%= factura.Fecha_inicio %></h6>
-                </td>
-                <td>
-                  <h6 class="fw-semibold mb-0"><%= factura.Fecha_fin %></h6>
-                </td>
-                <td>
-                  <h6 class="fw-semibold mb-0"><%= factura.Estado %></h6>
-                </td>
-                <td>
-                  <div class="btn-group dropend" style="width: 8rem">
-                    <button
-                      class="btn btn-secondary ti ti-list-check"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      data-bs-auto-close="true"
-                      aria-expanded="false"
-                    ></button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalLect<%= factura.Id %>"
-                          >Leer</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
-                          data-bs-toggle="modal"
-                          data-bs-target="#Modal<%= factura.Id %>"
-                          >Editar</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalAd<%= factura.Id %>"
-                          >Asignar por documentos</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
-                          href="/delFact/<%= factura.Id %>"
-                          >Eliminar</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
-                          data-bs-toggle="modal"
-                          data-bs-target="#tablaModal"
-                          >Asignar por documentos</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
+      <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">Asignacion de documentos</h5>
+          <div class="card">
+          <div class="card-body">
+  <div class="accordion accordion-flush" id="accordionExample">
+      <!--Acordion por documentos-->
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Asignar pot documentos
+          </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <form action="#" method="POST">
+              <div class="d-flex align-items-center justify-content-center centre text-center" >
+                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <select
+                  class="form-control" style="width: 35%;"
+                  name="Usuarios"
+                  id="Usuarios"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un usuario --</option>
+                  <% fact.forEach((fc)=> { %>
+                  <option value="<%= fc.Id %>"><%= fc.NumFactura %></option>
+                  <% }) %>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type="submit" class="btn btn-secondary">Asignar</button>
+              </div>
+          <div class="accordion-body">
+              <table class="table table-bordered table-responsive-xxl">
+                  <thead class="text-dark fs-4">
+                  <tr>
+                      <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Id</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Nombre</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Abreviacion</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Autor</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Version</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Acciones</h6>
+                      </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% docu.forEach((doc)=> { %>
+                  <tr>
+                      <td class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0"><%= doc.IdD %></h6>
+                      </td>
+                      <td class="border-bottom-0">
+                      <h6 class="fw-semibold mb-1">
+                          <%= doc.NombDoc %>
+                      </h6>
+                      </td>
+                      <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal"><%= doc.dAbrev %></p>
+                      </td>
+                      <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal"><%= doc.Autor %></p>
+                      </td>
+                      <td class="border-bottom-0">
+                      <p class="mb-0 fw-normal"><%= doc.Version %></p>
+                      </td>
+                      <td>
+                          <input type="checkbox" name="Documento" id="Documento" value="<%= doc.IdD %>" class="form-label">     
+                      </td>
+                  </tr>
+                  <% }) %>
+                  </tbody>
+              </table>
+          </div>
+      </form>
+      </>
       </div>
-    </div>
+      <!--Acordion por industria-->
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Asignar por industria
+          </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <form action="#" method="POST">
+              <div class="d-flex align-items-center justify-content-center centre text-center" >
+                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <select
+                  class="form-control" style="width: 35%;"
+                  name="Usuarios"
+                  id="Usuarios"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un usuario --</option>
+                  <% fact.forEach((fc)=> { %>
+                  <option value="<%= fc.Id %>"><%= fc.NumFactura %></option>
+                  <% }) %>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type="submit" class="btn btn-secondary">Asignar</button>
+              </div><br>
+  
+          <div class="accordion-body">
+              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+              <% industria.forEach((ind)=> { %>
+              <div class="col">
+                  <div class="card h-25">
+                  <div class="card-body">
+                      <h5 class="card-title"><input type="checkbox" name="Industria" id="Industria" value="<%= ind.Industria %>" class="form-label">  <%= ind.Industria %></h5>
+                  </div>
+                  </div>
+              </div>
+              <% }) %>
+              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+          </div>
+          </form>
+      </div>
+      </div>
+      <!--Acordion por Organismo-->
+      <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Asignar por organismo
+          </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <form action="#" method="POST">
+              <div class="d-flex align-items-center justify-content-center centre text-center" >
+                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <select
+                  class="form-control" style="width: 35%;"
+                  name="Usuarios"
+                  id="Usuarios"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un usuario --</option>
+                  <% fact.forEach((fc)=> { %>
+                  <option value="<%= fc.Id %>"><%= fc.NumFactura %></option>
+                  <% }) %>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type="submit" class="btn btn-secondary">Asignar</button>
+              </div><br>
+  
+          <div class="accordion-body">
+              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+              <% autor.forEach((aut)=> { %>
+              <div class="col">
+                  <div class="card h-25">
+                  <div class="card-body">
+                      <h5 class="card-title"><input type="checkbox" name="Autor" id="Autor" value="<%= aut.Autor %>" class="form-label">  <%= aut.Autor %></h5>
+                  </div>
+                  </div>
+              </div>
+              <% }) %>
+              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+          </div>
+          </form>
+      </div>
+      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+      </div>
   </div>
 
+    <% }else{ 
+      if(user.Rol == "Editar" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/admi/headED') %>
+  <!--  Header End -->
+  
+      <h1><%= user.Nombre %></h1>
+      <h1><%= user.Rol %></h1>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/admi/headLE') %>
+  <!--  Header End -->
+  
+      <h1><%= user.Nombre %></h1>
+      <h1><%= user.Rol %></h1>
+
+    <% }}}) %>
+
+
+
+
   <%- include ('../partials/admi/footer') -%>
-</div>

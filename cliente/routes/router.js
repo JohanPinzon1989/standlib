@@ -202,6 +202,12 @@ router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
 
 //Lista de Facturacion
 router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results4) => {
+    if (error) {
+      throw error;
+    } else {
   conexion.query(
     `select Id,Tenant_Id, NumFactura, date_format(Fecha_inicio, "%Y-%m-%d") as Fecha_inicio, date_format(Fecha_fin, "%Y-%m-%d") as Fecha_fin,
     Estado, CostoUSD, CostoCOP from historial_facturacion order by Fecha_inicio asc`,
@@ -221,10 +227,25 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
                   if (error) {
                     throw error;
                   } else {
+                    conexion.query(
+                      `select DISTINCT Autor from Documentos order by Autor asc`,
+                      (error, results5) => {
+                        if (error) {
+                          throw error;
+                        } else {
+                    conexion.query(
+                      `select DISTINCT Industria from Documentos order by Industria asc`,
+                      (error, results6) => {
+                        if (error) {
+                          throw error;
+                        } else {
                     res.render("ESP/admin/listPlanes", {
+                      usuario:results4,
                       fact: results,
                       docu: results2,
                       ten: results3,
+                      autor: results5,
+                      industria: results6,
                     });
                   }
                 }
@@ -235,17 +256,32 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
       }
     }
   );
+}
+});
+}
+});
+}
+});
 });
 
 //Agregar Factura
 router.get("/regFact", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
   conexion.query(
     `select * from tenant where Estado = "Activo" order by Nombre_org asc`,
-    (error, results) => {
+    (error, results1) => {
       if (error) {
         throw error;
       } else {
-        res.render("ESP/admin/crearFactura", { results: results });
+        res.render("ESP/admin/crearFactura", {usuario: results, results: results1 });
+      }
+    }
+  );
       }
     }
   );
@@ -281,33 +317,58 @@ router.get("/delFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
 });
 
 //agregar o eliminar asignacion
-router.use("/docFact/:Id,:It", adlogin.isAuthenticated, (req, res) => {
-  const Id = req.params.Id;
-  const It = req.params.It;
-  const asigDocFact = {
-    IdFactura: Id,
-    IdTenant: It,
-  };
+router.use("/docFact", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(`select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`, req.cookies.jwt, (error, results) => {
+    if (error) {
+      throw error;
+    } else {
   conexion.query(
-    `SELECT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,
-    t.Id as IdT, t.Nombre_org as NomOrg,
-    fd.Id as IdF, fd.NumFactura, fd.Fecha_inicio as FechaInicio, fd.Fecha_fin as FechaFin
-    FROM facturacion_documentos as f 
-    inner join historial_facturacion as fd on f.IdFactura = fd.Id
-    inner join tenant as t on f.IdTenant = t.Id
-    inner join documentos as d on f.IdDocumentos = d.Id
-    where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? and fd.Id= ? order by d.Nombre asc;`,
-    [It, Id],
-    (error, results) => {
+    `select Id,Tenant_Id, NumFactura, date_format(Fecha_inicio, "%Y-%m-%d") as Fecha_inicio, date_format(Fecha_fin, "%Y-%m-%d") as Fecha_fin,
+    Estado, CostoUSD, CostoCOP from historial_facturacion where Estado="Activo" order by Fecha_inicio asc`,
+    (error, results1) => {
       if (error) {
         throw error;
       } else {
-        res.render("ESP/admin/asigDocument", {
-          fact: results,
-        });
+        conexion.query(
+          `select * from documentos where Estado="Activo" and Pago= "Si" order by Nombre asc`,
+          (error, results2) => {
+            if (error) {
+              throw error;
+            } else {
+                    conexion.query(
+                      `select DISTINCT Autor from Documentos order by Autor asc`,
+                      (error, results3) => {
+                        if (error) {
+                          throw error;
+                        } else {
+                    conexion.query(
+                      `select DISTINCT Industria from Documentos order by Industria asc`,
+                      (error, results4) => {
+                        if (error) {
+                          throw error;
+                        } else {
+                    res.render("ESP/admin/asigDocument", {
+                      usuario: results,
+                      fact: results1,
+                      docu: results2,
+                      autor: results3,
+                      industria: results4,
+                    });
+                  }
+                }
+              );
+            }
+          }
+        );
       }
     }
   );
+}
+});
+}
+});
 });
 
 router.get("/modAsc", (req, res) => {

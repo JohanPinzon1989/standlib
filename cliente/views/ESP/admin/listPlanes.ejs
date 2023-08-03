@@ -1,68 +1,11 @@
-<%- include ('../partials/admi/header') -%>
-<div class="body-wrapper">
+<%- include ('../partials/admi/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
   <!--  Header Start -->
-  <header class="app-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-        <%- include ('../partials/admi/NavFacturacion') %>
-        <ul
-          class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
-        >
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link nav-icon-hover"
-              href="javascript:void(0)"
-              id="drop2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="assets/images/profile/tenant-1.jpg"
-                alt=""
-                width="35"
-                height="35"
-                class="rounded-circle"
-              />
-            </a>
-            <div
-              class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-              aria-labelledby="drop2"
-            >
-              <div class="message-body">
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-tenant fs-6"></i>
-                  <p class="mb-0 fs-3">My Profile</p>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-mail fs-6"></i>
-                  <p class="mb-0 fs-3">My Account</p>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-list-check fs-6"></i>
-                  <p class="mb-0 fs-3">My Task</p>
-                </a>
-                <a
-                  href="/adlogout"
-                  class="btn btn-outline-primary mx-3 mt-2 d-block"
-                  >Logout</a
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
+  <%- include ('../partials/admi/head') %>
   <!--  Header End -->
+  <%- include ('../partials/admi/NavFacturacion') %>
   <div
   class="container-fluid"
   style="overflow: scroll; height: calc(115vh - 80px)"
@@ -147,33 +90,8 @@
                         <a
                           type="button"
                           class="dropdown-item"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalAd<%= factura.Id %>"
-                          >Asignar por documentos</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
                           href="/delFact/<%= factura.Id %>,<%= factura.Tenant_Id %>"
                           >Eliminar</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          type="button"
-                          class="dropdown-item"
-                          href="/docFact/<%= factura.Id %>,<%= factura.Tenant_Id %>"
-                          >Asignacion de documentos</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                        type="button"
-                        class="dropdown-item"
-                        onclick="mostrarModal(<%= factura.Id %>)"
-                        >EJ enviar datos</a
                         >
                       </li>
                     </ul>
@@ -372,37 +290,6 @@
     </div>
   </div>
 </div>
- <!--Asignar documento-->
- <div class="modal fade" id="ModalAd<%= factura.Id %>" data-bs-backdrop="static">
-  <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Asignar documentos a factura N° <%= factura.NumFactura %></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/regDocFact" method="POST">
-          <input id="Id" name="IdFactura" value="<%= factura.Id %>" type="hidden" />
-          <input id="Id" name="IdTenant" value="<%= factura.Tenant_Id %>" type="hidden" />
-          <div class="row row-cols-1 row-cols-md-6 g-4">
-            <% docu.forEach((documentos)=> { %>
-          <div class="col">
-            <label for="<%= documentos.Id %>" class="form-label">
-            <input type="checkbox" name="<%= documentos.Id %>" id="<%= documentos.Id %>" value="<%= documentos.Nombre %>" class="form-label"><%= documentos.Nombre %>
-          </label>
-        </div>
-        <% }) %>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="submit">Guardar</button>
-      </form>
-        <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
 
               <% }) %>
             </tbody>
@@ -411,6 +298,28 @@
       </div>
   </div>
 </div>
+
+    <% }else{ 
+      if(user.Rol == "Editar" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/admi/headED') %>
+  <!--  Header End -->
+  
+      <h1><%= user.Nombre %></h1>
+      <h1><%= user.Rol %></h1>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/admi/headLE') %>
+  <!--  Header End -->
+  
+      <h1><%= user.Nombre %></h1>
+      <h1><%= user.Rol %></h1>
+
+    <% }}}) %>
+
  <!-- Enlaces a los scripts de Bootstrap 5 y jQuery -->
  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
