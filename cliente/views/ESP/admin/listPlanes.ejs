@@ -90,6 +90,15 @@
                         <a
                           type="button"
                           class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#ModalASC<%= factura.Id %>"
+                          >Ver asignacion</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          type="button"
+                          class="dropdown-item"
                           href="/delFact/<%= factura.Id %>,<%= factura.Tenant_Id %>"
                           >Eliminar</a
                         >
@@ -99,7 +108,7 @@
                 </td>
                 
               </tr>
-<!--Ver datos de factura factura-->
+<!--Ver datos de factura-->
  <div class="modal fade" id="ModalLect<%= factura.Id %>" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
@@ -189,6 +198,36 @@
     </div>
   </div>
 </div>
+<!--Ver asignacion de documentos de factura por documento-->
+ <div class="modal fade" id="ModalASC<%= factura.Id %>" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Documentos asignados a la Factura N° <%= factura.NumFactura %></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-cols-1 row-cols-md-6 g-4 scroll-sidebar">
+          <% documents.forEach((d)=> { 
+            if(d.IdF == factura.Id) {%>
+          <div class="col">
+            <div class="card card" style="width: 13rem; height: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title"> <%= d.NombDoc %></h5>
+                <p class="card-text"><%= d.Descripcion %></p>
+              </div>
+              <a href="/delDocFact/<%= factura.Id %>,<%= d.IdD %>" class="btn btn-secondary" type="button">Eliminar</a>
+            </div>
+          </div>
+          <% }}) %>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+  </div>
+</div>
+ </div>
  <!--Editar factura-->
  <div class="modal fade" id="Modal<%= factura.Id %>" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -390,6 +429,15 @@
                         <a
                           type="button"
                           class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#ModalASC<%= factura.Id %>"
+                          >Ver asignacion</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          type="button"
+                          class="dropdown-item"
                           href="/delFact/<%= factura.Id %>,<%= factura.Tenant_Id %>"
                           >Eliminar</a
                         >
@@ -399,7 +447,7 @@
                 </td>
                 
               </tr>
-<!--Ver datos de factura factura-->
+<!--Ver datos de factura-->
  <div class="modal fade" id="ModalLect<%= factura.Id %>" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
@@ -489,6 +537,36 @@
     </div>
   </div>
 </div>
+<!--Ver asignacion de documentos de factura por documento-->
+ <div class="modal fade" id="ModalASC<%= factura.Id %>" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Documentos asignados a la Factura N° <%= factura.NumFactura %></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-cols-1 row-cols-md-6 g-4 scroll-sidebar">
+          <% documents.forEach((d)=> { 
+            if(d.IdF == factura.Id) {%>
+          <div class="col">
+            <div class="card card" style="width: 13rem; height: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title"> <%= d.NombDoc %></h5>
+                <p class="card-text"><%= d.Descripcion %></p>
+              </div>
+              <a href="/delDocFact/<%= factura.Id %>,<%= d.IdD %>" class="btn btn-secondary" type="button">Eliminar</a>
+            </div>
+          </div>
+          <% }}) %>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+  </div>
+</div>
+ </div>
  <!--Editar factura-->
  <div class="modal fade" id="Modal<%= factura.Id %>" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -657,18 +735,39 @@
                   <h6 class="fw-semibold mb-0"><%= factura.Estado %></h6>
                 </td>
                 <td>
-                  
+                  <div class="btn-group dropend" style="width: 8rem">
+                    <button
+                      class="btn btn-secondary ti ti-list-check"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      data-bs-auto-close="true"
+                      aria-expanded="false"
+                    ></button>
+                    <ul class="dropdown-menu">
+                      <li>
                         <a
                           type="button"
-                          class="btn btn-secondary"
+                          class="dropdown-item"
                           data-bs-toggle="modal"
                           data-bs-target="#ModalLect<%= factura.Id %>"
-                          >Ver</a
+                          >Leer</a
                         >
+                      </li>
+                      <li>
+                        <a
+                          type="button"
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#ModalASC<%= factura.Id %>"
+                          >Ver asignacion</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
                 </td>
                 
               </tr>
-<!--Ver datos de factura factura-->
+<!--Ver datos de factura-->
  <div class="modal fade" id="ModalLect<%= factura.Id %>" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
@@ -758,7 +857,35 @@
     </div>
   </div>
 </div>
-
+<!--Ver asignacion de documentos de factura por documento-->
+ <div class="modal fade" id="ModalASC<%= factura.Id %>" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Documentos asignados a la Factura N° <%= factura.NumFactura %></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row row-cols-1 row-cols-md-6 g-4 scroll-sidebar">
+          <% documents.forEach((d)=> { 
+            if(d.IdF == factura.Id) {%>
+          <div class="col">
+            <div class="card card" style="width: 13rem; height: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title"> <%= d.NombDoc %></h5>
+                <p class="card-text"><%= d.Descripcion %></p>
+              </div>
+            </div>
+          </div>
+          <% }}) %>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+  </div>
+</div>
+ </div>
 
               <% }) %>
             </tbody>
