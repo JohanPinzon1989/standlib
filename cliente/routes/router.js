@@ -4,7 +4,7 @@ const fs = require("fs");
 const multer = require("multer");
 
 const conexion = require("../serv/DB/dbreg");
-const pais = require("../serv/modulos/pais/rutas");
+const { agregarP, updateP} = require("../serv/modulos/pais");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const {
   actualizarUc,
@@ -42,6 +42,7 @@ const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
 //const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
+const { agregarI, updateI } = require("../serv/modulos/industria");
 const controllerRouter = require("../controller/controller.admin");
 const { mysql } = require("../config");
 const uploader = multer({ storage });
@@ -309,7 +310,6 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
                                           if (error) {
                                             throw error;
                                           } else {
-                                            
                                             res.render("ESP/admin/listPlanes", {
                                               usuario: results4,
                                               fact: results,
@@ -473,6 +473,133 @@ router.use("/docFact", adlogin.isAuthenticated, (req, res) => {
             }
           }
         );
+      }
+    }
+  );
+});
+
+// Listar Industria
+router.get("/listInd", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        conexion.query(
+          `select * from industria order by Industria asc`,
+          req.cookies.jwt,
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/admin/listIndus", {
+                usuario: results,
+                results: results1,
+              });
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+// Agregar Industria
+router.get("/adInds", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("ESP/admin/addIndustria", {
+          usuario: results
+        });
+      }
+    }
+  );
+});
+
+//Eliminar Industria
+router.get("/dIndust/:Id", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  conexion.query(
+    "DELETE FROM industria WHERE Id = ?",
+    [Id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.redirect("/listInd");
+      }
+    }
+  );
+});
+
+// Listar Pais y region
+router.get("/listPaReg", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        conexion.query(
+          `select * from pais_estadoprovincia order by departament asc`,
+          req.cookies.jwt,
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/admin/listPaisReg", { usuario: results, results:results1 });
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+// Agregar Pais region
+router.get("/adPais", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("ESP/admin/addPais", {
+          usuario: results
+        });
+      }
+    }
+  );
+});
+
+//Eliminar Pais region
+router.get("/dPais/:Id", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  conexion.query(
+    "DELETE FROM pais_estadoprovincia WHERE Id = ?",
+    [Id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.redirect("/listPaReg");
       }
     }
   );
@@ -920,7 +1047,6 @@ router.get("/edtCli", login.isAuthenticated, (req, res) => {
 router.use("/api/perUser", perUser);
 router.use("/api/newClient", newClient);
 router.use("/api/Us", usuariosOrg);
-router.use("/api/pais", pais);
 //Agregar usuarios cliente
 router.use("/api/usuarios", agregarCLi);
 //Actualizar datos de usuario cliente
@@ -970,5 +1096,13 @@ router.post("/regDocUS", asignarDocUC);
 router.post("/regIndUS", asignarIndUC);
 //asignar documentos a Usuario por organismo
 router.post("/regAutUS", asignarAutUC);
+//Agregar Industria
+router.use("/addInd", agregarI);
+//Actualizar Industria
+router.use("/upInd", updateI);
+//Agregar Pais provincia
+router.use("/addPa", agregarP);
+//Actualizar pais provincia
+router.use("/upPa", updateP);
 
 module.exports = router;

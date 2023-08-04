@@ -1,340 +1,617 @@
-<%- include ('../partials/admi/header') -%>
-<div class="body-wrapper">
-  <!--  Header Start -->
-  <header class="app-header">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-        <ul
-          class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
-        >
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link nav-icon-hover"
-              href="javascript:void(0)"
-              id="drop2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="assets/images/profile/tenant-1.jpg"
-                alt=""
-                width="35"
-                height="35"
-                class="rounded-circle"
-              />
-            </a>
-            <div
-              class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-              aria-labelledby="drop2"
-            >
-              <div class="message-body">
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-tenant fs-6"></i>
-                  <p class="mb-0 fs-3">My Profile</p>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-mail fs-6"></i>
-                  <p class="mb-0 fs-3">My Account</p>
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  class="d-flex align-items-center gap-2 dropdown-item"
-                >
-                  <i class="ti ti-list-check fs-6"></i>
-                  <p class="mb-0 fs-3">My Task</p>
-                </a>
-                <a
-                  href="/adlogout"
-                  class="btn btn-outline-primary mx-3 mt-2 d-block"
-                  >Logout</a
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!--  Header End -->
-  <div
-    class="container-fluid"
-    style="overflow: scroll; height: calc(115vh - 80px)"
-  >
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4">
-            Listado de tenant clientes
-          </h5>
-          
-              <table class="table table-bordered">
-                <thead class="table-light">
-                  <tr>
-                    <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Id</h6>
-                    </th>
-                    <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Nombre Organizacion</h6>
-                    </th>
-                    <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Dominio</h6>
-                    </th>
-                    <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
-                    </th>
-                    <th>
-                      <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% results.forEach((tenant)=> { %>
-                  <tr>
-                    <td>
-                      <h6><%= tenant.Id %></h6>
-                    </td>
-                    <td>
-                      <h6><%= tenant.Nombre_org %></h6>
-                    </td>
-                    <td>
-                      <h6><%= tenant.Dominio %></h6>
-                    </td>
-                    <td>
-                      <h6 class="fw-semibold mb-0"><%= tenant.Estado %></h6>
-                    </td>
-                    <td >
-                        <div class="btn-group dropend">
-                            <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu">
-                              <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= tenant.Id %>">Leer</a></li>
-                              <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= tenant.Id %>">Editar</a></li>
-                            </ul>
-                          </div>
-                    </td>
-                    <!--Editar Tenant-->
-                    <div class="modal fade" id="Modal<%= tenant.Id %>" data-bs-backdrop="static">
-                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Editar registro</h5>
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-                            <form action="/uploadTen" method="POST">
-                              <input id="Id" name="Id" value="<%= tenant.Id %>" type="hidden" />
-                              <div class="mb-3">
-                                <label for="Nombre_org" class="form-label">Nombre Organizacion</label>
-                                <input
-                                  value="<%= tenant.Nombre_org %>"
-                                  placeholder="STANDLIB SAS"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nombre_org"
-                                  id="Nombre_org"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Dominio" class="form-label">Dominio</label>
-                                <input
-                                  value="<%= tenant.Dominio %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Dominio"
-                                  id="Dominio"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
-                                <input
-                                  value="<%= tenant.Nom_Contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nom_Contacto"
-                                  id="Nom_Contacto"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
-                                <input
-                                  value="<%= tenant.Tel_contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Tel_contacto"
-                                  id="Tel_contacto"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email" class="form-label">Correo de contacto</label>
-                                <input
-                                  value="<%= tenant.EmailT %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email"
-                                  id="Email"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
-                                <input
-                                  value="<%= tenant.Email_facturacion %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email_facturacion"
-                                  id="Email_facturacion"
-                                  aria-describedby="textHelp"
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Estado" class="form-label">Estado</label>
-                                <select
-                                  class="form-control"
-                                  name="Estado"
-                                  id="Estado"
-                                  aria-describedby="text"
-                                  required
-                                >
-                                  <option  value="Activo" <%= tenant.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-                                  <option  value="Bloqueado" <%= tenant.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
-                                </select>
-                              </div>                   
-                          </div>
-                          <div class="modal-footer">
-                            <button class="btn btn-secondary" type="submit">Guardar</button>
-                          </form>
-                            <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!--Leer datos de Tenant-->
-                    <div class="modal fade" id="ModalLect<%= tenant.Id %>" data-bs-backdrop="static">
-                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-                              <input id="Id" name="Id" value="<%= tenant.Id %>" type="hidden" disabled/>
-                              <div class="mb-3">
-                                <label for="Nombre_org" class="form-label" >Nombre Organizacion</label>
-                                <input
-                                  value="<%= tenant.Nombre_org %>"
-                                  placeholder="STANDLIB SAS"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nombre_org"
-                                  id="Nombre_org" disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Dominio" class="form-label">Dominio</label>
-                                <input
-                                  value="<%= tenant.Dominio %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Dominio"
-                                  id="Dominio"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Nom_Contacto" class="form-label">Nombre de contacto</label>
-                                <input
-                                  value="<%= tenant.Nom_Contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nom_Contacto"
-                                  id="Nom_Contacto"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Tel_contacto" class="form-label">Telefono de contacto</label>
-                                <input
-                                  value="<%= tenant.Tel_contacto %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Tel_contacto"
-                                  id="Tel_contacto"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email" class="form-label">Correo de contacto</label>
-                                <input
-                                  value="<%= tenant.EmailT %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email"
-                                  id="Email"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email_facturacion" class="form-label">Correo de facturacion</label>
-                                <input
-                                  value="<%= tenant.Email_facturacion %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Email_facturacion"
-                                  id="Email_facturacion"
-                                  disabled
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Estado" class="form-label">Estado</label>
-                                <input
-                                  value="<%= tenant.Estado %>"
-                                  placeholder="standlib.com"
-                                  type="text"
-                                  class="form-control"
-                                  name="Estado"
-                                  id="Estado"
-                                  disabled
-                                />
-                              </div>                  
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </tr>
+<%- include ('../partials/admi/header') %>
 
-                  <% }) %>
-                </tbody>
-              </table>
-        </div>
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/admi/head') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavIndustria') %>
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">
+          Listado de industrias
+        </h5>
+        
+            <table class="table table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Id</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Industria</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Abreviacion</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Descripcion</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((indus)=> { %>
+                <tr>
+                  <td>
+                    <h6><%= indus.Id %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Industria %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Abreviacion %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Descripcion %></h6>
+                  </td>
+                  <td >
+                      <div class="btn-group dropend">
+                          <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= indus.Id %>">Leer</a></li>
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= indus.Id %>">Editar</a></li>
+                            <li><a type="button" class="dropdown-item" href="/dIndust/<%= indus.Id %>">Eliminar</a></li>
+                          </ul>
+                        </div>
+                  </td>
+                  <!--Editar industria-->
+                  <div class="modal fade" id="Modal<%= indus.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Editar industria</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/upInd" method="POST">
+                            <input id="Id" name="Id" value="<%= indus.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="Industria" class="form-label">Industria</label>
+                              <input
+                                value="<%= indus.Industria %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria"
+                                id="Industria"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Industria_ing" class="form-label">Industria en ingles</label>
+                              <input
+                                value="<%= indus.Industria_ing %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria_ing"
+                                id="Industria_ing"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion" class="form-label">Abreviacion</label>
+                              <input
+                                value="<%= indus.Abreviacion %>"
+                                placeholder="IND"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion"
+                                id="Abreviacion"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion_ing" class="form-label">Abreviacion en ingles</label>
+                              <input
+                                value="<%= indus.Abreviacion_ing%>"
+                                placeholder="standlib.com"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion_ing"
+                                id="Abreviacion_ing"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Descripcion" class="form-label">Descripcion</label>
+                              <textarea class="form-control" name="Descripcion" id="Descripcion"><%= indus.Descripcion %></textarea>
+                            </div>                   
+                            <div class="mb-3">
+                              <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                              <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing"><%= indus.Descripcion_ing %></textarea>
+                            </div>                   
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="submit">Guardar</button>
+                        </form>
+                          <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Leer datos de indus-->
+                  <div class="modal fade" id="ModalLect<%= indus.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Ver industria</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/upInd" method="POST">
+                            <input id="Id" name="Id" value="<%= indus.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="Industria" class="form-label">Industria</label>
+                              <input
+                                value="<%= indus.Industria %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria"
+                                id="Industria"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Industria_ing" class="form-label">Industria en ingles</label>
+                              <input
+                                value="<%= indus.Industria_ing %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria_ing"
+                                id="Industria_ing"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion" class="form-label">Abreviacion</label>
+                              <input
+                                value="<%= indus.Abreviacion %>"
+                                placeholder="IND"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion"
+                                id="Abreviacion"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion_ing" class="form-label">Abreviacion en ingles</label>
+                              <input
+                                value="<%= indus.Abreviacion_ing%>"
+                                placeholder="standlib.com"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion_ing"
+                                id="Abreviacion_ing"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Descripcion" class="form-label">Descripcion</label>
+                              <textarea class="form-control" name="Descripcion" id="Descripcion" disabled><%= indus.Descripcion %></textarea>
+                            </div>                   
+                            <div class="mb-3">
+                              <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                              <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing" disabled><%= indus.Descripcion_ing %></textarea>
+                            </div>                   
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+
+                <% }) %>
+              </tbody>
+            </table>
       </div>
     </div>
   </div>
 </div>
+
+    <% }else{ 
+      if(user.Rol == "Editar" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/admi/headED') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavIndustria') %>
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">
+          Listado de industrias
+        </h5>
+        
+            <table class="table table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Id</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Industria</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Abreviacion</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Descripcion</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((indus)=> { %>
+                <tr>
+                  <td>
+                    <h6><%= indus.Id %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Industria %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Abreviacion %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Descripcion %></h6>
+                  </td>
+                  <td >
+                      <div class="btn-group dropend">
+                          <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= indus.Id %>">Leer</a></li>
+                            <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= indus.Id %>">Editar</a></li>
+                          </ul>
+                        </div>
+                  </td>
+                  <!--Editar industria-->
+                  <div class="modal fade" id="Modal<%= indus.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Editar industria</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/upInd" method="POST">
+                            <input id="Id" name="Id" value="<%= indus.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="Industria" class="form-label">Industria</label>
+                              <input
+                                value="<%= indus.Industria %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria"
+                                id="Industria"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Industria_ing" class="form-label">Industria en ingles</label>
+                              <input
+                                value="<%= indus.Industria_ing %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria_ing"
+                                id="Industria_ing"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion" class="form-label">Abreviacion</label>
+                              <input
+                                value="<%= indus.Abreviacion %>"
+                                placeholder="IND"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion"
+                                id="Abreviacion"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion_ing" class="form-label">Abreviacion en ingles</label>
+                              <input
+                                value="<%= indus.Abreviacion_ing%>"
+                                placeholder="standlib.com"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion_ing"
+                                id="Abreviacion_ing"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Descripcion" class="form-label">Descripcion</label>
+                              <textarea class="form-control" name="Descripcion" id="Descripcion"><%= indus.Descripcion %></textarea>
+                            </div>                   
+                            <div class="mb-3">
+                              <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                              <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing"><%= indus.Descripcion_ing %></textarea>
+                            </div>                   
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="submit">Guardar</button>
+                        </form>
+                          <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Leer datos de indus-->
+                  <div class="modal fade" id="ModalLect<%= indus.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Ver industria</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/upInd" method="POST">
+                            <input id="Id" name="Id" value="<%= indus.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="Industria" class="form-label">Industria</label>
+                              <input
+                                value="<%= indus.Industria %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria"
+                                id="Industria"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Industria_ing" class="form-label">Industria en ingles</label>
+                              <input
+                                value="<%= indus.Industria_ing %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria_ing"
+                                id="Industria_ing"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion" class="form-label">Abreviacion</label>
+                              <input
+                                value="<%= indus.Abreviacion %>"
+                                placeholder="IND"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion"
+                                id="Abreviacion"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion_ing" class="form-label">Abreviacion en ingles</label>
+                              <input
+                                value="<%= indus.Abreviacion_ing%>"
+                                placeholder="standlib.com"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion_ing"
+                                id="Abreviacion_ing"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Descripcion" class="form-label">Descripcion</label>
+                              <textarea class="form-control" name="Descripcion" id="Descripcion" disabled><%= indus.Descripcion %></textarea>
+                            </div>                   
+                            <div class="mb-3">
+                              <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                              <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing" disabled><%= indus.Descripcion_ing %></textarea>
+                            </div>                   
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+
+                <% }) %>
+              </tbody>
+            </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/admi/headLE') %>
+  <!--  Header End -->
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">
+          Listado de industrias
+        </h5>
+        
+            <table class="table table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Id</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Industria</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Abreviacion</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Descripcion</h6>
+                  </th>
+                  <th>
+                    <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((indus)=> { %>
+                <tr>
+                  <td>
+                    <h6><%= indus.Id %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Industria %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Abreviacion %></h6>
+                  </td>
+                  <td>
+                    <h6><%= indus.Descripcion %></h6>
+                  </td>
+                  <td >
+                      <a type="button btn btn-secondary" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= indus.Id %>">Leer</a>
+                  </td>
+                  <!--Leer datos de indus-->
+                  <div class="modal fade" id="ModalLect<%= indus.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Ver industria</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/upInd" method="POST">
+                            <input id="Id" name="Id" value="<%= indus.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="Industria" class="form-label">Industria</label>
+                              <input
+                                value="<%= indus.Industria %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria"
+                                id="Industria"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Industria_ing" class="form-label">Industria en ingles</label>
+                              <input
+                                value="<%= indus.Industria_ing %>"
+                                placeholder="ICONTEC"
+                                type="text"
+                                class="form-control"
+                                name="Industria_ing"
+                                id="Industria_ing"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion" class="form-label">Abreviacion</label>
+                              <input
+                                value="<%= indus.Abreviacion %>"
+                                placeholder="IND"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion"
+                                id="Abreviacion"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Abreviacion_ing" class="form-label">Abreviacion en ingles</label>
+                              <input
+                                value="<%= indus.Abreviacion_ing%>"
+                                placeholder="standlib.com"
+                                type="text"
+                                class="form-control"
+                                name="Abreviacion_ing"
+                                id="Abreviacion_ing"
+                                aria-describedby="textHelp"
+                                disabled
+                                required
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Descripcion" class="form-label">Descripcion</label>
+                              <textarea class="form-control" name="Descripcion" id="Descripcion" disabled><%= indus.Descripcion %></textarea>
+                            </div>                   
+                            <div class="mb-3">
+                              <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
+                              <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing" disabled><%= indus.Descripcion_ing %></textarea>
+                            </div>                   
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+
+                <% }) %>
+              </tbody>
+            </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <% }}}) %>
+
+
 
 <%- include ('../partials/admi/footer') -%>

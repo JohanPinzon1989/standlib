@@ -14,9 +14,34 @@ module.exports = function (dbInyect) {
   function find(id) {
     return db.find(Table, id);
   }
-
-  function agregar(body) {
-    return db.agregar(Table, body);
+//Actualizar industria
+  async function updateI(req, res){
+    const { body } = req;
+    const industria={
+      Id: body.Id,
+      Industria:  body.Industria,
+      Industria_ing: body.Industria_ing,
+      Abreviacion: body.Abreviacion,
+      Abreviacion_ing: body.Abreviacion_ing,
+      Descripcion: body.Descripcion,
+      Descripcion_ing: body.Descripcion_ing,
+    }
+    const ind = await db.agregar(Table, industria);
+    res.redirect("/listInd");
+  }
+//Agregar industria
+  async function agregarI(req, res){
+    const { body } = req;
+    const industria={
+      Industria:  body.Industria,
+      Industria_ing: body.Industria_ing,
+      Abreviacion: body.Abreviacion,
+      Abreviacion_ing: body.Abreviacion_ing,
+      Descripcion: body.Descripcion,
+      Descripcion_ing: body.Descripcion_ing,
+    }
+    const ind = await db.insertar(Table, industria);
+    res.redirect("/listInd");
   }
 
   function del(body) {
@@ -25,7 +50,8 @@ module.exports = function (dbInyect) {
   return {
     getAll,
     find,
-    agregar,
+    agregarI,
+    updateI,
     del,
   };
 };
