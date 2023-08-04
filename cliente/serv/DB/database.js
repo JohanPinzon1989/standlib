@@ -80,7 +80,7 @@ function findADU(table, body) {
     );
   });
 }
-//Buscar documentos deacuerdo a la industria
+//Buscar documentos de acuerdo a la industria
 function findIdsDU(table, body) {
   return new Promise((resolve, reject) => {
     conexion.query(
@@ -91,7 +91,7 @@ function findIdsDU(table, body) {
     );
   });
 }
-//Buscar documentos deacuerdo al autor
+//Buscar documentos de acuerdo al autor
 function findAutDU(table, body) {
   return new Promise((resolve, reject) => {
     conexion.query(
@@ -114,6 +114,7 @@ function findUsOrg(table, email) {
     );
   });
 }
+
 function findUsCli(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(

@@ -416,6 +416,7 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
   });
   
 });
+
 // Mensaje de correo ya registrado
 router.get("/mue", login.isAuthenticated, (req, res) => {
   conexion.query(`select * from usuarios as u
@@ -429,7 +430,6 @@ router.get("/mue", login.isAuthenticated, (req, res) => {
   });
   
 });
-
 
 //Listado de usuarios
 router.get("/us", login.isAuthenticated, (req, res) => {
@@ -478,6 +478,7 @@ router.get("/addus", login.isAuthenticated, (req, res) => {
   });
  
 });
+
 //Eliminar usuarios de la organizacion
 router.get("/dUserCLI/:Id", adlogin.isAuthenticated, (req, res) => {
   const Id = req.params.Id;
@@ -669,6 +670,7 @@ router.get("/perfC", login.isAuthenticated, (req, res) => {
   });
  
 });
+
 // Formulario edicion datos tenant usuario logueado Administrador
 router.get("/edtCli", login.isAuthenticated, (req, res) => {
   let c
@@ -736,13 +738,13 @@ router.post("/uploadTen", actualizarT);
 router.post("/addFact", agregarF);
 //actualizar factura
 router.post("/uploadFact", actualizarF);
-//asignar docuentos a factura
+//asignar documentos a factura por documento
 router.post("/regDocFact", asignarF);
-//asignar docuentos a Usuario por documento
+//asignar documentos a Usuario por documento
 router.post("/regDocUS", asignarDocUC);
-//asignar docuentos a Usuario por Industria
+//asignar documentos a Usuario por Industria
 router.post("/regIndUS", asignarIndUC);
-//asignar docuentos a Usuario por Industria
+//asignar documentos a Usuario por Industria
 router.post("/regAutUS", asignarAutUC);
 
 module.exports = router;

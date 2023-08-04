@@ -45,49 +45,38 @@ module.exports = function (dbInyect) {
     res.redirect("/Fcli");
   }
 
+  // Asinar documento a factura
   async function asignarF(req, res) {
     const { body } = req;
     console.log(body);
+    let fact = body.Factura
+    let ten
+    const tena = await db.find("historial_facturacion", fact);
+    for (var count = 0; count < tena.length; count++) {
+      ten = await tena[count].Tenant_Id;
+    }
+    console.log(ten)
+    for (var count = 0; count < body.Documento.length; count++) {
+      const asignacion = {
+        IdTenant: ten,
+        IdDocumentos: body.Documento[count],
+        IdFactura: fact,
+      }
+      console.log(asignacion)
 
-    //Capturar los dos ultimos registros
-    const dataArray = Object.entries(body);
-    const lastTwoElements = dataArray.slice(-2);
-    const updatedDataObj = Object.fromEntries(lastTwoElements);
-
-    // Capturar los datos de los documentos
-    const dataArray1 = Object.entries(body);
-    dataArray1.splice(-2);
-    const updatedDataObj1 = Object.fromEntries(dataArray1);
-
-    //Ordenar los datos de documentos
-    const dataObj = updatedDataObj1;
-
-    for (const key in dataObj) {
-      if (dataObj.hasOwnProperty(key)) {
-        const value = await dataObj[key];
-
-        //Capturar los datos a registrar
-        const asignacion = await {
-          Id: null,
-          IdTenant: updatedDataObj.IdTenant,
-          IdDocumentos: key,
-          IdFactura: updatedDataObj.IdFactura,
-        };
-        console.log(asignacion);
-
-        //Valida si el doscumento ya fue asignado
-        const asig = await db.findAD("facturacion_documentos", asignacion);
-        let docFact;
-        for (var count = 0; count < asig.length; count++) {
-          docFact = await asig[count].Id;
-        }
-        console.log(docFact);
-        if (docFact > 0) {
-          console.log("ya fue asignado");
-        } else {
-          //Enviar datos a Base de Datos
-          const result = await db.agregar("facturacion_documentos", asignacion);
-        }
+      //Valida si el doscumento ya fue asignado
+      const asig = await db.findAD("facturacion_documentos", asignacion);
+      let docFact;
+      for (var count1 = 0; count1 < asig.length; count1++) {
+        docFact = await asig[count1].Id;
+      }
+      console.log(docFact);
+      if (docFact > 0) {
+        console.log("ya fue asignado");
+      } else {
+        //Enviar datos a Base de Datos
+        console.log("Registrado");
+        const result = await db.agregar("facturacion_documentos", asignacion);
       }
     }
     res.redirect("/Fcli");

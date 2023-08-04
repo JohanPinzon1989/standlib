@@ -26,13 +26,13 @@
           </button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <form action="#" method="POST">
+          <form action="/regDocFact" method="POST">
               <div class="d-flex align-items-center justify-content-center centre text-center" >
-                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <label for="Factura" class="form-label">Factura &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <select
                   class="form-control" style="width: 35%;"
-                  name="Usuarios"
-                  id="Usuarios"
+                  name="Factura"
+                  id="Factura"
                   aria-describedby="text"
                   required
                 >
@@ -72,15 +72,15 @@
                   <% docu.forEach((doc)=> { %>
                   <tr>
                       <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0"><%= doc.IdD %></h6>
+                      <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
                       </td>
                       <td class="border-bottom-0">
                       <h6 class="fw-semibold mb-1">
-                          <%= doc.NombDoc %>
+                          <%= doc.Nombre %>
                       </h6>
                       </td>
                       <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"><%= doc.dAbrev %></p>
+                      <p class="mb-0 fw-normal"><%= doc.Abreviacion %></p>
                       </td>
                       <td class="border-bottom-0">
                       <p class="mb-0 fw-normal"><%= doc.Autor %></p>
@@ -89,7 +89,7 @@
                       <p class="mb-0 fw-normal"><%= doc.Version %></p>
                       </td>
                       <td>
-                          <input type="checkbox" name="Documento" id="Documento" value="<%= doc.IdD %>" class="form-label">     
+                          <input type="checkbox" name="Documento" id="Documento" value="<%= doc.Id %>" class="form-label">     
                       </td>
                   </tr>
                   <% }) %>
