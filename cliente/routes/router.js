@@ -22,6 +22,7 @@ const {
   asignarFO,
 } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
+const {actualizarUorg} = require("../serv/modulos/usuariosOrg");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const {
@@ -67,7 +68,17 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
-        res.render("ESP/admin/index", { usuario: results });
+        conexion.query(
+          `select * from documentos where Estado = "Activo" and Pago = "NO" order by Nombre asc`,
+          req.cookies.jwt,
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/admin/index", { usuario: results, results: results1 });
+            }
+          }
+        );
       }
     }
   );
@@ -127,17 +138,6 @@ router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
   );
 });
 
-// Ver documento
-/*router.post("/VDoc/ver", adlogin.isAuthenticated,(req, res) => {
-  const Id = req.params.Id;
-  conexion.query("SELECT * FROM documentos WHERE Id = ?",[Id], (error, results) => {
-    if (error) {
-      throw error;
-    } else {
-      res.render("ESP/admin/verDoc", { results: results });
-    }
-  });
-});*/
 router.post("/VDoc/ver", adlogin.isAuthenticated, controllerRouter.rDoc);
 
 //Listar usuarios de Organizacion
@@ -605,6 +605,23 @@ router.get("/dPais/:Id", adlogin.isAuthenticated, (req, res) => {
   );
 });
 
+// Editar datos de usuario logueado
+router.get("/EditUsAdOrg", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("ESP/admin/editPerfil", { usuario: results });
+      }
+    }
+  );
+});
+
 router.get("/modAsc", (req, res) => {
   res.render("ESP/admin/asigDocument");
 });
@@ -648,7 +665,17 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
-        res.render("ESP/user/index", { usuario: results });
+        conexion.query(
+          `select * from documentos where Estado = "Activo" and Pago = "NO" order by Nombre asc`,
+          req.cookies.jwt,
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/user/index", { usuario: results, results: results1 });
+            }
+          }
+        );
       }
     }
   );
@@ -771,7 +798,7 @@ router.get("/norA", adlogin.isAuthenticated, function (req, res) {
           c = results[count].Tenant_Id;
         }
         conexion.query(
-          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc,
+          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc, d.Descripcion,
       t.Id as IdT, t.Nombre_org as NomOrg
       FROM facturacion_documentos as f 
       inner join historial_facturacion as fd on f.IdFactura = fd.Id
@@ -1104,5 +1131,7 @@ router.use("/upInd", updateI);
 router.use("/addPa", agregarP);
 //Actualizar pais provincia
 router.use("/upPa", updateP);
+//Actualizar datos de usuario Standlib logueado
+router.use("/actualizarUsOrgLog", actualizarUorg);
 
 module.exports = router;

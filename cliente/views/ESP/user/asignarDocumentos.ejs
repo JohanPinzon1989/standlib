@@ -125,19 +125,21 @@
                 <button type="submit" class="btn btn-secondary">Asignar</button>
                 </div><br>
 
-            <div class="accordion-body">
-                <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+                <div class="accordion-body">
+                  <div class="card-body">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
                 <% industria.forEach((ind)=> { %>
-                <div class="col">
-                    <div class="card h-25">
-                    <div class="card-body">
+                  <div class="col">
+                    <div class="card card" style="width: 16rem; height: 6rem;">
+                      <div class="card-body">
                         <h5 class="card-title"><input type="checkbox" name="Industria" id="Industria" value="<%= ind.Industria %>" class="form-label">  <%= ind.Industria %></h5>
-                    </div>
+                       </div>
                     </div>
                 </div>
                 <% }) %>
-                <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+              </div>
             </div>
+                </div>
             </form>
         </div>
         </div>
@@ -168,18 +170,20 @@
                 <button type="submit" class="btn btn-secondary">Asignar</button>
                 </div><br>
 
-            <div class="accordion-body">
-                <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+                <div class="accordion-body">
+                  <div class="card-body">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
                 <% autor.forEach((aut)=> { %>
-                <div class="col">
-                    <div class="card h-25">
-                    <div class="card-body">
+                  <div class="col">
+                    <div class="card card" style="width: 16rem; height: 6rem;">
+                      <div class="card-body">
                         <h5 class="card-title"><input type="checkbox" name="Autor" id="Autor" value="<%= aut.Autor %>" class="form-label">  <%= aut.Autor %></h5>
                     </div>
                     </div>
                 </div>
                 <% }) %>
-                <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+                </div>
+                  </div>
             </div>
             </form>
         </div>
@@ -191,6 +195,7 @@
     </div>
         </div>
     </div>
+    
 
     <% }else{ 
       if(user.Perfil == "Editor" ){ %>
@@ -319,19 +324,21 @@
               <button type="submit" class="btn btn-secondary">Asignar</button>
               </div><br>
 
-          <div class="accordion-body">
-              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+              <div class="accordion-body">
+                <div class="card-body">
+                  <div class="row row-cols-1 row-cols-md-3 g-4">
               <% industria.forEach((ind)=> { %>
-              <div class="col">
-                  <div class="card h-25">
-                  <div class="card-body">
+                <div class="col">
+                  <div class="card card" style="width: 16rem; height: 6rem;">
+                    <div class="card-body">
                       <h5 class="card-title"><input type="checkbox" name="Industria" id="Industria" value="<%= ind.Industria %>" class="form-label">  <%= ind.Industria %></h5>
-                  </div>
+                     </div>
                   </div>
               </div>
               <% }) %>
-              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+            </div>
           </div>
+              </div>
           </form>
       </div>
       </div>
@@ -362,18 +369,20 @@
               <button type="submit" class="btn btn-secondary">Asignar</button>
               </div><br>
 
-          <div class="accordion-body">
-              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+              <div class="accordion-body">
+                <div class="card-body">
+                  <div class="row row-cols-1 row-cols-md-3 g-4">
               <% autor.forEach((aut)=> { %>
-              <div class="col">
-                  <div class="card h-25">
-                  <div class="card-body">
+                <div class="col">
+                  <div class="card card" style="width: 16rem; height: 6rem;">
+                    <div class="card-body">
                       <h5 class="card-title"><input type="checkbox" name="Autor" id="Autor" value="<%= aut.Autor %>" class="form-label">  <%= aut.Autor %></h5>
                   </div>
                   </div>
               </div>
               <% }) %>
-              <div class="row row-cols-1 row-cols-md-6 g-4"></div>
+              </div>
+                </div>
           </div>
           </form>
       </div>
