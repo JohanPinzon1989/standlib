@@ -36,7 +36,7 @@
                   aria-describedby="text"
                   required
                 >
-                  <option selected>-- Seleccione un usuario --</option>
+                  <option selected>-- Seleccione una Factura --</option>
                   <% fact.forEach((fc)=> { %>
                   <option value="<%= fc.Id %>"><%= fc.NumFactura %></option>
                   <% }) %>
@@ -107,17 +107,17 @@
           </button>
       </h2>
       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          <form action="#" method="POST">
+          <form action="/regDocFactI" method="POST">
               <div class="d-flex align-items-center justify-content-center centre text-center" >
-                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <label for="Factura" class="form-label">Factura &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <select
                   class="form-control" style="width: 35%;"
-                  name="Usuarios"
-                  id="Usuarios"
+                  name="Factura"
+                  id="Factura"
                   aria-describedby="text"
                   required
                 >
-                  <option selected>-- Seleccione un usuario --</option>
+                  <option selected>-- Seleccione una Factura --</option>
                   <% fact.forEach((fc)=> { %>
                   <option value="<%= fc.Id %>"><%= fc.NumFactura %></option>
                   <% }) %>
@@ -150,17 +150,17 @@
           </button>
       </h2>
       <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          <form action="#" method="POST">
+          <form action="/regDocFactO" method="POST">
               <div class="d-flex align-items-center justify-content-center centre text-center" >
-                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <label for="Factura" class="form-label">Factura &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <select
                   class="form-control" style="width: 35%;"
-                  name="Usuarios"
-                  id="Usuarios"
+                  name="Factura"
+                  id="Factura"
                   aria-describedby="text"
                   required
                 >
-                  <option selected>-- Seleccione un usuario --</option>
+                  <option selected>-- Seleccione una Factura --</option>
                   <% fact.forEach((fc)=> { %>
                   <option value="<%= fc.Id %>"><%= fc.NumFactura %></option>
                   <% }) %>

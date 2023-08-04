@@ -7,7 +7,7 @@ const conexion = require("../serv/DB/dbreg");
 const pais = require("../serv/modulos/pais/rutas");
 const usuarios = require("../serv/modulos/usuarios/rutas")
 const { actualizarUc, actualizarUcP, agregarCLi, actualizarCU, actualizarCcP, actualizarPC} = require("../serv/modulos/usuarios");
-const { agregarF, actualizarF, asignarF } = require("../serv/modulos/factura");
+const { agregarF, actualizarF, asignarF, asignarFI, asignarFO } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
@@ -740,11 +740,15 @@ router.post("/addFact", agregarF);
 router.post("/uploadFact", actualizarF);
 //asignar documentos a factura por documento
 router.post("/regDocFact", asignarF);
+//asignar documentos a factura por industria
+router.post("/regDocFactI", asignarFI);
+//asignar documentos a factura por organismo
+router.post("/regDocFactO", asignarFO);
 //asignar documentos a Usuario por documento
 router.post("/regDocUS", asignarDocUC);
 //asignar documentos a Usuario por Industria
 router.post("/regIndUS", asignarIndUC);
-//asignar documentos a Usuario por Industria
+//asignar documentos a Usuario por organismo
 router.post("/regAutUS", asignarAutUC);
 
 module.exports = router;
