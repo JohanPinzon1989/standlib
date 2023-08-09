@@ -49,11 +49,76 @@ function find(table, id) {
     });
   });
 }
+function findTU(table, id) {
+  return new Promise((resolve, reject) => {
+    conexion.query(`SELECT * FROM ${table} WHERE IdC = ${id}`, (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
+  });
+}
+
+//Valida asignacion de documento Factura
+function findAD(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE IdTenant=${body.IdTenant} AND IdDocumentos=${body.IdDocumentos} AND IdFactura=${body.IdFactura}`,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
+//Valida asignacion de documento Usuario
+function findADU(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE IdUsuario=${body.IdUsuario} AND IdDocumentos=${body.IdDocumentos}`,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+//Buscar documentos de acuerdo a la industria
+function findIdsDU(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE Industria = '${body.Industria}' `,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+//Buscar documentos de acuerdo al autor
+function findAutDU(table, body) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE Autor = '${body.Autor}' `,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      `SELECT * FROM ${table} WHERE Email= ?`,
+      `SELECT * FROM ${table} WHERE ?`,
+      email,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
+function findUsCli(table, email) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE Email=?`,
       email,
       (error, result) => {
         return error ? reject(error) : resolve(result);
@@ -80,9 +145,19 @@ function actualizar(table, data) {
     );
   });
 }
+function actualizarTU(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      "UPDATE " + table + " SET ? WHERE IdC = ?",
+      [data, data.IdC],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 function actualizard(table, data) {
   return new Promise((resolve, reject) => {
-    console.log(data);
     conexion.query(
       "UPDATE " + table + " SET ? WHERE Id = ?",
       [data, data.Id],
@@ -105,6 +180,17 @@ function del(table, data) {
   return new Promise((resolve, reject) => {
     conexion.query(
       "DELETE FROM " + table + " WHERE Id = ?",
+      data,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+function delt(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      "DELETE FROM " + table + " WHERE Token = ?",
       data,
       (error, result) => {
         return error ? reject(error) : resolve(result);
@@ -135,4 +221,13 @@ module.exports = {
   findUsOrg,
   actualizar,
   actualizard,
+  findAD,
+  insertar,
+  delt,
+  findTU,
+  actualizarTU,
+  findUsCli,
+  findADU,
+  findIdsDU,
+  findAutDU
 };

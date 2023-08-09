@@ -1,0 +1,83 @@
+<%- include ('../partials/User/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Perfil == "Administrador") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/User/head') %>
+  <!--  Header End -->
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1 class="text-center"> El correo electronico suminitrado ya se encuentra registrado</h1>
+            </div>
+            <a
+                href="/addus"
+                type="button"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Aceptar
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <% }else{ 
+      if(user.Perfil == "Editor" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/User/headED') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1 class="text-center"> El correo electronico suminitrado ya se encuentra registrado</h1>
+            </div>
+            <a
+                href="/addus"
+                type="button"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Aceptar
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/User/headLE') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1> no tiene los permisos requeridos</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+    <% }}}) %>
+
+    <%-include('../partials/User/footer') %> 

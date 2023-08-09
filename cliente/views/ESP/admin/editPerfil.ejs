@@ -1,0 +1,222 @@
+<%- include ('../partials/admi/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/admi/head') %>
+  <!--  Header End -->
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Actualizar datos de <%= user.Nombre %> <%= user.Apellido %></h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/actualizarUsOrgLog" method="POST">
+              <div class="mb-3"></div>
+              <input id="Id" name="Id" value="<%= user.Id %>" type="hidden" />
+            </div>
+              <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombres</label>
+                <input
+                value="<%= user.Nombre %>"
+                  placeholder="Daniel Jose"
+                  type="text"
+                  class="form-control"
+                  name="Nombre"
+                  id="Nombre"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Apellido" class="form-label">Apellidos</label>
+                <input
+                value="<%= user.Apellido %>"
+                  placeholder="Jimenez Cuadro"
+                  type="text"
+                  class="form-control"
+                  name="Apellido"
+                  id="Apellido"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Email" class="form-label">Correo</label>
+                <input
+                value="<%= user.Email %>"
+                  placeholder="prueba@ejemplo.com"
+                  type="email"
+                  class="form-control"
+                  name="Email"
+                  id="Email"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Guardar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }else{ 
+      if(user.Rol == "Editar" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/admi/headED') %>
+  <!--  Header End -->
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Actualizar datos de <%= user.Nombre %> <%= user.Apellido %></h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/actualizarUsOrgLog" method="POST">
+              <div class="mb-3"></div>
+              <input id="Id" name="Id" value="<%= user.Id %>" type="hidden" />
+            </div>
+              <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombres</label>
+                <input
+                value="<%= user.Nombre %>"
+                  placeholder="Daniel Jose"
+                  type="text"
+                  class="form-control"
+                  name="Nombre"
+                  id="Nombre"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Apellido" class="form-label">Apellidos</label>
+                <input
+                value="<%= user.Apellido %>"
+                  placeholder="Jimenez Cuadro"
+                  type="text"
+                  class="form-control"
+                  name="Apellido"
+                  id="Apellido"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Email" class="form-label">Correo</label>
+                <input
+                value="<%= user.Email %>"
+                  placeholder="prueba@ejemplo.com"
+                  type="email"
+                  class="form-control"
+                  name="Email"
+                  id="Email"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Guardar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/admi/headLE') %>
+  <!--  Header End -->
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Actualizar datos de <%= user.Nombre %> <%= user.Apellido %></h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/actualizarUsOrgLog" method="POST">
+              <div class="mb-3"></div>
+              <input id="Id" name="Id" value="<%= user.Id %>" type="hidden" />
+            </div>
+              <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombres</label>
+                <input
+                value="<%= user.Nombre %>"
+                  placeholder="Daniel Jose"
+                  type="text"
+                  class="form-control"
+                  name="Nombre"
+                  id="Nombre"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Apellido" class="form-label">Apellidos</label>
+                <input
+                value="<%= user.Apellido %>"
+                  placeholder="Jimenez Cuadro"
+                  type="text"
+                  class="form-control"
+                  name="Apellido"
+                  id="Apellido"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Email" class="form-label">Correo</label>
+                <input
+                value="<%= user.Email %>"
+                  placeholder="prueba@ejemplo.com"
+                  type="email"
+                  class="form-control"
+                  name="Email"
+                  id="Email"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Guardar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }}}) %>
+
+    <%-include('../partials/admi/footer') %> 

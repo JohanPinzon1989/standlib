@@ -1,0 +1,223 @@
+<%- include ('../partials/admi/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/admi/head') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavPais') %>
+  
+  <div
+    class="container-fluid"
+    style="overflow: scroll; height: calc(115vh - 80px)"
+  >
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">Agregar pais region</h5>
+          <div class="card">
+            <div class="card-body">
+              <form action="/addPa" method="POST">
+                <div class="mb-3">
+                  <label for="Pais" class="form-label">Pais</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Pais"
+                    id="Pais"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="PaisEng" class="form-label">Pais en ingles</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="PaisEng"
+                    id="PaisEng"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="Departament" class="form-label">Departamento</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Departament"
+                    id="Departament"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="CiudadProvincia" class="form-label">Ciudad / Provincia</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="CiudadProvincia"
+                    id="CiudadProvincia"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>                   
+                <div class="mb-3">
+                  <label for="Longitud" class="form-label">Longitud</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Longitud"
+                    id="Longitud"
+                    aria-describedby="textHelp"
+                  />
+                </div>                   
+                <div class="mb-3">
+                  <label for="Latitud" class="form-label">Latitud</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Latitud"
+                    id="Latitud"
+                    aria-describedby="textHelp"
+                  />
+                </div>                   
+            </div>                  
+                <button
+                  type="submit"
+                  class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+                >
+                  Agregar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }else{ 
+      if(user.Rol == "Editar" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/admi/headED') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavPais') %>
+  
+  <div
+    class="container-fluid"
+    style="overflow: scroll; height: calc(115vh - 80px)"
+  >
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">Agregar pais region</h5>
+          <div class="card">
+            <div class="card-body">
+              <form action="/addPa" method="POST">
+                <div class="mb-3">
+                  <label for="Pais" class="form-label">Pais</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Pais"
+                    id="Pais"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="PaisEng" class="form-label">Pais en ingles</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="PaisEng"
+                    id="PaisEng"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="Departament" class="form-label">Departamento</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Departament"
+                    id="Departament"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="CiudadProvincia" class="form-label">Ciudad / Provincia</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="CiudadProvincia"
+                    id="CiudadProvincia"
+                    aria-describedby="textHelp"
+                    required
+                  />
+                </div>                   
+                <div class="mb-3">
+                  <label for="Longitud" class="form-label">Longitud</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Longitud"
+                    id="Longitud"
+                    aria-describedby="textHelp"
+                  />
+                </div>                   
+                <div class="mb-3">
+                  <label for="Latitud" class="form-label">Latitud</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Latitud"
+                    id="Latitud"
+                    aria-describedby="textHelp"
+                  />
+                </div>                   
+            </div>                  
+                <button
+                  type="submit"
+                  class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+                >
+                  Agregar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/admi/headLE') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1> No tiene los permisos requeridos</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }}}) %>
+
+    <%-include('../partials/admi/footer') %> 
+
+  

@@ -1,0 +1,163 @@
+<%- include ('../partials/User/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Perfil == "Administrador") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/User/head') %>
+  <!--  Header End -->
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Actualizar datos de <%= user.Nombre %> <%= user.Apellido %></h5>
+        <div class="card">
+          <div class="card-body">
+            
+            <form action="/estTenCli" method="POST">
+                <% results.forEach((ten)=> {  %>
+              <div class="mb-3"></div>
+              <input id="Id" name="Id" value="<%= ten.Id %>" type="hidden" />
+            </div>
+              <div class="mb-3">
+                <label for="Nombre_org" class="form-label">Nombre de la organizacion</label>
+                <input
+                value="<%= ten.Nombre_org %>"
+                  placeholder="STANDLIB SAS"
+                  type="text"
+                  class="form-control"
+                  name="Nombre_org"
+                  id="Nombre_org"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Nom_Contacto" class="form-label">Nombre de Contacto</label>
+                <input
+                value="<%= ten.Nom_Contacto %>"
+                  placeholder="Daniel Jimenez Cuadro"
+                  type="text"
+                  class="form-control"
+                  name="Nom_Contacto"
+                  id="Nom_Contacto"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Dominio" class="form-label">Dominio</label>
+                <input
+                value="<%= ten.Dominio %>"
+                  placeholder="standlib.com"
+                  type="text"
+                  class="form-control"
+                  name="Dominio"
+                  id="Dominio"
+                  aria-describedby="textlHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Tel_contacto" class="form-label">Numero de telefono de contacto</label>
+                <input
+                value="<%= ten.Tel_contacto %>"
+                  placeholder="3135956745"
+                  type="tel"
+                  class="form-control"
+                  name="Tel_contacto"
+                  id="Tel_contacto"
+                  aria-describedby="tellHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="EmailT" class="form-label">Correo electronico de contacto</label>
+                <input
+                value="<%= ten.EmailT %>"
+                  placeholder="prueba@ejemplo.com"
+                  type="email"
+                  class="form-control"
+                  name="EmailT"
+                  id="EmailT"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Email_facturacion" class="form-label">Correo electronico de facturacion</label>
+                <input
+                value="<%= ten.Email_facturacion %>"
+                  placeholder="prueba@ejemplo.com"
+                  type="email"
+                  class="form-control"
+                  name="Email_facturacion"
+                  id="Email_facturacion"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Guardar
+              </button>
+              <% }) %>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }else{ 
+      if(user.Perfil == "Editor" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/User/headED') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1> No tiene los permisos requeridos</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/User/headLE') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1> No tiene los permisos requeridos</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }}}) %>
+
+    <%-include('../partials/User/footer') %> 

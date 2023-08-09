@@ -1,0 +1,255 @@
+<%- include ('../partials/User/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Perfil == "Administrador") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/User/head') %>
+  <%- include ('../partials/user/NavUsuario') %>
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Registro usuarios</h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/api/usuarios" method="POST">
+              <div class="mb-3"></div>
+              <input id="Id" name="Id" value="0" hidden />
+            </div>
+              <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombres</label>
+                <input
+                  placeholder="Daniel Jose"
+                  type="text"
+                  class="form-control"
+                  name="Nombre"
+                  id="Nombre"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Apellido" class="form-label">Apellidos</label>
+                <input
+                  placeholder="Jimenez Cuadro"
+                  type="text"
+                  class="form-control"
+                  name="Apellido"
+                  id="Apellido"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Email" class="form-label">Correo</label>
+                <input
+                  placeholder="prueba@ejemplo.com"
+                  type="email"
+                  class="form-control"
+                  name="Email"
+                  id="Email"
+                  aria-describedby="emailHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Num_Fijo" class="form-label">Numero de telefono fijo</label>
+                <input
+                  placeholder="6164858 ext 1"
+                  type="tel"
+                  class="form-control"
+                  name="Num_Fijo"
+                  id="Num_Fijo"
+                  aria-describedby="telHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Num_Celular" class="form-label">Numero de celular</label>
+                <input
+                  placeholder="+57 3134568759"
+                  type="tel"
+                  class="form-control"
+                  name="Num_Celular"
+                  id="Num_Celular"
+                  aria-describedby="telHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Perfil" class="form-label">Rol</label>
+                <select
+                  class="form-control"
+                  name="Perfil"
+                  id="Perfil"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un rol --</option>
+                  <option value="Administrdor">Administrador</option>
+                  <option value="Editor">Editor</option>
+                  <option value="Lector">Lector</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="Estado_provincia" class="form-label">Estado o provincia</label>
+                <select
+                  class="form-control"
+                  name="Estado_provincia"
+                  id="Estado_provincia"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un estado o provincia --</option>
+                  <% results.forEach((estP)=> { %>
+                  <option value="<%= estP.Id %>"><%= estP.Departament%> / <%= estP.CiudadProvincia %></option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="Publicidad" class="form-label">Quiere recibir publicidad?</label>
+                <select
+                  class="form-control"
+                  name="Publicidad"
+                  id="Publicidad"
+                  aria-describedby="text"
+                  required
+                >
+                  <option value="Si" selected>Si</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Contraseña</label>
+                <input
+                  placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales"
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  id="password"
+                  required
+                />
+              </div>
+              <input id="Tenant_Id" name="Tenant_Id" value="<%= user.Tenant_Id%>" type="hidden" />
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }else{ 
+      if(user.Perfil == "Editor" ){ %>
+
+         <!--  Header Start -->
+         <%- include ('../partials/User/head') %>
+         <%- include ('../partials/user/NavUsuario') %>
+  
+         <div
+         class="container-fluid"
+         style="overflow: scroll; height: calc(115vh - 80px)"
+       >
+         <div class="container-fluid">
+           <div class="card">
+             <div class="card-body">
+               <h5 class="card-title fw-semibold mb-4">Registro usuarios</h5>
+               <div class="card">
+                 <div class="card-body">
+                   <form action="/api/Us" method="POST">
+                     <div class="mb-3"></div>
+                     <input id="Id" name="Id" value="0" hidden />
+                   </div>
+                     <div class="mb-3">
+                       <label for="Nombre" class="form-label">Nombres</label>
+                       <input
+                         placeholder="Daniel Jose"
+                         type="text"
+                         class="form-control"
+                         name="Nombre"
+                         id="Nombre"
+                         aria-describedby="textHelp"
+                         required
+                       />
+                     </div>
+                     <div class="mb-3">
+                       <label for="Apellido" class="form-label">Apellidos</label>
+                       <input
+                         placeholder="Jimenez Cuadro"
+                         type="text"
+                         class="form-control"
+                         name="Apellido"
+                         id="Apellido"
+                         aria-describedby="textHelp"
+                         required
+                       />
+                     </div>
+                     <div class="mb-3">
+                       <label for="Email" class="form-label">Correo</label>
+                       <input
+                         placeholder="prueba@ejemplo.com"
+                         type="email"
+                         class="form-control"
+                         name="Email"
+                         id="Email"
+                         aria-describedby="emailHelp"
+                         required
+                       />
+                     </div>
+                     <div class="mb-3">
+                       <label for="Rol" class="form-label">Rol</label>
+                       <select
+                         class="form-control"
+                         name="Rol"
+                         id="Rol"
+                         aria-describedby="text"
+                         required
+                       >
+                         <option selected>-- Seleccione un rol --</option>
+                         <option value="Administrar">Administrar</option>
+                         <option value="Editar">Editar</option>
+                         <option value="Leer">Leer</option>
+                       </select>
+                     </div>
+                     <div class="mb-4">
+                       <label for="password" class="form-label">Contraseña</label>
+                       <input
+                         placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales"
+                         type="password"
+                         class="form-control"
+                         name="password"
+                         id="password"
+                         required
+                       />
+                     </div>
+                     <button
+                       type="submit"
+                       class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+                     >
+                       Agregar
+                     </button>
+                   </form>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/User/headLE') %>
+  <!--  Header End -->
+  
+  
+
+    <% }}}) %>
+
+    <%-include('../partials/User/footer') %> 

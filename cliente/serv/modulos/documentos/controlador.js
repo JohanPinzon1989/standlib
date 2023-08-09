@@ -50,7 +50,7 @@ module.exports = function (dbInyect) {
         Pago: body.Pago,
       };
       const result = await db.agregar(Table, documento);
-      res.render("ESP/admin/index");
+      res.redirect("/lDoc");
     } else {
       const documento = {
         id: body.Id,
@@ -69,7 +69,7 @@ module.exports = function (dbInyect) {
         Pago: body.Pago,
       };
       const result = await db.agregar(Table, documento);
-      res.render("ESP/admin/index");
+      res.redirect("/lDoc");
     }
   }
 

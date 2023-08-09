@@ -102,6 +102,28 @@ module.exports = function (dbInyect) {
     }
   }
 
+  async function actualizarUorg(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/ia");
+  }
+
+  async function actualizarPasOrg(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      password: await bcrypt.hash(body.password, 8),
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/ia");
+  }
+
   function del(body) {
     return db.del(Table, body.Id);
   }
@@ -112,5 +134,7 @@ module.exports = function (dbInyect) {
     del,
     auth,
     getAllP,
+    actualizarUorg,
+    actualizarPasOrg
   };
 };

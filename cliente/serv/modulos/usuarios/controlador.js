@@ -69,7 +69,8 @@ module.exports = function (dbInyect) {
     return db.find(Table, id);
   }
 
-  async function agregar(body) {
+  async function agregarCLi(req, res) {
+    const { body } = req;
     const usuario = {
       Id: null,
       Nombre: body.Nombre,
@@ -77,14 +78,79 @@ module.exports = function (dbInyect) {
       Email: body.Email,
       Num_Fijo: body.Num_Fijo,
       Num_Celular: body.Num_Celular,
-      Estado: body.Estado,
+      Estado: "Activo",
+      Estado_ing: "Active",
       password: await bcrypt.hash(body.password, 8),
+      Perfil: body.Perfil,
       Publicidad: body.Publicidad,
+      Estado_provincia: body.Estado_provincia,
       Tenant_Id: body.Tenant_Id,
-      Estado_provincia_Id: body.Estado_provincia_Id,
-      Perfil_Usuario_Id: body.Perfil_Usuario_Id,
     };
-    return db.agregar(Table, usuario);
+    const us = await db.findUsCli(Table,usuario.Email);
+    let u
+    for (var count = 0; count < us.length; count++) {
+      u = us[count].Id;
+    }
+    console.log(u)
+    if (u > 0){
+      res.redirect("/mue")
+    }else{
+    res.redirect("/us")
+  }
+  }
+
+  async function actualizarCU(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email,
+      Num_Fijo: body.Num_Fijo,
+      Num_Celular: body.Num_Celular,
+      Estado: body.Estado,
+      Estado_ing: body.Estado_ing,
+      Perfil: body.Perfil,
+      Publicidad: body.Publicidad,
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/us");
+  }
+
+  async function actualizarPC(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      Nombre: body.Nombre,
+      Apellido: body.Apellido,
+      Email: body.Email,
+      Num_Fijo: body.Num_Fijo,
+      Num_Celular: body.Num_Celular,
+      Publicidad: body.Publicidad,
+      Estado_provincia: body.Estado_provincia
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/iu");
+  }
+
+  async function actualizarUcP(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      password: await bcrypt.hash(body.password, 8),
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/Tcli");
+  }
+
+  async function actualizarCcP(req, res) {
+    const { body } = req;
+    const usuario = {
+      Id: body.Id,
+      password: await bcrypt.hash(body.password, 8),
+    };
+    const result = await db.actualizar(Table, usuario);
+    res.redirect("/us");
   }
 
   async function actualizarUc(req, res) {
@@ -120,11 +186,14 @@ module.exports = function (dbInyect) {
   return {
     getAll,
     find,
-    agregar,
+    agregarCLi,
     del,
     auth,
     getAllP,
     actualizarUc,
     actualizarUcP,
+    actualizarCcP,
+    actualizarCU,
+    actualizarPC
   };
 };

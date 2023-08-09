@@ -1,0 +1,299 @@
+<%- include ('../partials/admi/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/admi/head') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavFacturacion') %>
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Registro de plan</h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/addFact" method="POST">
+              <input id="Id" name="Id" value="0" hidden />
+              <div class="mb-3">
+                <label for="Nombre_org" class="form-label">Cliente</label>
+                <select
+                  class="form-control"
+                  name="Nombre_org"
+                  id="Nombre_org"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un rol --</option>
+                  <% for(var count=0; count < results.length; count++) { %>
+                  <option value="<%= results[count].Id %>">
+                    <%= results[count].Nombre_org %>
+                  </option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="NumFactura" class="form-label"
+                  >Numero de factura</label
+                >
+                <input
+                  placeholder="SLB-2023-001"
+                  type="text"
+                  class="form-control"
+                  name="NumFactura"
+                  id="NumFactura"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Fecha_inicio" class="form-label"
+                  >Fecha de inicio</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  name="Fecha_inicio"
+                  id="Fecha_inicio"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Fecha_fin" class="form-label"
+                  >Fecha de vencimiento</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  name="Fecha_fin"
+                  id="Fecha_fin"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="CostoUSD" class="form-label"
+                  >Valor en dolares</label
+                >
+                <input
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  name="CostoUSD"
+                  id="CostoUSD"
+                  aria-describedby="emailHelp"
+                  required
+                />
+                <span class="validity"></span>
+              </div>
+              <div class="mb-3">
+                <label for="CostoCOP" class="form-label"
+                  >Valor en pesos Colombianos</label
+                >
+                <input
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  name="CostoCOP"
+                  id="CostoCOP"
+                  aria-describedby="emailHelp"
+                  required
+                />
+                <span class="validity"></span>
+              </div>
+              <div class="mb-3">
+                <label for="Estado" class="form-label">Estado</label>
+                <select
+                  class="form-control"
+                  name="Estado"
+                  id="Estado"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un estado --</option>
+                  <option value="Activo">Activo</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+    <% }else{ 
+      if(user.Rol == "Editar" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/admi/headED') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavFacturacion') %>
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Registro de plan</h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/addFact" method="POST">
+              <input id="Id" name="Id" value="0" hidden />
+              <div class="mb-3">
+                <label for="Nombre_org" class="form-label">Cliente</label>
+                <select
+                  class="form-control"
+                  name="Nombre_org"
+                  id="Nombre_org"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un rol --</option>
+                  <% for(var count=0; count < results.length; count++) { %>
+                  <option value="<%= results[count].Id %>">
+                    <%= results[count].Nombre_org %>
+                  </option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="NumFactura" class="form-label"
+                  >Numero de factura</label
+                >
+                <input
+                  placeholder="SLB-2023-001"
+                  type="text"
+                  class="form-control"
+                  name="NumFactura"
+                  id="NumFactura"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Fecha_inicio" class="form-label"
+                  >Fecha de inicio</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  name="Fecha_inicio"
+                  id="Fecha_inicio"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Fecha_fin" class="form-label"
+                  >Fecha de vencimiento</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  name="Fecha_fin"
+                  id="Fecha_fin"
+                  aria-describedby="textHelp"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="CostoUSD" class="form-label"
+                  >Valor en dolares</label
+                >
+                <input
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  name="CostoUSD"
+                  id="CostoUSD"
+                  aria-describedby="emailHelp"
+                  required
+                />
+                <span class="validity"></span>
+              </div>
+              <div class="mb-3">
+                <label for="CostoCOP" class="form-label"
+                  >Valor en pesos Colombianos</label
+                >
+                <input
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  name="CostoCOP"
+                  id="CostoCOP"
+                  aria-describedby="emailHelp"
+                  required
+                />
+                <span class="validity"></span>
+              </div>
+              <div class="mb-3">
+                <label for="Estado" class="form-label">Estado</label>
+                <select
+                  class="form-control"
+                  name="Estado"
+                  id="Estado"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione un estado --</option>
+                  <option value="Activo">Activo</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
+              >
+                Agregar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/admi/headLE') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1> No tiene los permisos requeridos</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <% }}}) %>
+
+<%- include ('../partials/admi/footer') %>

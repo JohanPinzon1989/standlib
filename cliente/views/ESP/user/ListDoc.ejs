@@ -1,0 +1,308 @@
+<%- include ('../partials/User/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Perfil == "Administrador") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/User/head') %>
+  <!--  Header End -->
+  <%- include ('../partials/User/NavAsignaNorm') %>
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Listado de documentos</h5>
+        <div class="card">
+          <div class="card-body">
+            <table class="table table-bordered table-responsive-xxl">
+              <thead class="text-dark fs-4">
+                <tr>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Id</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Nombre</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Abreviacion</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Autor</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Version</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Acciones</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((doc)=> { %>
+                <tr>
+                  <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0"><%= doc.IdD %></h6>
+                  </td>
+                  <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">
+                      <%= doc.NombDoc %>
+                    </h6>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.dAbrev %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.Autor %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
+                  </td>
+                  <td>
+                      <div class="btn-group dropend">
+                        <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Ver informacion</a></li>
+                        </ul>
+                      </div>       
+                  </td>
+                  <!-- Modal de lectura -->
+                  <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
+                    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><%= doc.Nombre %></h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <object
+                            type="application/pdf"
+                            data="/<%= doc.LinkDoc %>"
+                            width="100%"
+                            height="100%"
+                          >
+                          </object>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Modal de asignacion-->
+                  <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"></h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
+                            <div class="mb-3">
+                                <label for="Nombre" class="form-label">Nombre del documento</label>
+                                <input type="text" class="form-control" name="Nombre" id="Nombre" value="<%= doc.NombDoc %>" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
+                                <input type="text" class="form-control" name="Abreviacion" id="Abreviacion" value="<%= doc.dAbrev %>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Version" class="form-label">Version del documento</label>
+                                <input type="text" class="form-control" name="Version" id="Version" value="<%= doc.Version %>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Descripcion" class="form-label">Descripcion</label>
+                                <textarea class="form-control" name="Descripcion" id="Descripcion"><%= doc.Descripcion %></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Autor" class="form-label">Autor</label>
+                                <input type="text" class="form-control" name="Autor"
+                                    id="Autor" value="<%= doc.Autor %>">
+                            </div>
+                          
+                        </div>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <% }else{ 
+      if(user.Perfil == "Editor" ){ %>
+
+         <!--  Header Start -->
+  <%- include ('../partials/User/headED') %>
+  <!--  Header End -->
+  <%- include ('../partials/User/NavAsignaNorm') %>
+  
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Listado de documentos</h5>
+        <div class="card">
+          <div class="card-body">
+            <table class="table table-bordered table-responsive-xxl">
+              <thead class="text-dark fs-4">
+                <tr>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Id</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Nombre</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Abreviacion</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Autor</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Version</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Acciones</h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% results.forEach((doc)=> { %>
+                <tr>
+                  <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0"><%= doc.IdD %></h6>
+                  </td>
+                  <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">
+                      <%= doc.NombDoc %>
+                    </h6>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.dAbrev %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.Autor %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
+                  </td>
+                  <td>
+                      <div class="btn-group dropend">
+                        <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Ver informacion</a></li>
+                        </ul>
+                      </div>       
+                  </td>
+                  <!-- Modal de lectura -->
+                  <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
+                    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"><%= doc.Nombre %></h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <object
+                            type="application/pdf"
+                            data="/<%= doc.LinkDoc %>"
+                            width="100%"
+                            height="100%"
+                          >
+                          </object>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Modal de asignacion-->
+                  <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title"></h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
+                            <div class="mb-3">
+                                <label for="Nombre" class="form-label">Nombre del documento</label>
+                                <input type="text" class="form-control" name="Nombre" id="Nombre" value="<%= doc.NombDoc %>" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
+                                <input type="text" class="form-control" name="Abreviacion" id="Abreviacion" value="<%= doc.dAbrev %>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Version" class="form-label">Version del documento</label>
+                                <input type="text" class="form-control" name="Version" id="Version" value="<%= doc.Version %>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Descripcion" class="form-label">Descripcion</label>
+                                <textarea class="form-control" name="Descripcion" id="Descripcion"><%= doc.Descripcion %></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Autor" class="form-label">Autor</label>
+                                <input type="text" class="form-control" name="Autor"
+                                    id="Autor" value="<%= doc.Autor %>">
+                            </div>
+                          
+                        </div>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+     <% }else { %>
+
+           <!--  Header Start -->
+  <%- include ('../partials/User/headLE') %>
+  <!--  Header End -->
+  
+  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4"></h5>
+          <div class="card">
+            <div class="card-body">
+              <h1> No tiene los permisos requeridos</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+    <% }}}) %>
+
+
+<%-include('../partials/User/footer') %>
