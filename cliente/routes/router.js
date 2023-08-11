@@ -4,7 +4,7 @@ const fs = require("fs");
 const multer = require("multer");
 
 const conexion = require("../serv/DB/dbreg");
-const { agregarP, updateP} = require("../serv/modulos/pais");
+const { agregarP, updateP } = require("../serv/modulos/pais");
 const usuarios = require("../serv/modulos/usuarios/rutas");
 const {
   actualizarUc,
@@ -22,8 +22,9 @@ const {
   asignarFO,
 } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
-const {actualizarUorg} = require("../serv/modulos/usuariosOrg");
+const { actualizarUorg } = require("../serv/modulos/usuariosOrg");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
+const {agregarCLiTen} = require("../serv/modulos/nuevocliente");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const {
   add,
@@ -75,7 +76,10 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
             if (error) {
               throw error;
             } else {
-              res.render("ESP/admin/index", { usuario: results, results: results1 });
+              res.render("ESP/admin/index", {
+                usuario: results,
+                results: results1,
+              });
             }
           }
         );
@@ -250,6 +254,32 @@ router.get("/Tcli", adlogin.isAuthenticated, (req, res) => {
                 usuario: results,
                 results: results1,
               });
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+// Crear nuevo cliente
+router.get("/regisNuevCli", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        conexion.query(
+          "SELECT * FROM pais_estadoprovincia order by Departament asc",
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/admin/regNuevoCliente", {usuario: results, results: results1 });
             }
           }
         );
@@ -520,7 +550,7 @@ router.get("/adInds", adlogin.isAuthenticated, (req, res) => {
         throw error;
       } else {
         res.render("ESP/admin/addIndustria", {
-          usuario: results
+          usuario: results,
         });
       }
     }
@@ -561,7 +591,10 @@ router.get("/listPaReg", adlogin.isAuthenticated, (req, res) => {
             if (error) {
               throw error;
             } else {
-              res.render("ESP/admin/listPaisReg", { usuario: results, results:results1 });
+              res.render("ESP/admin/listPaisReg", {
+                usuario: results,
+                results: results1,
+              });
             }
           }
         );
@@ -582,7 +615,7 @@ router.get("/adPais", adlogin.isAuthenticated, (req, res) => {
         throw error;
       } else {
         res.render("ESP/admin/addPais", {
-          usuario: results
+          usuario: results,
         });
       }
     }
@@ -620,10 +653,6 @@ router.get("/EditUsAdOrg", adlogin.isAuthenticated, (req, res) => {
       }
     }
   );
-});
-
-router.get("/modAsc", (req, res) => {
-  res.render("ESP/admin/asigDocument");
 });
 
 /* Ruta de clientes
@@ -672,7 +701,10 @@ router.get("/iu", login.isAuthenticated, (req, res) => {
             if (error) {
               throw error;
             } else {
-              res.render("ESP/user/index", { usuario: results, results: results1 });
+              res.render("ESP/user/index", {
+                usuario: results,
+                results: results1,
+              });
             }
           }
         );
@@ -1072,7 +1104,11 @@ router.get("/edtCli", login.isAuthenticated, (req, res) => {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Router para registrar los datos
 router.use("/api/perUser", perUser);
+//Registro de cliente nuevo
 router.use("/api/newClient", newClient);
+//Registro de cliente nuevo desde usuario de STANDLIB
+router.use("/api/newClient", agregarCLiTen);
+//Agregar usuarios organizacion
 router.use("/api/Us", usuariosOrg);
 //Agregar usuarios cliente
 router.use("/api/usuarios", agregarCLi);
