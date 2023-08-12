@@ -69,6 +69,7 @@ module.exports = function (dbInyect) {
     return db.find(Table, id);
   }
 
+  //Agregar usuario Standlib
   async function agregar(body) {
     if (body.Id == "0") {
       const usuario = {
@@ -102,6 +103,7 @@ module.exports = function (dbInyect) {
     }
   }
 
+  // Actualizar datos usuario Standlib
   async function actualizarUorg(req, res) {
     const { body } = req;
     const usuario = {
@@ -114,6 +116,7 @@ module.exports = function (dbInyect) {
     res.redirect("/ia");
   }
 
+  //Actualizar contraseña usuario Standlib
   async function actualizarPasOrg(req, res) {
     const { body } = req;
     const usuario = {

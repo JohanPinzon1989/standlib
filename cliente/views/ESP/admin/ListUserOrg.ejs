@@ -60,18 +60,19 @@
                           <h6 class="fw-semibold mb-0"><%= users.Estado %></h6>
                         </td>
                         <td>
-                        <a
-                        class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal<%= users.Id %>"
-                            >Editar</a
-                          >
-                            <a
-                            href="/dUser/<%= users.Id %>"
-                            onclick="return confirm('¿Esta seguro de eliminar?');"
-                            class="btn btn-danger m-1"
-                            >Eliminar</a
-                          >
+                          <div class="btn-group dropend">
+                            <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLe<%= users.Id %>">Leer</a></li>
+                              <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= users.Id %>">Editar</a></li>
+                              <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalP<%= users.Id %>">Cambio de contraseña</a></li>
+                              <li><a href="/dUser/<%= users.Id %>"  onclick="return confirm('¿Esta seguro de eliminar?');" class="dropdown-item">Eliminar</a></li>
+                            </ul>
+                          </div>
                         </td>
                       </tr>
+                      <!-- Editar datos de usuario-->
                       <div class="modal fade" id="Modal<%= users.Id %>" data-bs-backdrop="static">
                         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                           <div class="modal-content">
@@ -159,6 +160,127 @@
                           </div>
                         </div>
                       </div>
+                      <!-- Leer datos de usuario-->
+                      <div class="modal fade" id="ModalLe<%= users.Id %>" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="Nombre" class="form-label">Nombres</label>
+                                  <input
+                                    value="<%= users.Nombre %>"
+                                    placeholder="Daniel Jose"
+                                    type="text"
+                                    class="form-control"
+                                    name="Nombre"
+                                    id="Nombre"
+                                    aria-describedby="textHelp"
+                                    required
+                                    disabled
+                                  />
+                                </div>
+                                <div class="mb-3">
+                                  <label for="Apellido" class="form-label">Apellidos</label>
+                                  <input
+                                    value="<%= users.Apellido %>"
+                                    placeholder="Jimenez Cuadro"
+                                    type="text"
+                                    class="form-control"
+                                    name="Apellido"
+                                    id="Apellido"
+                                    aria-describedby="textHelp"
+                                    required
+                                    disabled
+                                  />
+                                </div>
+                                <div class="mb-3">
+                                  <label for="Email" class="form-label">Correo</label>
+                                  <input
+                                    value="<%= users.Email %>"
+                                    placeholder="prueba@ejemplo.com"
+                                    type="email"
+                                    class="form-control"
+                                    name="Email"
+                                    id="Email"
+                                    aria-describedby="emailHelp"
+                                    required
+                                    disabled
+                                  />
+                                </div>
+                                <div class="mb-3">
+                                  <label for="Rol" class="form-label">Rol</label>
+                                  <select
+                                    class="form-control"
+                                    name="Rol"
+                                    id="Rol"
+                                    aria-describedby="text"
+                                    required
+                                    disabled
+                                  >
+                                    <option  value="Administrar" <%= users.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
+                                    <option  value="Editar" <%= users.Rol=='Editar' ? "selected" : '' %> >Editar</option>
+                                    <option  value="Leer" <%= users.Rol=='Leer' ? "selected" : '' %> >Leer</option>
+                                  </select>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="Estado" class="form-label">Estado</label>
+                                  <select
+                                    class="form-control"
+                                    name="Estado"
+                                    id="Estado"
+                                    aria-describedby="text"
+                                    required
+                                    disabled
+                                  >
+                                    <option  value="Activo" <%= users.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+                                    <option  value="Bloqueado" <%= users.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+                                  </select>
+                                </div>                   
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Cambiar contraseña contraseña Usuario-->
+                  <div class="modal fade" id="ModalP<%= users.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Cambiar contraseña</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/actualizarPsOrgLog" method="POST">
+                            <input id="Id" name="Id" value="<%= users.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="password" class="form-label">Nueva contraseña</label>
+                              <input
+                                placeholder="Requiere caracteres en mayuscula, numericos y especiales"
+                                type="password"
+                                class="form-control"
+                                name="password"
+                                id="password"
+                                aria-describedby="textHelp"
+                                required
+                              />
+                            </div>
+                                              
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="submit">Cambiar</button>
+                        </form>
+                          <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                       <% }) %>
                     </tbody>
                   </table>
@@ -176,165 +298,287 @@
   <!--  Header End -->
   <%- include ('../partials/admi/NavUsuario') %>
   
-      <div
-      class="container-fluid"
-      style="overflow: scroll; height: calc(115vh - 80px)"
-    >
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">
-                Listado de usuarios STANDLIB
-              </h5>
-              
-                  <table class="table table-bordered">
-                    <thead class="table-light">
-                      <tr>
-                        <th>
-                          <h6 class="fw-semibold mb-0 fs-4">Id</h6>
-                        </th>
-                        <th>
-                          <h6 class="fw-semibold mb-0 fs-4">Nombre</h6>
-                        </th>
-                        <th>
-                          <h6 class="fw-semibold mb-0 fs-4">Apellido</h6>
-                        </th>
-                        <th>
-                          <h6 class="fw-semibold mb-0 fs-4">Correo</h6>
-                        </th>
-                        <th>
-                          <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
-                        </th>
-                        <th>
-                          <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% results.forEach((users)=> { %>
-                      <tr>
-                        <td>
-                          <h6><%= users.Id %></h6>
-                        </td>
-                        <td>
-                          <h6><%= users.Nombre %></h6>
-                        </td>
-                        <td>
-                          <h6><%= users.Apellido %></h6>
-                        </td>
-                        <td>
-                          <h6 class="fw-semibold mb-0"><%= users.Email %></h6>
-                        </td>
-                        <td>
-                          <h6 class="fw-semibold mb-0"><%= users.Estado %></h6>
-                        </td>
-                        <td>
-                        <a
-                        class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal<%= users.Id %>"
-                            >Editar</a
-                          >
-                            <a
-                            href="/dUser/<%= users.Id %>"
-                            onclick="return confirm('¿Esta seguro de eliminar?');"
-                            class="btn btn-danger m-1"
-                            >Eliminar</a
-                          >
-                        </td>
-                      </tr>
-                      <div class="modal fade" id="Modal<%= users.Id %>" data-bs-backdrop="static">
-                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Editar registro</h5>
-                              <button class="btn-close" data-bs-dismiss="modal"></button>
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">
+            Listado de usuarios STANDLIB
+          </h5>
+          
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Id</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Nombre</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Apellido</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Correo</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% results.forEach((users)=> { %>
+                  <tr>
+                    <td>
+                      <h6><%= users.Id %></h6>
+                    </td>
+                    <td>
+                      <h6><%= users.Nombre %></h6>
+                    </td>
+                    <td>
+                      <h6><%= users.Apellido %></h6>
+                    </td>
+                    <td>
+                      <h6 class="fw-semibold mb-0"><%= users.Email %></h6>
+                    </td>
+                    <td>
+                      <h6 class="fw-semibold mb-0"><%= users.Estado %></h6>
+                    </td>
+                    <td>
+                      <div class="btn-group dropend">
+                        <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLe<%= users.Id %>">Leer</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= users.Id %>">Editar</a></li>
+                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalP<%= users.Id %>">Cambio de contraseña</a></li>
+                          <li><a href="/dUser/<%= users.Id %>"  onclick="return confirm('¿Esta seguro de eliminar?');" class="dropdown-item">Eliminar</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Editar datos de usuario-->
+                  <div class="modal fade" id="Modal<%= users.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Editar registro</h5>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/api/Us" method="POST">
+                            <input id="Id" name="Id" value="<%= users.Id %>" type="hidden" />
+                            <div class="mb-3">
+                              <label for="Nombre" class="form-label">Nombres</label>
+                              <input
+                                value="<%= users.Nombre %>"
+                                placeholder="Daniel Jose"
+                                type="text"
+                                class="form-control"
+                                name="Nombre"
+                                id="Nombre"
+                                aria-describedby="textHelp"
+                                required
+                              />
                             </div>
-                            <div class="modal-body">
-                              <form action="/api/Us" method="POST">
-                                <input id="Id" name="Id" value="<%= users.Id %>" type="hidden" />
-                                <div class="mb-3">
-                                  <label for="Nombre" class="form-label">Nombres</label>
-                                  <input
-                                    value="<%= users.Nombre %>"
-                                    placeholder="Daniel Jose"
-                                    type="text"
-                                    class="form-control"
-                                    name="Nombre"
-                                    id="Nombre"
-                                    aria-describedby="textHelp"
-                                    required
-                                  />
-                                </div>
-                                <div class="mb-3">
-                                  <label for="Apellido" class="form-label">Apellidos</label>
-                                  <input
-                                    value="<%= users.Apellido %>"
-                                    placeholder="Jimenez Cuadro"
-                                    type="text"
-                                    class="form-control"
-                                    name="Apellido"
-                                    id="Apellido"
-                                    aria-describedby="textHelp"
-                                    required
-                                  />
-                                </div>
-                                <div class="mb-3">
-                                  <label for="Email" class="form-label">Correo</label>
-                                  <input
-                                    value="<%= users.Email %>"
-                                    placeholder="prueba@ejemplo.com"
-                                    type="email"
-                                    class="form-control"
-                                    name="Email"
-                                    id="Email"
-                                    aria-describedby="emailHelp"
-                                    required
-                                  />
-                                </div>
-                                <div class="mb-3">
-                                  <label for="Rol" class="form-label">Rol</label>
-                                  <select
-                                    class="form-control"
-                                    name="Rol"
-                                    id="Rol"
-                                    aria-describedby="text"
-                                    required
-                                  >
-                                    <option  value="Administrar" <%= users.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
-                                    <option  value="Editar" <%= users.Rol=='Editar' ? "selected" : '' %> >Editar</option>
-                                    <option  value="Leer" <%= users.Rol=='Leer' ? "selected" : '' %> >Leer</option>
-                                  </select>
-                                </div>
-                                <div class="mb-3">
-                                  <label for="Estado" class="form-label">Estado</label>
-                                  <select
-                                    class="form-control"
-                                    name="Estado"
-                                    id="Estado"
-                                    aria-describedby="text"
-                                    required
-                                  >
-                                    <option  value="Activo" <%= users.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-                                    <option  value="Bloqueado" <%= users.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
-                                  </select>
-                                </div>                   
+                            <div class="mb-3">
+                              <label for="Apellido" class="form-label">Apellidos</label>
+                              <input
+                                value="<%= users.Apellido %>"
+                                placeholder="Jimenez Cuadro"
+                                type="text"
+                                class="form-control"
+                                name="Apellido"
+                                id="Apellido"
+                                aria-describedby="textHelp"
+                                required
+                              />
                             </div>
-                            <div class="modal-footer">
-                              <button class="btn btn-secondary" type="submit">Guardar</button>
-                            </form>
-                              <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                              
+                            <div class="mb-3">
+                              <label for="Email" class="form-label">Correo</label>
+                              <input
+                                value="<%= users.Email %>"
+                                placeholder="prueba@ejemplo.com"
+                                type="email"
+                                class="form-control"
+                                name="Email"
+                                id="Email"
+                                aria-describedby="emailHelp"
+                                required
+                              />
                             </div>
-                          </form>
-                          </div>
+                            <div class="mb-3">
+                              <label for="Rol" class="form-label">Rol</label>
+                              <select
+                                class="form-control"
+                                name="Rol"
+                                id="Rol"
+                                aria-describedby="text"
+                                required
+                              >
+                                <option  value="Administrar" <%= users.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
+                                <option  value="Editar" <%= users.Rol=='Editar' ? "selected" : '' %> >Editar</option>
+                                <option  value="Leer" <%= users.Rol=='Leer' ? "selected" : '' %> >Leer</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label for="Estado" class="form-label">Estado</label>
+                              <select
+                                class="form-control"
+                                name="Estado"
+                                id="Estado"
+                                aria-describedby="text"
+                                required
+                              >
+                                <option  value="Activo" <%= users.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+                                <option  value="Bloqueado" <%= users.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+                              </select>
+                            </div>                   
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="submit">Guardar</button>
+                        </form>
+                          <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                          
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Leer datos de usuario-->
+                  <div class="modal fade" id="ModalLe<%= users.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="Nombre" class="form-label">Nombres</label>
+                              <input
+                                value="<%= users.Nombre %>"
+                                placeholder="Daniel Jose"
+                                type="text"
+                                class="form-control"
+                                name="Nombre"
+                                id="Nombre"
+                                aria-describedby="textHelp"
+                                required
+                                disabled
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Apellido" class="form-label">Apellidos</label>
+                              <input
+                                value="<%= users.Apellido %>"
+                                placeholder="Jimenez Cuadro"
+                                type="text"
+                                class="form-control"
+                                name="Apellido"
+                                id="Apellido"
+                                aria-describedby="textHelp"
+                                required
+                                disabled
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Email" class="form-label">Correo</label>
+                              <input
+                                value="<%= users.Email %>"
+                                placeholder="prueba@ejemplo.com"
+                                type="email"
+                                class="form-control"
+                                name="Email"
+                                id="Email"
+                                aria-describedby="emailHelp"
+                                required
+                                disabled
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Rol" class="form-label">Rol</label>
+                              <select
+                                class="form-control"
+                                name="Rol"
+                                id="Rol"
+                                aria-describedby="text"
+                                required
+                                disabled
+                              >
+                                <option  value="Administrar" <%= users.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
+                                <option  value="Editar" <%= users.Rol=='Editar' ? "selected" : '' %> >Editar</option>
+                                <option  value="Leer" <%= users.Rol=='Leer' ? "selected" : '' %> >Leer</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label for="Estado" class="form-label">Estado</label>
+                              <select
+                                class="form-control"
+                                name="Estado"
+                                id="Estado"
+                                aria-describedby="text"
+                                required
+                                disabled
+                              >
+                                <option  value="Activo" <%= users.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+                                <option  value="Bloqueado" <%= users.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+                              </select>
+                            </div>                   
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                          
                         </div>
                       </div>
-                      <% }) %>
-                    </tbody>
-                  </table>
-            </div>
-          </div>
+                    </div>
+                  </div>
+                  <!--Cambiar contraseña contraseña Usuario-->
+              <div class="modal fade" id="ModalP<%= users.Id %>" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Cambiar contraseña</h5>
+                      <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/actualizarPsOrgLog" method="POST">
+                        <input id="Id" name="Id" value="<%= users.Id %>" type="hidden" />
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Nueva contraseña</label>
+                          <input
+                            placeholder="Requiere caracteres en mayuscula, numericos y especiales"
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            id="password"
+                            aria-describedby="textHelp"
+                            required
+                          />
+                        </div>
+                                          
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" type="submit">Cambiar</button>
+                    </form>
+                      <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+                  <% }) %>
+                </tbody>
+              </table>
+        </div>
       </div>
-      </div>
+  </div>
+  </div>
 
      <% }else { %>
 
@@ -342,162 +586,156 @@
   <%- include ('../partials/admi/headLE') %>
   <!--  Header End -->
   
-    <div
-    class="container-fluid"
-    style="overflow: scroll; height: calc(115vh - 80px)"
-  >
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">
-              Listado de usuarios STANDLIB
-            </h5>
-            
-                <table class="table table-bordered">
-                  <thead class="table-light">
-                    <tr>
-                      <th>
-                        <h6 class="fw-semibold mb-0 fs-4">Id</h6>
-                      </th>
-                      <th>
-                        <h6 class="fw-semibold mb-0 fs-4">Nombre</h6>
-                      </th>
-                      <th>
-                        <h6 class="fw-semibold mb-0 fs-4">Apellido</h6>
-                      </th>
-                      <th>
-                        <h6 class="fw-semibold mb-0 fs-4">Correo</h6>
-                      </th>
-                      <th>
-                        <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
-                      </th>
-                      <th>
-                        <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% results.forEach((users)=> { %>
-                    <tr>
-                      <td>
-                        <h6><%= users.Id %></h6>
-                      </td>
-                      <td>
-                        <h6><%= users.Nombre %></h6>
-                      </td>
-                      <td>
-                        <h6><%= users.Apellido %></h6>
-                      </td>
-                      <td>
-                        <h6 class="fw-semibold mb-0"><%= users.Email %></h6>
-                      </td>
-                      <td>
-                        <h6 class="fw-semibold mb-0"><%= users.Estado %></h6>
-                      </td>
-                      <td>
-                      <a
-                      class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal<%= users.Id %>"
-                          >Ver</a
-                        >
+  <div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">
+            Listado de usuarios STANDLIB
+          </h5>
+          
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Id</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Nombre</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Apellido</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Correo</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Estado</h6>
+                    </th>
+                    <th>
+                      <h6 class="fw-semibold mb-0 fs-4">Acciones</h6>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% results.forEach((users)=> { %>
+                  <tr>
+                    <td>
+                      <h6><%= users.Id %></h6>
+                    </td>
+                    <td>
+                      <h6><%= users.Nombre %></h6>
+                    </td>
+                    <td>
+                      <h6><%= users.Apellido %></h6>
+                    </td>
+                    <td>
+                      <h6 class="fw-semibold mb-0"><%= users.Email %></h6>
+                    </td>
+                    <td>
+                      <h6 class="fw-semibold mb-0"><%= users.Estado %></h6>
+                    </td>
+                    <td>  
+                    <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalLe<%= users.Id %>">Leer</a>
+                    </td>
+                  </tr>
+                  <!-- Leer datos de usuario-->
+                  <div class="modal fade" id="ModalLe<%= users.Id %>" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="Nombre" class="form-label">Nombres</label>
+                              <input
+                                value="<%= users.Nombre %>"
+                                placeholder="Daniel Jose"
+                                type="text"
+                                class="form-control"
+                                name="Nombre"
+                                id="Nombre"
+                                aria-describedby="textHelp"
+                                required
+                                disabled
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Apellido" class="form-label">Apellidos</label>
+                              <input
+                                value="<%= users.Apellido %>"
+                                placeholder="Jimenez Cuadro"
+                                type="text"
+                                class="form-control"
+                                name="Apellido"
+                                id="Apellido"
+                                aria-describedby="textHelp"
+                                required
+                                disabled
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Email" class="form-label">Correo</label>
+                              <input
+                                value="<%= users.Email %>"
+                                placeholder="prueba@ejemplo.com"
+                                type="email"
+                                class="form-control"
+                                name="Email"
+                                id="Email"
+                                aria-describedby="emailHelp"
+                                required
+                                disabled
+                              />
+                            </div>
+                            <div class="mb-3">
+                              <label for="Rol" class="form-label">Rol</label>
+                              <select
+                                class="form-control"
+                                name="Rol"
+                                id="Rol"
+                                aria-describedby="text"
+                                required
+                                disabled
+                              >
+                                <option  value="Administrar" <%= users.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
+                                <option  value="Editar" <%= users.Rol=='Editar' ? "selected" : '' %> >Editar</option>
+                                <option  value="Leer" <%= users.Rol=='Leer' ? "selected" : '' %> >Leer</option>
+                              </select>
+                            </div>
+                            <div class="mb-3">
+                              <label for="Estado" class="form-label">Estado</label>
+                              <select
+                                class="form-control"
+                                name="Estado"
+                                id="Estado"
+                                aria-describedby="text"
+                                required
+                                disabled
+                              >
+                                <option  value="Activo" <%= users.Estado=='Activo' ? "selected" : '' %> >Activo</option>
+                                <option  value="Bloqueado" <%= users.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
+                              </select>
+                            </div>                   
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                           
-                      </td>
-                    </tr>
-                    <div class="modal fade" id="Modal<%= users.Id %>" data-bs-backdrop="static">
-                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Leer registro</h5>
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-                              <div class="mb-3">
-                                <label for="Nombre" class="form-label">Nombres</label>
-                                <input
-                                  value="<%= users.Nombre %>"
-                                  placeholder="Daniel Jose"
-                                  type="text"
-                                  class="form-control"
-                                  name="Nombre"
-                                  id="Nombre"
-                                  aria-describedby="textHelp"
-                                  readonly
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Apellido" class="form-label">Apellidos</label>
-                                <input
-                                  value="<%= users.Apellido %>"
-                                  placeholder="Jimenez Cuadro"
-                                  type="text"
-                                  class="form-control"
-                                  name="Apellido"
-                                  id="Apellido"
-                                  aria-describedby="textHelp"
-                                  readonly
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Email" class="form-label">Correo</label>
-                                <input
-                                  value="<%= users.Email %>"
-                                  placeholder="prueba@ejemplo.com"
-                                  type="email"
-                                  class="form-control"
-                                  name="Email"
-                                  id="Email"
-                                  aria-describedby="emailHelp"
-                                  readonly
-                                  required
-                                />
-                              </div>
-                              <div class="mb-3">
-                                <label for="Rol" class="form-label">Rol</label>
-                                <select
-                                  class="form-control"
-                                  name="Rol"
-                                  id="Rol"
-                                  aria-describedby="text"
-                                  readonly
-                                  required
-                                >
-                                  <option  value="Administrar" <%= users.Rol=='Administrar' ? "selected" : '' %> >Administrar</option>
-                                  <option  value="Editar" <%= users.Rol=='Editar' ? "selected" : '' %> >Editar</option>
-                                  <option  value="Leer" <%= users.Rol=='Leer' ? "selected" : '' %> >Leer</option>
-                                </select>
-                              </div>
-                              <div class="mb-3">
-                                <label for="Estado" class="form-label">Estado</label>
-                                <select
-                                  class="form-control"
-                                  name="Estado"
-                                  id="Estado"
-                                  aria-describedby="text"
-                                  required
-                                  readonly
-                                >
-                                  <option  value="Activo" <%= users.Estado=='Activo' ? "selected" : '' %> >Activo</option>
-                                  <option  value="Bloqueado" <%= users.Estado=='Bloqueado' ? "selected" : '' %> >Bloqueado</option>
-                                </select>
-                              </div>                   
-                          </div>
-                          <div class="modal-footer">
-                          </form>
-                            <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            
-                          </div>
-                        </form>
                         </div>
                       </div>
                     </div>
-                    <% }) %>
-                  </tbody>
-                </table>
-          </div>
+                  </div>
+                  <% }) %>
+                </tbody>
+              </table>
         </div>
-    </div>
-    </div>
+      </div>
+  </div>
+  </div>
 
     <% }}}) %>
 

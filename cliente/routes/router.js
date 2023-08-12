@@ -22,7 +22,7 @@ const {
   asignarFO,
 } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
-const { actualizarUorg } = require("../serv/modulos/usuariosOrg");
+const { actualizarUorg, actualizarPasOrg } = require("../serv/modulos/usuariosOrg");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
 const {agregarCLiTen} = require("../serv/modulos/nuevocliente");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
@@ -101,13 +101,20 @@ router.get("/aDoc", adlogin.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
-        conexion.query("SELECT * FROM industria", (error, results1) => {
+        conexion.query("SELECT * FROM industria order by Industria asc", (error, results1) => {
           if (error) {
             throw error;
           } else {
-            res.render("ESP/admin/addDoc", {
-              usuario: results,
-              results: results1,
+            conexion.query(`SELECT * FROM autores where Estado = "Activo" order by Autor asc`, (error, results2) => {
+              if (error) {
+                throw error;
+              } else {
+                res.render("ESP/admin/addDoc", {
+                  usuario: results,
+                  results: results1,
+                  autores: results2,
+                });
+              }
             });
           }
         });
@@ -127,7 +134,7 @@ router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
       if (error) {
         throw error;
       } else {
-        conexion.query("SELECT * FROM documentos", (error, results1) => {
+        conexion.query("SELECT * FROM documentos order by Nombre asc", (error, results1) => {
           if (error) {
             throw error;
           } else {
@@ -508,6 +515,35 @@ router.use("/docFact", adlogin.isAuthenticated, (req, res) => {
   );
 });
 
+// Listar Industria
+router.get("/listInd", adlogin.isAuthenticated, (req, res) => {
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        conexion.query(
+          `select * from autores order by Autor asc`,
+          req.cookies.jwt,
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/admin/listAutores", {
+                usuario: results,
+                results: results1,
+              });
+            }
+          }
+        );
+      }
+    }
+  );
+});
 // Listar Industria
 router.get("/listInd", adlogin.isAuthenticated, (req, res) => {
   conexion.query(
@@ -1107,7 +1143,7 @@ router.use("/api/perUser", perUser);
 //Registro de cliente nuevo
 router.use("/api/newClient", newClient);
 //Registro de cliente nuevo desde usuario de STANDLIB
-router.use("/api/newClient", agregarCLiTen);
+router.use("/newClientTen", agregarCLiTen);
 //Agregar usuarios organizacion
 router.use("/api/Us", usuariosOrg);
 //Agregar usuarios cliente
@@ -1169,5 +1205,7 @@ router.use("/addPa", agregarP);
 router.use("/upPa", updateP);
 //Actualizar datos de usuario Standlib logueado
 router.use("/actualizarUsOrgLog", actualizarUorg);
+//Actualizar contraseña usuario Standlib
+router.use("/actualizarPsOrgLog", actualizarPasOrg);
 
 module.exports = router;
