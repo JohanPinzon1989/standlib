@@ -45,6 +45,7 @@ const storage = require("../serv/modulos/documentos/load");
 //const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
 const { agregarI, updateI } = require("../serv/modulos/industria");
+const { agregarAt, updateAT } = require("../serv/modulos/autores");
 const controllerRouter = require("../controller/controller.admin");
 const { mysql } = require("../config");
 const uploader = multer({ storage });
@@ -515,8 +516,8 @@ router.use("/docFact", adlogin.isAuthenticated, (req, res) => {
   );
 });
 
-// Listar Industria
-router.get("/listInd", adlogin.isAuthenticated, (req, res) => {
+// Listar Autores
+router.get("/listAuth", adlogin.isAuthenticated, (req, res) => {
   conexion.query(
     `select * from usuarios_standlib as u
   inner join controlcona as c
@@ -1199,6 +1200,10 @@ router.post("/regAutUS", asignarAutUC);
 router.use("/addInd", agregarI);
 //Actualizar Industria
 router.use("/upInd", updateI);
+//Agregar Autores
+router.use("/addAuth", agregarAt);
+//Actualizar Autore
+router.use("/upAuth", updateAT);
 //Agregar Pais provincia
 router.use("/addPa", agregarP);
 //Actualizar pais provincia
