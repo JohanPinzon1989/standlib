@@ -139,9 +139,16 @@ router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
           if (error) {
             throw error;
           } else {
-            res.render("ESP/admin/listDoc", {
-              usuario: results,
-              results: results1,
+            conexion.query("SELECT * FROM autores order by Autor asc", (error, results2) => {
+              if (error) {
+                throw error;
+              } else {
+                res.render("ESP/admin/listDoc", {
+                  usuario: results,
+                  results: results1,
+                  autores: results2
+                });
+              }
             });
           }
         });
