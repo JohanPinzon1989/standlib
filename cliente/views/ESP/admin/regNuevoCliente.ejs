@@ -1,0 +1,192 @@
+<%- include ('../partials/admi/header') %>
+
+<% usuario.forEach((user)=> { 
+  if (user.Rol == "Administrar") {%>
+  <!--  Header Start -->
+  <%- include ('../partials/admi/head') %>
+  <!--  Header End -->
+  <%- include ('../partials/admi/NavCrearcliente') %>
+
+  <div
+    class="container-fluid"
+    style="overflow: scroll; height: calc(115vh - 80px)"
+  >
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-4">Registro nuevo cliente</h5>
+          <div class="card">
+            <div class="card-body">
+                <form action="/newClientTen" method="POST">
+                  <div class="mb-3">
+                    <label for="Nombre_org" class="form-label">Organizacion</label>
+                    <input placeholder="Ingenieia SAS" type="text" class="form-control" name="Nombre_org" id="Nombre_org" aria-describedby="textHelp" required>
+                    <div class="mb-3">
+                      <label for="Nombre" class="form-label">Nombres de contacto</label>
+                      <input placeholder="Daniel Jose" type="text" class="form-control" name="Nombre" id="Nombre" aria-describedby="textHelp" required>
+                    </div>
+                      <div class="mb-3">
+                      <label for="Apellido" class="form-label">Apellidos de contacto</label>
+                      <input placeholder="Jimenez Cuadro" type="text" class="form-control" name="Apellido" id="Apellido" aria-describedby="textHelp" required>
+                    </div>
+                    </div>
+                      <div class="mb-3">
+                      <label for="Dominio" class="form-label">Dominio organizacion</label>
+                      <input placeholder="ejemplo.com" type="text" class="form-control" name="Dominio" id="Dominio" aria-describedby="textHelp" required>
+                    </div>
+				            <div class="mb-3">
+                    <label for="Num_Fijo" class="form-label">Numero fijo</label>
+                    <input type="text" class="form-control" name="Num_Fijo" id="Num_Fijo" aria-describedby="textHelp">
+                  </div>
+				            <div class="mb-3">
+                    <label for="Num_Celular" class="form-label">Numero celular</label>
+                    <input type="text" class="form-control" name="Num_Celular" id="Num_Celular" aria-describedby="textHelp" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="Email" class="form-label">Correo de contacto</label>
+                    <input placeholder="prueba@ejemplo.com" type="email" class="form-control" name="Email" id="Email" aria-describedby="emailHelp" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="Email_facturacion" class="form-label">Correo facturacion</label>
+                    <input placeholder="facturacion@ejemplo.com" type="email" class="form-control" name="Email_facturacion" id="Email_facturacion" aria-describedby="emailHelp" >
+                  </div>			          
+                  <div class="mb-3">
+                    <label for="EstPrv" class="form-label">Ciudad provincia</label>
+                    <select class="form-control" name="EstPrv" id="EstPrv" aria-describedby="text" required>
+                        <option selected>-- Seleccione una ciudad o provincia --</option>
+                        <% for(var count=0; count < results.length; count++) { %>
+                        <option value="<%= results[count].CiudadProvincia %>"><%= results[count].Departament %> / <%= results[count].CiudadProvincia %></option> <% } %>
+                    </select>
+                  <div class="mb-3">
+                    <label for="Publicidad" class="form-label">Publicidad</label>
+                    <select class="form-control" name="Publicidad" id="Publicidad" aria-describedby="text" required>
+                        <option value="Si">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                  </div>				          
+                  <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales" type="password" class="form-control" name="password" id="password" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">Tienes una cuenta?</p>
+                    <a class="text-primary fw-bold ms-2" href="/login">Iniciar sesion</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+                <% }else{ 
+                  if(user.Rol == "Editar" ){ %>
+            
+                     <!--  Header Start -->
+              <%- include ('../partials/admi/headED') %>
+              <!--  Header End -->
+              <%- include ('../partials/admi/NavCrearcliente') %>
+
+              <div
+                class="container-fluid"
+                style="overflow: scroll; height: calc(115vh - 80px)"
+              >
+                <div class="container-fluid">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title fw-semibold mb-4">Registro nuevo cliente</h5>
+                      <div class="card">
+                        <div class="card-body">
+                            <form action="/newClientTen" method="POST">
+                              <div class="mb-3">
+                                <label for="Nombre_org" class="form-label">Organizacion</label>
+                                <input placeholder="Ingenieia SAS" type="text" class="form-control" name="Nombre_org" id="Nombre_org" aria-describedby="textHelp" required>
+                                <div class="mb-3">
+                                  <label for="Nombre" class="form-label">Nombres de contacto</label>
+                                  <input placeholder="Daniel Jose" type="text" class="form-control" name="Nombre" id="Nombre" aria-describedby="textHelp" required>
+                                </div>
+                                  <div class="mb-3">
+                                  <label for="Apellido" class="form-label">Apellidos de contacto</label>
+                                  <input placeholder="Jimenez Cuadro" type="text" class="form-control" name="Apellido" id="Apellido" aria-describedby="textHelp" required>
+                                </div>
+                                </div>
+                                  <div class="mb-3">
+                                  <label for="Dominio" class="form-label">Dominio organizacion</label>
+                                  <input placeholder="ejemplo.com" type="text" class="form-control" name="Dominio" id="Dominio" aria-describedby="textHelp" required>
+                                </div>
+                                <div class="mb-3">
+                                <label for="Num_Fijo" class="form-label">Numero fijo</label>
+                                <input type="text" class="form-control" name="Num_Fijo" id="Num_Fijo" aria-describedby="textHelp">
+                              </div>
+                                <div class="mb-3">
+                                <label for="Num_Celular" class="form-label">Numero celular</label>
+                                <input type="text" class="form-control" name="Num_Celular" id="Num_Celular" aria-describedby="textHelp" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="Email" class="form-label">Correo de contacto</label>
+                                <input placeholder="prueba@ejemplo.com" type="email" class="form-control" name="Email" id="Email" aria-describedby="emailHelp" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="Email_facturacion" class="form-label">Correo facturacion</label>
+                                <input placeholder="facturacion@ejemplo.com" type="email" class="form-control" name="Email_facturacion" id="Email_facturacion" aria-describedby="emailHelp" >
+                              </div>			          
+                              <div class="mb-3">
+                                <label for="EstPrv" class="form-label">Ciudad provincia</label>
+                                <select class="form-control" name="EstPrv" id="EstPrv" aria-describedby="text" required>
+                                    <option selected>-- Seleccione una ciudad o provincia --</option>
+                                    <% for(var count=0; count < results.length; count++) { %>
+                                    <option value="<%= results[count].CiudadProvincia %>"><%= results[count].Departament %> / <%= results[count].CiudadProvincia %></option> <% } %>
+                                </select>
+                              <div class="mb-3">
+                                <label for="Publicidad" class="form-label">Publicidad</label>
+                                <select class="form-control" name="Publicidad" id="Publicidad" aria-describedby="text" required>
+                                    <option value="Si">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                              </div>				          
+                              <div class="mb-4">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input placeholder="Debe contener letras en mayuscula, numeros y caracteres especiales" type="password" class="form-control" name="password" id="password" required>
+                              </div>
+                              <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
+                              <div class="d-flex align-items-center justify-content-center">
+                                <p class="fs-4 mb-0 fw-bold">Tienes una cuenta?</p>
+                                <a class="text-primary fw-bold ms-2" href="/login">Iniciar sesion</a>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+
+              <% }else { %>
+
+                <!--  Header Start -->
+       <%- include ('../partials/admi/headLE') %>
+       <!--  Header End -->
+       <%- include ('../partials/admi/NavCrearcliente') %>
+
+       <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
+        <div class="container-fluid">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold mb-4"></h5>
+              <div class="card">
+                <div class="card-body">
+                  <h1> No tiene los permisos requeridos</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <% }}}) %>
+
+       <%-include('../partials/admi/footer') %> 
+            

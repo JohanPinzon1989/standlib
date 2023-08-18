@@ -1,0 +1,57 @@
+<div class="card-body p-2 text-center" >
+  <a href="/listAuth" type="button" class="btn btn-outline-danger m-1"
+    >Lista de autor</a
+  >
+  <a type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#ModalAgregar"
+    >Agregar autor</a
+  >
+</div>
+
+<!--Modal agregar autor-->
+<div class="modal fade" id="ModalAgregar" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar autor</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/addAuth" method="POST">
+          <div class="mb-3">
+            <label for="Autor" class="form-label">Autor</label>
+            <input
+              placeholder="ICONTEC"
+              type="text"
+              class="form-control"
+              name="Autor"
+              id="Autor"
+              aria-describedby="textHelp"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Descripcion" class="form-label">Descripcion</label>
+            <textarea class="form-control" name="Descripcion" id="Descripcion"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="Estado" class="form-label">Estado</label>
+            <select
+              class="form-control"
+              name="Estado"
+              id="Estado"
+              aria-describedby="text"
+              required
+            >
+              <option  selected value="Activo">Activo</option>
+              <option  value="Bloqueado">Bloqueado</option>
+            </select>
+          </div>                
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="submit">Agregar</button>
+      </form>
+        <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
