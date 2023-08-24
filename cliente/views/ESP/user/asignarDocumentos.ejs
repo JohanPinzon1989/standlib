@@ -98,51 +98,6 @@
         </form>
         </>
         </div>
-        <!--Acordion por industria-->
-        <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Asignar por industria
-            </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <form action="/regIndUS" method="POST">
-                <div class="d-flex align-items-center justify-content-center centre text-center" >
-                  <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                  <select
-                    class="form-control" style="width: 35%;"
-                    name="Usuarios"
-                    id="Usuarios"
-                    aria-describedby="text"
-                    required
-                  >
-                    <option selected>-- Seleccione un usuario --</option>
-                    <% usuarios.forEach((usr)=> { %>
-                    <option value="<%= usr.Id %>"><%= usr.Nombre%> <%= usr.Apellido %></option>
-                    <% }) %>
-                  </select>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="submit" class="btn btn-secondary">Asignar</button>
-                </div><br>
-
-                <div class="accordion-body">
-                  <div class="card-body">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                <% industria.forEach((ind)=> { %>
-                  <div class="col">
-                    <div class="card card" style="width: 16rem; height: 6rem;">
-                      <div class="card-body">
-                        <h5 class="card-title"><input type="checkbox" name="Industria" id="Industria" value="<%= ind.Industria %>" class="form-label">  <%= ind.Industria %></h5>
-                       </div>
-                    </div>
-                </div>
-                <% }) %>
-              </div>
-            </div>
-                </div>
-            </form>
-        </div>
-        </div>
         <!--Acordion por Organismo-->
         <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
@@ -296,51 +251,6 @@
           </div>
       </form>
       </>
-      </div>
-      <!--Acordion por industria-->
-      <div class="accordion-item">
-      <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Asignar por industria
-          </button>
-      </h2>
-      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          <form action="/regIndUS" method="POST">
-              <div class="d-flex align-items-center justify-content-center centre text-center" >
-                <label for="Usuarios" class="form-label">Usuarios &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <select
-                  class="form-control" style="width: 35%;"
-                  name="Usuarios"
-                  id="Usuarios"
-                  aria-describedby="text"
-                  required
-                >
-                  <option selected>-- Seleccione un usuario --</option>
-                  <% usuarios.forEach((usr)=> { %>
-                  <option value="<%= usr.Id %>"><%= usr.Nombre%> <%= usr.Apellido %></option>
-                  <% }) %>
-                </select>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button type="submit" class="btn btn-secondary">Asignar</button>
-              </div><br>
-
-              <div class="accordion-body">
-                <div class="card-body">
-                  <div class="row row-cols-1 row-cols-md-3 g-4">
-              <% industria.forEach((ind)=> { %>
-                <div class="col">
-                  <div class="card card" style="width: 16rem; height: 6rem;">
-                    <div class="card-body">
-                      <h5 class="card-title"><input type="checkbox" name="Industria" id="Industria" value="<%= ind.Industria %>" class="form-label">  <%= ind.Industria %></h5>
-                     </div>
-                  </div>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-              </div>
-          </form>
-      </div>
       </div>
       <!--Acordion por Organismo-->
       <div class="accordion-item">

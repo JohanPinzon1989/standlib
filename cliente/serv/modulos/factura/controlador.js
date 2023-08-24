@@ -82,51 +82,6 @@ module.exports = function (dbInyect) {
     res.redirect("/Fcli");
   }
 
-  // Asinar documento a factura por industria
-  async function asignarFI(req, res) {
-    const { body } = req;
-    console.log(body);
-    let fact = body.Factura
-    let ten
-    let indus
-    const tena = await db.find("historial_facturacion", fact);
-    for (var count = 0; count < tena.length; count++) {
-      ten = await tena[count].Tenant_Id;
-    }
-    console.log(ten)
-      for (var count = 0; count < body.Industria.length; count++) {
-        const di = {
-          Industria: body.Industria[count]
-        }
-        const ind = await db.findIdsDU("documentos", di);
-        for (var count1 = 0; count1 < ind.length; count1++) {
-          indus= await ind[count1];
-        const asignacion = {
-          IdTenant: ten,
-          IdDocumentos: indus.Id,
-          IdFactura: fact,
-        }
-        console.log(asignacion)
-
-        //Valida si el doscumento ya fue asignado
-        const asig = await db.findAD("facturacion_documentos", asignacion);
-        let docFact;
-        for (var count2 = 0; count2 < asig.length; count2++) {
-          docFact = await asig[count2].Id;
-        }
-        console.log(docFact);
-        if (docFact > 0) {
-          console.log("ya fue asignado");
-        } else {
-          //Enviar datos a Base de Datos
-          console.log("Registrado");
-          const result = await db.agregar("facturacion_documentos", asignacion);
-        }
-      }
-    }
-    res.redirect("/Fcli");
-  };
-
   // Asinar documento a factura por organismo
   async function asignarFO(req, res) {
     const { body } = req;
@@ -184,7 +139,6 @@ module.exports = function (dbInyect) {
     delF,
     actualizarF,
     asignarF,
-    asignarFI,
     asignarFO
   };
 };

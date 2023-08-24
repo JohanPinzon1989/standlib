@@ -80,17 +80,7 @@ function findADU(table, body) {
     );
   });
 }
-//Buscar documentos de acuerdo a la industria
-function findIdsDU(table, body) {
-  return new Promise((resolve, reject) => {
-    conexion.query(
-      `SELECT * FROM ${table} WHERE Industria = '${body.Industria}' `,
-      (error, result) => {
-        return error ? reject(error) : resolve(result);
-      }
-    );
-  });
-}
+
 //Buscar documentos de acuerdo al autor
 function findAutDU(table, body) {
   return new Promise((resolve, reject) => {
@@ -240,7 +230,6 @@ module.exports = {
   actualizarTU,
   findUsCli,
   findADU,
-  findIdsDU,
   findAutDU,
   findAutor
 };

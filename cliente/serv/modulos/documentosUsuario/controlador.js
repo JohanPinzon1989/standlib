@@ -49,41 +49,7 @@ module.exports = function (dbInyect) {
         res.redirect("/asnor");
   }
 
-  //Asignar documento a usuario por Industria
-  async function asignarIndUC(req, res) {
-    const { body } = req;
-    console.log(body)
-    let doc;
-    let ind;
-    let us = body.Usuarios
-       for (var count = 0; count < body.Industria.length; count++) {
-          ind = body.Industria[count]; 
-          const di = {
-            Industria: ind,
-          }
-          const fdoc = await db.findIdsDU("documentos", di);
-          for (var count1 = 0; count1 < fdoc.length; count1++) {
-            doc = await fdoc[count1].Id;
-            const documetoUs = {
-              IdUsuario: us,
-              IdDocumentos: doc,
-            }
-            //Valida si el doscumento ya fue asignado
-          const asig = await db.findADU("usuario_documentos", documetoUs);
-          let docUs;
-          for (var count2 = 0; count2 < asig.length; count2++) {
-            docUs = await asig[count2].Id;;
-          }
-          if (docUs > 0) {
-            console.log("ya fue asignado");
-          } else {
-            //Enviar datos a Base de Datos
-            const result = await db.agregar("usuario_documentos", documetoUs);
-          }
-          }       
-        }  
-        res.redirect("/asnor");
-  }
+
   //Asignar documento a usuario por Organismo
   async function asignarAutUC(req, res) {
     const { body } = req;
@@ -129,7 +95,6 @@ module.exports = function (dbInyect) {
     agregar,
     del,
     asignarDocUC,
-    asignarIndUC,
     asignarAutUC
   };
 };

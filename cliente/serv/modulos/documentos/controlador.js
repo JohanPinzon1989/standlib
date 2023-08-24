@@ -25,13 +25,6 @@ module.exports = function (dbInyect) {
     const { body, file } = req;
     var fecha = require("moment");
     var hoy = fecha().format("YYYY-MM-DD");
-    const ind = await db.find("industria", body.Industria);
-    let induE;
-    let induI;
-    for (var count = 0; count < ind.length; count++) {
-      induE = ind[count].Industria;
-      induI = ind[count].Industria_ing;
-    }
     if (body.Id == null) {
       const documento = {
         id: null,
@@ -45,8 +38,6 @@ module.exports = function (dbInyect) {
         linkDoc: `file/uploaders/${file.filename}`,
         LinkImagen: null,
         Autor: body.Autor,
-        Industria: induE,
-        Industria_ing: induI,
         Pago: body.Pago,
       };
       const result = await db.agregar(Table, documento);
@@ -64,8 +55,6 @@ module.exports = function (dbInyect) {
         linkDoc: `file/uploaders/${file.filename}`,
         LinkImagen: null,
         Autor: body.Autor,
-        Industria: induE,
-        Industria_ing: induI,
         Pago: body.Pago,
       };
       const result = await db.agregar(Table, documento);

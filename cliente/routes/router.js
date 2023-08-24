@@ -22,9 +22,12 @@ const {
   asignarFO,
 } = require("../serv/modulos/factura");
 const usuariosOrg = require("../serv/modulos/usuariosOrg/rutas");
-const { actualizarUorg, actualizarPasOrg } = require("../serv/modulos/usuariosOrg");
+const {
+  actualizarUorg,
+  actualizarPasOrg,
+} = require("../serv/modulos/usuariosOrg");
 const newClient = require("../serv/modulos/nuevocliente/rutas");
-const {agregarCLiTen} = require("../serv/modulos/nuevocliente");
+const { agregarCLiTen } = require("../serv/modulos/nuevocliente");
 const perUser = require("../serv/modulos/perfilUsuario/rutas");
 const {
   add,
@@ -44,7 +47,6 @@ const adlogin = require("../serv/modulos/usuariosOrg/autenticacion");
 const storage = require("../serv/modulos/documentos/load");
 //const bodyParser = require("body-parser");
 const { agregar } = require("../serv/modulos/pais");
-const { agregarI, updateI } = require("../serv/modulos/industria");
 const { agregarAt, updateAT } = require("../serv/modulos/autores");
 const controllerRouter = require("../controller/controller.admin");
 const { mysql } = require("../config");
@@ -102,23 +104,19 @@ router.get("/aDoc", adlogin.isAuthenticated, (req, res) => {
       if (error) {
         throw error;
       } else {
-        conexion.query("SELECT * FROM industria order by Industria asc", (error, results1) => {
-          if (error) {
-            throw error;
-          } else {
-            conexion.query(`SELECT * FROM autores where Estado = "Activo" order by Autor asc`, (error, results2) => {
-              if (error) {
-                throw error;
-              } else {
-                res.render("ESP/admin/addDoc", {
-                  usuario: results,
-                  results: results1,
-                  autores: results2,
-                });
-              }
-            });
+        conexion.query(
+          `SELECT * FROM autores where Estado = "Activo" order by Autor asc`,
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              res.render("ESP/admin/addDoc", {
+                usuario: results,
+                autores: results1,
+              });
+            }
           }
-        });
+        );
       }
     }
   );
@@ -135,23 +133,29 @@ router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
       if (error) {
         throw error;
       } else {
-        conexion.query("SELECT * FROM documentos order by Nombre asc", (error, results1) => {
-          if (error) {
-            throw error;
-          } else {
-            conexion.query("SELECT * FROM autores order by Autor asc", (error, results2) => {
-              if (error) {
-                throw error;
-              } else {
-                res.render("ESP/admin/listDoc", {
-                  usuario: results,
-                  results: results1,
-                  autores: results2
-                });
-              }
-            });
+        conexion.query(
+          "SELECT * FROM documentos order by Nombre asc",
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              conexion.query(
+                "SELECT * FROM autores order by Autor asc",
+                (error, results2) => {
+                  if (error) {
+                    throw error;
+                  } else {
+                    res.render("ESP/admin/listDoc", {
+                      usuario: results,
+                      results: results1,
+                      autores: results2,
+                    });
+                  }
+                }
+              );
+            }
           }
-        });
+        );
       }
     }
   );
@@ -294,7 +298,10 @@ router.get("/regisNuevCli", adlogin.isAuthenticated, (req, res) => {
             if (error) {
               throw error;
             } else {
-              res.render("ESP/admin/regNuevoCliente", {usuario: results, results: results1 });
+              res.render("ESP/admin/regNuevoCliente", {
+                usuario: results,
+                results: results1,
+              });
             }
           }
         );
@@ -340,33 +347,23 @@ router.get("/Fcli", adlogin.isAuthenticated, (req, res) => {
                                 throw error;
                               } else {
                                 conexion.query(
-                                  `select DISTINCT Industria from Documentos order by Industria asc`,
-                                  (error, results6) => {
-                                    if (error) {
-                                      throw error;
-                                    } else {
-                                      conexion.query(
-                                        `select d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria, d.Estado, d.LinkDoc, d.Descripcion,
+                                  `select d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Estado, d.LinkDoc, d.Descripcion,
                                         f.IdFactura as IdF
                                         from documentos as d
                                         inner join facturacion_documentos as f 
                                         where d.Id = f.IdDocumentos and d.Estado = "Activo" order by NombDoc asc`,
-                                        (error, results7) => {
-                                          if (error) {
-                                            throw error;
-                                          } else {
-                                            res.render("ESP/admin/listPlanes", {
-                                              usuario: results4,
-                                              fact: results,
-                                              docu: results2,
-                                              ten: results3,
-                                              autor: results5,
-                                              industria: results6,
-                                              documents: results7,
-                                            });
-                                          }
-                                        }
-                                      );
+                                  (error, results7) => {
+                                    if (error) {
+                                      throw error;
+                                    } else {
+                                      res.render("ESP/admin/listPlanes", {
+                                        usuario: results4,
+                                        fact: results,
+                                        docu: results2,
+                                        ten: results3,
+                                        autor: results5,
+                                        documents: results7,
+                                      });
                                     }
                                   }
                                 );
@@ -493,22 +490,12 @@ router.use("/docFact", adlogin.isAuthenticated, (req, res) => {
                         if (error) {
                           throw error;
                         } else {
-                          conexion.query(
-                            `select DISTINCT Industria from Documentos order by Industria asc`,
-                            (error, results4) => {
-                              if (error) {
-                                throw error;
-                              } else {
-                                res.render("ESP/admin/asigDocument", {
-                                  usuario: results,
-                                  fact: results1,
-                                  docu: results2,
-                                  autor: results3,
-                                  industria: results4,
-                                });
-                              }
-                            }
-                          );
+                          res.render("ESP/admin/asigDocument", {
+                            usuario: results,
+                            fact: results1,
+                            docu: results2,
+                            autor: results3,
+                          });
                         }
                       }
                     );
@@ -548,70 +535,6 @@ router.get("/listAuth", adlogin.isAuthenticated, (req, res) => {
             }
           }
         );
-      }
-    }
-  );
-});
-// Listar Industria
-router.get("/listInd", adlogin.isAuthenticated, (req, res) => {
-  conexion.query(
-    `select * from usuarios_standlib as u
-  inner join controlcona as c
-  where c.Token = ? and c.IdC = u.Id`,
-    req.cookies.jwt,
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        conexion.query(
-          `select * from industria order by Industria asc`,
-          req.cookies.jwt,
-          (error, results1) => {
-            if (error) {
-              throw error;
-            } else {
-              res.render("ESP/admin/listIndus", {
-                usuario: results,
-                results: results1,
-              });
-            }
-          }
-        );
-      }
-    }
-  );
-});
-
-// Agregar Industria
-router.get("/adInds", adlogin.isAuthenticated, (req, res) => {
-  conexion.query(
-    `select * from usuarios_standlib as u
-  inner join controlcona as c
-  where c.Token = ? and c.IdC = u.Id`,
-    req.cookies.jwt,
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        res.render("ESP/admin/addIndustria", {
-          usuario: results,
-        });
-      }
-    }
-  );
-});
-
-//Eliminar Industria
-router.get("/dIndust/:Id", adlogin.isAuthenticated, (req, res) => {
-  const Id = req.params.Id;
-  conexion.query(
-    "DELETE FROM industria WHERE Id = ?",
-    [Id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      } else {
-        res.redirect("/listInd");
       }
     }
   );
@@ -874,7 +797,7 @@ router.get("/norA", adlogin.isAuthenticated, function (req, res) {
           c = results[count].Tenant_Id;
         }
         conexion.query(
-          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc, d.Descripcion,
+          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Estado, d.LinkDoc, d.Descripcion,
       t.Id as IdT, t.Nombre_org as NomOrg
       FROM facturacion_documentos as f 
       inner join historial_facturacion as fd on f.IdFactura = fd.Id
@@ -914,7 +837,7 @@ router.get("/asnor", adlogin.isAuthenticated, function (req, res) {
           c = results[count].Tenant_Id;
         }
         conexion.query(
-          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc,
+          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Estado, d.LinkDoc,
       t.Id as IdT, t.Nombre_org as NomOrg
       FROM facturacion_documentos as f 
       inner join historial_facturacion as fd on f.IdFactura = fd.Id
@@ -934,39 +857,23 @@ router.get("/asnor", adlogin.isAuthenticated, function (req, res) {
                     throw error;
                   } else {
                     conexion.query(
-                      `SELECT DISTINCT  d.Industria
-              FROM facturacion_documentos as f 
-              inner join historial_facturacion as fd on f.IdFactura = fd.Id
-              inner join tenant as t on f.IdTenant = t.Id
-              inner join documentos as d on f.IdDocumentos = d.Id
-              where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Industria asc;`,
+                      `SELECT DISTINCT  d.Autor
+                              FROM facturacion_documentos as f 
+                              inner join historial_facturacion as fd on f.IdFactura = fd.Id
+                              inner join tenant as t on f.IdTenant = t.Id
+                              inner join documentos as d on f.IdDocumentos = d.Id
+                              where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Autor asc;`,
                       c,
-                      (error, results3) => {
+                      (error, results4) => {
                         if (error) {
                           throw error;
                         } else {
-                          conexion.query(
-                            `SELECT DISTINCT  d.Autor
-                  FROM facturacion_documentos as f 
-                  inner join historial_facturacion as fd on f.IdFactura = fd.Id
-                  inner join tenant as t on f.IdTenant = t.Id
-                  inner join documentos as d on f.IdDocumentos = d.Id
-                  where d.Pago = "SI" and d.Estado = "Activo" and fd.Estado = "Activo" and t.Estado = "Activo" and t.Id = ? order by d.Autor asc;`,
-                            c,
-                            (error, results4) => {
-                              if (error) {
-                                throw error;
-                              } else {
-                                res.render("ESP/user/asignarDocumentos", {
-                                  usuario: results,
-                                  documentos: results1,
-                                  usuarios: results2,
-                                  industria: results3,
-                                  autor: results4,
-                                });
-                              }
-                            }
-                          );
+                          res.render("ESP/user/asignarDocumentos", {
+                            usuario: results,
+                            documentos: results1,
+                            usuarios: results2,
+                            autor: results4,
+                          });
                         }
                       }
                     );
@@ -997,7 +904,7 @@ router.get("/norL", adlogin.isAuthenticated, function (req, res) {
           c = results[count].Tenant_Id;
         }
         conexion.query(
-          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Industria,  d.Estado, d.LinkDoc,
+          `SELECT DISTINCT d.Id as IdD, d.Nombre as NombDoc, d.Abreviacion as dAbrev, d.Version, d.Autor, d.Estado, d.LinkDoc,
       t.Id as IdT, t.Nombre_org as NomOrg
       FROM facturacion_documentos as f 
       inner join historial_facturacion as fd on f.IdFactura = fd.Id
@@ -1193,20 +1100,12 @@ router.post("/addFact", agregarF);
 router.post("/uploadFact", actualizarF);
 //asignar documentos a factura por documento
 router.post("/regDocFact", asignarF);
-//asignar documentos a factura por industria
-router.post("/regDocFactI", asignarFI);
 //asignar documentos a factura por organismo
 router.post("/regDocFactO", asignarFO);
 //asignar documentos a Usuario por documento
 router.post("/regDocUS", asignarDocUC);
-//asignar documentos a Usuario por Industria
-router.post("/regIndUS", asignarIndUC);
 //asignar documentos a Usuario por organismo
 router.post("/regAutUS", asignarAutUC);
-//Agregar Industria
-router.use("/addInd", agregarI);
-//Actualizar Industria
-router.use("/upInd", updateI);
 //Agregar Autores
 router.use("/addAuth", agregarAt);
 //Actualizar Autore

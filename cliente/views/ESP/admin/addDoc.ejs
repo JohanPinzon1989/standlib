@@ -1,236 +1,295 @@
-<%- include ('../partials/admi/header') %>
+<%- include ('../partials/admi/header') %> <% usuario.forEach((user)=> { if
+(user.Rol == "Administrar") {%>
+<!--  Header Start -->
+<%- include ('../partials/admi/head') %>
+<!--  Header End -->
+<%- include ('../partials/admi/NavDocumentos') %>
 
-<% usuario.forEach((user)=> { 
-  if (user.Rol == "Administrar") {%>
-  <!--  Header Start -->
-  <%- include ('../partials/admi/head') %>
-  <!--  Header End -->
-  <%- include ('../partials/admi/NavDocumentos') %>
-  
-        <div
-        class="container-fluid"
-        style="overflow: scroll; height: calc(115vh - 80px)"
-        >
-                <div class="container-fluid">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
-                            <div class="card">
-                                <div class="card-body">
-                                    
-                                    <form action="/upload" method="POST" enctype="multipart/form-data">
-                                        <div class="mb-3">
-                                            <label for="Nombre" class="form-label">Nombre del documento</label>
-                                            <input type="text" class="form-control" name="Nombre" id="Nombre">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
-                                            <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Version" class="form-label">Version del documento</label>
-                                            <input type="text" class="form-control" name="Version" id="Version">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Descripcion" class="form-label">Descripcion en español</label>
-                                            <input type="text" class="form-control" name="Descripcion" id="Descripcion"
-                                                aria-describedby="emailHelp">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
-                                            <input type="text" class="form-control" name="Descripcion_ing"
-                                                id="Descripcion_ing">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Autor" class="form-label">Organismo</label>
-                                            <select
-                                            class="form-control"
-                                            name="Autor"
-                                            id="Autor"
-                                            aria-describedby="text"
-                                            required
-                                            >
-                                            <option selected>-- Seleccione una opcion --</option>
-                                            <% for(var count=0; count < autores.length; count++) { %>
-                                            <option value="<%= autores[count].Autor %>"><%= autores[count].Autor %></option><% } %>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Industria" class="form-label">Industria</label>
-                                            <select
-                                            class="form-control"
-                                            name="Industria"
-                                            id="Industria"
-                                            aria-describedby="text"
-                                            required
-                                            >
-                                            <option selected>-- Seleccione una opcion --</option>
-                                            <% for(var count=0; count < results.length; count++) { %>
-                                            <option value="<%= results[count].Id %>"><%= results[count].Industria %></option><% } %>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Pago" class="form-label">Documento pago?</label>
-                                            <select
-                                            class="form-control"
-                                            name="Pago"
-                                            id="Pago"
-                                            aria-describedby="text"
-                                            required
-                                            >
-                                            <option selected>-- Seleccione una opcion --</option>
-                                            <option value="SI">Si</option>
-                                            <option value="NO">No</option>
-                                            </select>
-                                        </div>
-                                        <div class="card-body p-2" style="margin-left: 20%;">
-
-                                            <input type="file" name="pdfFile" id="pdfFile"
-                                                class="btn btn-outline-danger m-1" required>
-                                            <button type="submit" class="btn btn-primary">Cargar documento</button>
-                                        </div>
-
-                                    </form>
-                                    
-                                    <div style="margin-top: 15px;">
-                                        <embed id="vistaPrevia" type="application/pdf" width="100%" height="800px"
-                                            aria-controls="nodownload">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-    <% }else{ 
-      if(user.Rol == "Editar" ){ %>
-
-         <!--  Header Start -->
-  <%- include ('../partials/admi/headED') %>
-  <!--  Header End -->
-  <%- include ('../partials/admi/NavDocumentos') %>
-  
-  <div
+<div
   class="container-fluid"
   style="overflow: scroll; height: calc(115vh - 80px)"
-  >
-          <div class="container-fluid">
-              <div class="card">
-                  <div class="card-body">
-                      <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
-                      <div class="card">
-                          <div class="card-body">
-                              
-                              <form action="/upload" method="POST" enctype="multipart/form-data">
-                                  <div class="mb-3">
-                                      <label for="Nombre" class="form-label">Nombre del documento</label>
-                                      <input type="text" class="form-control" name="Nombre" id="Nombre">
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
-                                      <input type="text" class="form-control" name="Abreviacion" id="Abreviacion">
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Version" class="form-label">Version del documento</label>
-                                      <input type="text" class="form-control" name="Version" id="Version">
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Descripcion" class="form-label">Descripcion en español</label>
-                                      <input type="text" class="form-control" name="Descripcion" id="Descripcion"
-                                          aria-describedby="emailHelp">
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
-                                      <input type="text" class="form-control" name="Descripcion_ing"
-                                          id="Descripcion_ing">
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Autor" class="form-label">Organismo</label>
-                                      <select
-                                      class="form-control"
-                                      name="Autor"
-                                      id="Autor"
-                                      aria-describedby="text"
-                                      required
-                                      >
-                                      <option selected>-- Seleccione una opcion --</option>
-                                      <% for(var count=0; count < autores.length; count++) { %>
-                                      <option value="<%= autores[count].Autor %>"><%= autores[count].Autor %></option><% } %>
-                                      </select>
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Industria" class="form-label">Industria</label>
-                                      <select
-                                      class="form-control"
-                                      name="Industria"
-                                      id="Industria"
-                                      aria-describedby="text"
-                                      required
-                                      >
-                                      <option selected>-- Seleccione una opcion --</option>
-                                      <% for(var count=0; count < results.length; count++) { %>
-                                      <option value="<%= results[count].Id %>"><%= results[count].Industria %></option><% } %>
-                                      </select>
-                                  </div>
-                                  <div class="mb-3">
-                                      <label for="Pago" class="form-label">Documento pago?</label>
-                                      <select
-                                      class="form-control"
-                                      name="Pago"
-                                      id="Pago"
-                                      aria-describedby="text"
-                                      required
-                                      >
-                                      <option selected>-- Seleccione una opcion --</option>
-                                      <option value="SI">Si</option>
-                                      <option value="NO">No</option>
-                                      </select>
-                                  </div>
-                                  <div class="card-body p-2" style="margin-left: 20%;">
-
-                                      <input type="file" name="pdfFile" id="pdfFile"
-                                          class="btn btn-outline-danger m-1" required>
-                                      <button type="submit" class="btn btn-primary">Cargar documento</button>
-                                  </div>
-
-                              </form>
-                              
-                              <div style="margin-top: 15px;">
-                                  <embed id="vistaPrevia" type="application/pdf" width="100%" height="800px"
-                                      aria-controls="nodownload">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="Nombre" class="form-label"
+                  >Nombre del documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Nombre"
+                  id="Nombre"
+                />
               </div>
-          </div>
-      </div>
+              <div class="mb-3">
+                <label for="Abreviacion" class="form-label"
+                  >Abreviacion del documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Abreviacion"
+                  id="Abreviacion"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Version" class="form-label"
+                  >Version del documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Version"
+                  id="Version"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Descripcion" class="form-label"
+                  >Descripcion en español</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Descripcion"
+                  id="Descripcion"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Descripcion_ing" class="form-label"
+                  >Descripcion en ingles</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Descripcion_ing"
+                  id="Descripcion_ing"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Autor" class="form-label">Organismo</label>
+                <select
+                  class="form-control"
+                  name="Autor"
+                  id="Autor"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione una opcion --</option>
+                  <% for(var count=0; count < autores.length; count++) { %>
+                  <option value="<%= autores[count].Autor %>">
+                    <%= autores[count].Autor %>
+                  </option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="Pago" class="form-label">Documento pago?</label>
+                <select
+                  class="form-control"
+                  name="Pago"
+                  id="Pago"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione una opcion --</option>
+                  <option value="SI">Si</option>
+                  <option value="NO">No</option>
+                </select>
+              </div>
+              <div class="card-body p-2" style="margin-left: 20%">
+                <input
+                  type="file"
+                  name="pdfFile"
+                  id="pdfFile"
+                  class="btn btn-outline-danger m-1"
+                  required
+                />
+                <button type="submit" class="btn btn-primary">
+                  Cargar documento
+                </button>
+              </div>
+            </form>
 
-     <% }else { %>
-
-           <!--  Header Start -->
-  <%- include ('../partials/admi/headLE') %>
-  <!--  Header End -->
-  
-  <div class="container-fluid" style="overflow:scroll;height: calc(115vh - 80px);">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold mb-4"></h5>
-          <div class="card">
-            <div class="card-body">
-              <h1> No tiene los permisos requeridos</h1>
+            <div style="margin-top: 15px">
+              <embed
+                id="vistaPrevia"
+                type="application/pdf"
+                width="100%"
+                height="800px"
+                aria-controls="nodownload"
+              />
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-    <% }}}) %>
+<% }else{ if(user.Rol == "Editar" ){ %>
 
+<!--  Header Start -->
+<%- include ('../partials/admi/headED') %>
+<!--  Header End -->
+<%- include ('../partials/admi/NavDocumentos') %>
 
+<div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Cargar documento</h5>
+        <div class="card">
+          <div class="card-body">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="Nombre" class="form-label"
+                  >Nombre del documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Nombre"
+                  id="Nombre"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Abreviacion" class="form-label"
+                  >Abreviacion del documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Abreviacion"
+                  id="Abreviacion"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Version" class="form-label"
+                  >Version del documento</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Version"
+                  id="Version"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Descripcion" class="form-label"
+                  >Descripcion en español</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Descripcion"
+                  id="Descripcion"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Descripcion_ing" class="form-label"
+                  >Descripcion en ingles</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Descripcion_ing"
+                  id="Descripcion_ing"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="Autor" class="form-label">Organismo</label>
+                <select
+                  class="form-control"
+                  name="Autor"
+                  id="Autor"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione una opcion --</option>
+                  <% for(var count=0; count < autores.length; count++) { %>
+                  <option value="<%= autores[count].Autor %>">
+                    <%= autores[count].Autor %>
+                  </option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="Pago" class="form-label">Documento pago?</label>
+                <select
+                  class="form-control"
+                  name="Pago"
+                  id="Pago"
+                  aria-describedby="text"
+                  required
+                >
+                  <option selected>-- Seleccione una opcion --</option>
+                  <option value="SI">Si</option>
+                  <option value="NO">No</option>
+                </select>
+              </div>
+              <div class="card-body p-2" style="margin-left: 20%">
+                <input
+                  type="file"
+                  name="pdfFile"
+                  id="pdfFile"
+                  class="btn btn-outline-danger m-1"
+                  required
+                />
+                <button type="submit" class="btn btn-primary">
+                  Cargar documento
+                </button>
+              </div>
+            </form>
 
-    
-    <%- include ('../partials/admi/footer') %>
+            <div style="margin-top: 15px">
+              <embed
+                id="vistaPrevia"
+                type="application/pdf"
+                width="100%"
+                height="800px"
+                aria-controls="nodownload"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% }else { %>
+
+<!--  Header Start -->
+<%- include ('../partials/admi/headLE') %>
+<!--  Header End -->
+
+<div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4"></h5>
+        <div class="card">
+          <div class="card-body">
+            <h1>No tiene los permisos requeridos</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% }}}) %> <%- include ('../partials/admi/footer') %>
