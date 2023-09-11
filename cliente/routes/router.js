@@ -1084,6 +1084,8 @@ router.get("/logout", login.logout);
 router.get("/adlogout", adlogin.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
+//cargar masiva de usuarios
+router.post("/CargeMas", uploader.single("xlsxFile"));
 //actualizar datos de archivos
 router.post("/update", actualizar);
 //actualizar datos de tenant por el cliente
