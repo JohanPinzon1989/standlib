@@ -104,6 +104,19 @@ function findAutor(table, body) {
   });
 }
 
+//Validador y/o buscador de documento
+function findDoc(table, Nombre) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM ${table} WHERE Nombre=?`,
+      Nombre,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
 function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
     conexion.query(
@@ -231,5 +244,6 @@ module.exports = {
   findUsCli,
   findADU,
   findAutDU,
-  findAutor
+  findAutor,
+  findDoc
 };

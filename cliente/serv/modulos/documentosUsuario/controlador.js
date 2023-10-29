@@ -73,7 +73,7 @@ module.exports = function (dbInyect) {
           const asig = await db.findADU("usuario_documentos", documetoUs);
           let docUs;
           for (var count2 = 0; count2 < asig.length; count2++) {
-            docUs = await asig[count2].Id;;
+            docUs = await asig[count2].Id;
           }
           if (docUs > 0) {
             console.log("ya fue asignado");

@@ -34,6 +34,7 @@ const {
   actualizar,
   actualizarD,
   actualizarI,
+  uploadData,
 } = require("../serv/modulos/documentos");
 const { actualizarT, actualizarTC } = require("../serv/modulos/tenant");
 const {
@@ -1084,6 +1085,8 @@ router.get("/logout", login.logout);
 router.get("/adlogout", adlogin.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
+router.get("/uploadData", uploadData);
+
 //cargar masiva de usuarios
 router.post("/CargeMas", uploader.single("xlsxFile"));
 //actualizar datos de archivos
