@@ -27,7 +27,7 @@ module.exports = function (dbInyect) {
     var hoy = fecha().format("YYYY-MM-DD");
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.readFile(
-      "C:\\D\\SOFTMAT\\PROYECTOS - Documentos\\STANDLIB\\DOCUMENTOS\\Listar archivos.xlsm"
+      "C:\\Users\\johan.pinzon\\Videos\\PY\\standlib\\cliente\\public\\file\\Excel\\Listar archivos.xlsm"
     );
 
     const worksheet = workbook.getWorksheet(1); // Hoja 1
@@ -43,6 +43,7 @@ module.exports = function (dbInyect) {
     for (const row of data) {
       const [
         column1,
+        column2,
         Link,
         Organismo,
         column4,
@@ -50,7 +51,18 @@ module.exports = function (dbInyect) {
         Version,
         Año,
         TipoPago,
-      ] = row; // Ajusta esto según tu hoja de Excel
+        Link2,
+      ] = row; // Campos de excel
+      /*console.log(column1);
+      console.log(column2.result);
+      console.log(Link.result);
+      console.log(Organismo.result);
+      console.log(column4.result);
+      console.log(Nombre.result);
+      console.log(Version.result);
+      console.log(Año.result);
+      console.log(TipoPago.result);
+      console.log(Link2);*/
       const resul = await db.findDoc(Table, Nombre.result);
       let cont = 0;
       
@@ -73,7 +85,7 @@ module.exports = function (dbInyect) {
           AnoPublicacion: Año.result,
           Fecha_carga: `${hoy}`,
           Estado: "Activo",
-          linkDoc: Link.text,
+          linkDoc: Link.result,
           LinkImagen: null,
           Autor: Organismo.result,
           Pago: TipoPago.result,
@@ -83,8 +95,7 @@ module.exports = function (dbInyect) {
         console.log("Ya esta cargado el documento " + Nombre.result);
       }
     }
-
-    //res.result(result);
+    res.redirect("/lDoc");
   }
 
   async function add(req, res) {

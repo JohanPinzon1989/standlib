@@ -21,13 +21,13 @@
               <thead class="text-dark fs-4">
                 <tr>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Id</h6>
-                  </th>
-                  <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Nombre</h6>
                   </th>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Abreviacion</h6>
+                    <h6 class="fw-semibold mb-0">Version</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Año de publicacion</h6>
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Organismo</h6>
@@ -44,15 +44,15 @@
                 <% results.forEach((doc)=> { %>
                 <tr>
                   <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
-                  </td>
-                  <td class="border-bottom-0">
                     <h6 class="fw-semibold mb-1">
                       <%= doc.Nombre %>
                     </h6>
                   </td>
                   <td class="border-bottom-0">
-                    <p class="mb-0 fw-normal"><%= doc.Abreviacion %></p>
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.AnoPublicacion %></p>
                   </td>
                   <td class="border-bottom-0">
                     <p class="mb-0 fw-normal"><%= doc.Autor %></p>
@@ -118,20 +118,21 @@
                                 <input type="text" class="form-control" name="Nombre" id="Nombre" value="<%= doc.Nombre %>">
                             </div>
                             <div class="mb-3">
-                                <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
-                                <input type="text" class="form-control" name="Abreviacion" id="Abreviacion" value="<%= doc.Abreviacion %>">
-                            </div>
-                            <div class="mb-3">
                                 <label for="Version" class="form-label">Version del documento</label>
                                 <input type="text" class="form-control" name="Version" id="Version" value="<%= doc.Version %>">
                             </div>
                             <div class="mb-3">
-                                <label for="Descripcion" class="form-label">Descripcion en español</label>
-                                <textarea class="form-control" name="Descripcion" id="Descripcion"><%= doc.Descripcion %></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
-                                <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing"><%= doc.Descripcion_ing %></textarea>
+                              <label for="AnoPublicacion" class="form-label">Selecciona un Año:</label>
+                              <select class="form-control" id="AnoPublicacion" name="AnoPublicacion" aria-describedby="text" required>
+                                  <!-- Generar opciones de años -->
+                                  <option  value="<%= doc.AnoPublicacion%>"><%= doc.AnoPublicacion %></option>
+                                  <script>
+                                      var year = new Date().getFullYear(); // Obtener el año actual
+                                      for (var i = year; i >= year - 30; i--) {
+                                          document.write('<option value="' + i + '">' + i + '</option>');
+                                      }
+                                  </script>
+                              </select>
                             </div>
                             <div class="mb-3">
                               <label for="Estado" class="form-label">Estado del documento</label>

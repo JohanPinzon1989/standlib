@@ -1085,7 +1085,7 @@ router.get("/logout", login.logout);
 router.get("/adlogout", adlogin.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
-router.get("/uploadData", uploadData);
+router.use("/uploadData", uploadData);
 
 //cargar masiva de usuarios
 router.post("/CargeMas", uploader.single("xlsxFile"));
