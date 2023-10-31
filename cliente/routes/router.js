@@ -36,6 +36,7 @@ const {
   actualizarI,
   uploadData,
   convertPDF,
+  crearFolder,
 } = require("../serv/modulos/documentos");
 const { actualizarT, actualizarTC } = require("../serv/modulos/tenant");
 const {
@@ -1088,6 +1089,8 @@ router.get("/adlogout", adlogin.logout);
 router.post("/upload", uploader.single("pdfFile"), add);
 //carga masiva de documentos
 router.use("/uploadData", uploadData);
+//Crear carpetas para documentos
+router.use("/createFolder", crearFolder);
 //convertir pdf a imagenes
 router.use("/convertPDF", convertPDF);
 

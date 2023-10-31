@@ -7,6 +7,7 @@ const ExcelJS = require("exceljs");
 const pdf = require('pdf-poppler');
 const fs = require('fs');
 const path = require('path');
+const { error } = require("console");
 
 const Table = "documentos";
 
@@ -25,8 +26,9 @@ module.exports = function (dbInyect) {
     return db.find(Table, id);
   }
 
-  //Convertir pdf en imagenes
-  async function convertPDF(req, res) {
+  //Crear carpetas
+
+  async function crearFolder(req, res) {
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.readFile(
       "C:\\Users\\johan.pinzon\\Videos\\PY\\standlib\\cliente\\public\\file\\Excel\\Listar archivos.xlsm"
@@ -55,7 +57,7 @@ module.exports = function (dbInyect) {
         TipoPago,
         Link2,
       ] = row; // Campos de excel
-      console.log(column1);
+      /*console.log(column1);
       console.log(column2.text);
       console.log(Link.result);
       console.log(Organismo.result);
@@ -65,37 +67,66 @@ module.exports = function (dbInyect) {
       console.log(Año.result);
       console.log(TipoPago.result);
       console.log(Link2);
-      console.log("Nombre carpeta: "+Nombre.result+"_"+Version.result+"_"+Año.result);
-      
-      const rutaCompleta = path.join('C:/Users/johan.pinzon/Videos/PY/standlib/cliente/public/file/img', Nombre.result+"_"+Version.result+"_"+Año.result);
+      console.log("Nombre carpeta: "+Nombre.result+"_"+Version.result+"_"+Año.result);*/
+      let rutaPDF = column2.text;
+      const rutaOrganismo = path.join('C:/Users/johan.pinzon/Videos/PY/standlib/cliente/public/file/img/', Organismo.result);
+      const rutaCompleta = path.join('C:/Users/johan.pinzon/Videos/PY/standlib/cliente/public/file/img/'+Organismo.result+'/', Nombre.result+"_"+Version.result+"_"+Año.result);
       
       // Verificar si la carpeta ya existe
-      if (!fs.existsSync(rutaCompleta)) {
-        fs.mkdirSync(rutaCompleta);
-        console.log('Carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result +' creada');
-      } else {
-        console.log('La carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result+' ya existe.');
+      if (!fs.existsSync(rutaOrganismo)){
+        fs.mkdirSync(rutaOrganismo);
+        console.log('Carpeta '+Organismo.result+' creada');
+        if (!fs.existsSync(rutaCompleta)) {
+          fs.mkdirSync(rutaCompleta);
+          console.log('Carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result +' creada');
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+        } else {
+          console.log('La carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result+' ya existe.');
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+        }
+      }else{
+        console.log('La carpeta '+Organismo.result+' ya existe.');
+        if (!fs.existsSync(rutaCompleta)) {
+          fs.mkdirSync(rutaCompleta);
+          console.log('Carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result +' creada');
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+        } else {
+          console.log('La carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result+' ya existe.');
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+        }
       }
+    }
+    return console.log("Proceso terminado");
+  }
 
-      const pdfPath = column2.text; // Replace with the path to your source PDF file
-      const outputDir = 'C:/Users/johan.pinzon/Videos/PY/standlib/cliente/public/file/img/'+Nombre.result+"_"+Version.result+"_"+Año.result; // Replace with the directory where you want to save the images
+  //Convertir pdf en imagenes
+  async function convertPDF(pdfRoute,RutaSalida,NombrePdf) {
+    
+      
+      const pdfPath = pdfRoute; // Replace with the path to your source PDF file
+      const outputDir = RutaSalida; // Replace with the directory where you want to save the images
+      const NombreP = NombrePdf
+      console.log(pdfPath);
+      console.log(outputDir);
+      console.log("Nombre de la imagen "+NombreP);
 
       const convertOptions = {
         format: 'jpeg', // You can use other formats like 'png', 'tiff', etc.
         out_dir: outputDir,
-        out_prefix: Nombre.result+"_"+Version.result+"_"+Año.result, // Prefix for image filenames
+        out_prefix: NombreP, // Prefix for image filenames
       };
 
       pdf.convert(pdfPath, convertOptions)
         .then((info) => {
           console.log('Conversion successful');
           console.log(info);
+          return console.log("Convercion terminada");
         })
         .catch((error) => {
           console.error('Error converting PDF to images:', error);
         });
-    }
-    res.redirect("/lDoc");
+    
+    return console.log("Convercion terminada");
   }
 
   async function uploadData(res, req) {
@@ -270,5 +301,6 @@ module.exports = function (dbInyect) {
     actualizarI,
     uploadData,
     convertPDF,
+    crearFolder,
   };
 };
