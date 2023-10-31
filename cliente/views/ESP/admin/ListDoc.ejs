@@ -83,21 +83,14 @@
                   </td>
                   <!-- Modal de lectura -->
                   <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
+                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title"><%= doc.Nombre %></h5>
                           <button class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                          <object
-                            type="application/pdf"
-                            data="/<%= doc.LinkDoc %>#toolbar=0"
-                            width="100%"
-                            height="100%"
-                          >
-                          </object>
-                        </div>
+                          <img style="width: 1024px; align-content: center;" src="file/img/ANS/ASME ANS RA-S interpretations volume 2_1_2008/ASME ANS RA-S interpretations volume 2-1.jpg">
                       </div>
                     </div>
                   </div>

@@ -79,20 +79,20 @@ module.exports = function (dbInyect) {
         if (!fs.existsSync(rutaCompleta)) {
           fs.mkdirSync(rutaCompleta);
           console.log('Carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result +' creada');
-          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result);
         } else {
           console.log('La carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result+' ya existe.');
-          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result);
         }
       }else{
         console.log('La carpeta '+Organismo.result+' ya existe.');
         if (!fs.existsSync(rutaCompleta)) {
           fs.mkdirSync(rutaCompleta);
           console.log('Carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result +' creada');
-          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result);
         } else {
           console.log('La carpeta '+Nombre.result+"_"+Version.result+"_"+Año.result+' ya existe.');
-          convertPDF(rutaPDF,rutaCompleta,Nombre.result+"_"+Version.result+"_"+Año.result);
+          convertPDF(rutaPDF,rutaCompleta,Nombre.result);
         }
       }
     }
@@ -111,7 +111,7 @@ module.exports = function (dbInyect) {
       console.log("Nombre de la imagen "+NombreP);
 
       const convertOptions = {
-        format: 'jpeg', // You can use other formats like 'png', 'tiff', etc.
+        format: 'webp', // You can use other formats like 'png', 'tiff', etc.
         out_dir: outputDir,
         out_prefix: NombreP, // Prefix for image filenames
       };
@@ -121,13 +121,23 @@ module.exports = function (dbInyect) {
           console.log('Conversion successful');
           console.log(info);
           return console.log("Convercion terminada");
+
         })
         .catch((error) => {
           console.error('Error converting PDF to images:', error);
         });
+
+        fs.readdir(outputDir, function (err, archivos) {
+          if (err) {
+          onError(err);
+          return;
+          }
+          console.log(archivos);
+          });
     
     return console.log("Convercion terminada");
   }
+
 
   async function uploadData(res, req) {
     var fecha = require("moment");
