@@ -28,6 +28,10 @@ input[type=submit] {
     padding: 0
 }
 
+.toolbar {
+    display: none;
+}
+
 body {
     margin: 0;
     padding: 0;

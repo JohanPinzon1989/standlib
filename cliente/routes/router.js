@@ -35,6 +35,7 @@ const {
   actualizarD,
   actualizarI,
   uploadData,
+  convertPDF,
 } = require("../serv/modulos/documentos");
 const { actualizarT, actualizarTC } = require("../serv/modulos/tenant");
 const {
@@ -1085,7 +1086,10 @@ router.get("/logout", login.logout);
 router.get("/adlogout", adlogin.logout);
 //cargar archivos
 router.post("/upload", uploader.single("pdfFile"), add);
+//carga masiva de documentos
 router.use("/uploadData", uploadData);
+//convertir pdf a imagenes
+router.use("/convertPDF", convertPDF);
 
 //cargar masiva de usuarios
 router.post("/CargeMas", uploader.single("xlsxFile"));
