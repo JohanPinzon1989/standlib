@@ -116,6 +116,18 @@ function findDoc(table, Nombre) {
     );
   });
 }
+//Validador y/o buscador de imagenes
+function findImg(Nombre) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `SELECT * FROM docimg WHERE Nombre=?`,
+      Nombre,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 function findUsOrg(table, email) {
   return new Promise((resolve, reject) => {
@@ -245,5 +257,6 @@ module.exports = {
   findADU,
   findAutDU,
   findAutor,
-  findDoc
-};
+  findDoc,
+  findImg
+}
