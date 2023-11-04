@@ -175,11 +175,13 @@
                 <button class="btn-close" data-bs-dismiss="modal"></button>
               </div>
               <div class="modal-body">
-              <input type="file" name="pdfFile" class="btn btn-outline-danger m-1" required>
+              <input type="file" name="xlsxFile" class="btn btn-outline-danger m-1" required>
               </div>
               <div class="modal-footer">
-                <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%= user.Id %>">Cargar</a>
-              <a type="button" class="btn btn-success" href="/file/Excel/Masivo.xlsx" download="Masivo.xlsx">Descargar plantilla</a>
+                <div>
+                  <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal<%= user.Id %>">Cargar</a>
+                </div>                
+                  <a type="button" class="btn btn-success" href="/file/Excel/Masivo.xlsx" download="Masivo.xlsx">Descargar plantilla</a>
               </div>
             </div>
           </div>
