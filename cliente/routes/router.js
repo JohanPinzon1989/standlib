@@ -164,6 +164,39 @@ router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
   );
 });
 
+//Test visor documentos
+router.get("/LectorDoc", function (req, res) {
+        conexion.query(
+          "SELECT * FROM docimg WHERE IdDocumento = 8 order by Nombre asc LIMIT 15000 OFFSET 0;",
+          (error, results1) => {
+            if (error) {
+              throw error;
+            } else {
+              //console.log(results1);
+              res.render("ESP/admin/lectorDoc", {
+                imagenes: results1,
+              });
+            }
+          }
+        );
+});
+
+//ver documento
+router.post("/verDoc:Id", adlogin.isAuthenticated, (req, res) => {
+  const Id = req.params.Id;
+  conexion.query(
+    "SELECT FROM usuarios_standlib WHERE IdDocumento = ?",
+    [Id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
+        res.render("?");
+      }
+    }
+  );
+});
+
 router.post("/VDoc/ver", adlogin.isAuthenticated, controllerRouter.rDoc);
 
 //Listar usuarios de Organizacion

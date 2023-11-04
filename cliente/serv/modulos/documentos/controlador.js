@@ -267,7 +267,7 @@ module.exports = function (dbInyect) {
       out_prefix: NombreP, // Prefix for image filenames
     };
 
-    pdf.convert(pdfPath, convertOptions).then((info) => {
+    await pdf.convert(pdfPath, convertOptions).then((info) => {
         /*console.log('Conversion successful');
         console.log(info);*/
 
