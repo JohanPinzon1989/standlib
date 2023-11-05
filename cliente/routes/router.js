@@ -165,20 +165,45 @@ router.get("/lDoc", adlogin.isAuthenticated, function (req, res) {
 });
 
 //Test visor documentos
-router.get("/LectorDoc", function (req, res) {
+router.get("/LectorDoc:d", adlogin.isAuthenticated, function (req, res) {
+  const D = req.params.d;
+  conexion.query(
+    `select * from usuarios_standlib as u
+  inner join controlcona as c
+  where c.Token = ? and c.IdC = u.Id`,
+    req.cookies.jwt,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
         conexion.query(
-          "SELECT * FROM docimg WHERE IdDocumento = 8 order by Nombre asc LIMIT 15000 OFFSET 0;",
+          "SELECT * FROM documentos WHERE Id = ? order by Nombre asc LIMIT 15000 OFFSET 0;",
+          [D],
           (error, results1) => {
             if (error) {
               throw error;
             } else {
-              //console.log(results1);
-              res.render("ESP/admin/lectorDoc", {
-                imagenes: results1,
-              });
+              conexion.query(
+                "SELECT * FROM docimg WHERE IdDocumento = ? order by Nombre asc LIMIT 15000 OFFSET 0;",
+                [D],
+                (error, results2) => {
+                  if (error) {
+                    throw error;
+                  } else {
+                    res.render("ESP/admin/lectorDoc", {
+                      usuario: results,
+                      documento: results1,
+                      imagenes: results2,
+                    });
+                  }
+                }
+              );
             }
           }
         );
+      }
+    }
+  );
 });
 
 //ver documento
