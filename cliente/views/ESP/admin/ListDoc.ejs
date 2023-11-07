@@ -76,24 +76,9 @@
                         <ul class="dropdown-menu">
                           <li><a type="button" class="dropdown-item" href="/LectorDoc<%= doc.Id %>" target="_blank">Leer</a></li>
                           <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRem<%= doc.Id %>">Remplazar archivo</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalImg<%= doc.Id %>">Cargar imagen</a></li>
                         </ul>
                       </div>       
                   </td>
-                  <!-- Modal de lectura -->
-                  <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <img style="width: 1024px; align-content: center;" src="file/img/ANS/ASME ANS RA-S interpretations volume 2_1_2008/ASME ANS RA-S interpretations volume 2-1.jpg">
-                      </div>
-                    </div>
-                  </div>
 
                   <!-- Modal de edicion -->
                   <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
@@ -180,52 +165,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Modal remplazar documento-->
-                  <div class="modal fade" id="ModalRem<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadD" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar documento</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Cargar imagen del documento-->
-                  <div class="modal fade" id="ModalImg<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadI" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar Imagen</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </tr>
                 <% }) %>
               </tbody>
@@ -259,13 +198,13 @@
               <thead class="text-dark fs-4">
                 <tr>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Id</h6>
-                  </th>
-                  <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Nombre</h6>
                   </th>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Abreviacion</h6>
+                    <h6 class="fw-semibold mb-0">Version</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Año de publicacion</h6>
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Organismo</h6>
@@ -282,15 +221,15 @@
                 <% results.forEach((doc)=> { %>
                 <tr>
                   <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
-                  </td>
-                  <td class="border-bottom-0">
                     <h6 class="fw-semibold mb-1">
                       <%= doc.Nombre %>
                     </h6>
                   </td>
                   <td class="border-bottom-0">
-                    <p class="mb-0 fw-normal"><%= doc.Abreviacion %></p>
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.AnoPublicacion %></p>
                   </td>
                   <td class="border-bottom-0">
                     <p class="mb-0 fw-normal"><%= doc.Autor %></p>
@@ -312,33 +251,11 @@
                         <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
+                          <li><a type="button" class="dropdown-item" href="/LectorDoc<%= doc.Id %>" target="_blank">Leer</a></li>
                           <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Editar</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalRem<%= doc.Id %>">Remplazar archivo</a></li>
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalImg<%= doc.Id %>">Cargar imagen</a></li>
                         </ul>
                       </div>       
                   </td>
-                  <!-- Modal de lectura -->
-                  <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <object
-                            type="application/pdf"
-                            data="/<%= doc.LinkDoc %>"
-                            width="100%"
-                            height="100%"
-                          >
-                          </object>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
                   <!-- Modal de edicion -->
                   <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">
@@ -356,20 +273,21 @@
                                 <input type="text" class="form-control" name="Nombre" id="Nombre" value="<%= doc.Nombre %>">
                             </div>
                             <div class="mb-3">
-                                <label for="Abreviacion" class="form-label">Abreviacion del documento</label>
-                                <input type="text" class="form-control" name="Abreviacion" id="Abreviacion" value="<%= doc.Abreviacion %>">
-                            </div>
-                            <div class="mb-3">
                                 <label for="Version" class="form-label">Version del documento</label>
                                 <input type="text" class="form-control" name="Version" id="Version" value="<%= doc.Version %>">
                             </div>
                             <div class="mb-3">
-                                <label for="Descripcion" class="form-label">Descripcion en español</label>
-                                <textarea class="form-control" name="Descripcion" id="Descripcion"><%= doc.Descripcion %></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="Descripcion_ing" class="form-label">Descripcion en ingles</label>
-                                <textarea class="form-control" name="Descripcion_ing" id="Descripcion_ing"><%= doc.Descripcion_ing %></textarea>
+                              <label for="AnoPublicacion" class="form-label">Selecciona un Año:</label>
+                              <select class="form-control" id="AnoPublicacion" name="AnoPublicacion" aria-describedby="text" required>
+                                  <!-- Generar opciones de años -->
+                                  <option  value="<%= doc.AnoPublicacion%>"><%= doc.AnoPublicacion %></option>
+                                  <script>
+                                      var year = new Date().getFullYear(); // Obtener el año actual
+                                      for (var i = year; i >= year - 30; i--) {
+                                          document.write('<option value="' + i + '">' + i + '</option>');
+                                      }
+                                  </script>
+                              </select>
                             </div>
                             <div class="mb-3">
                               <label for="Estado" class="form-label">Estado del documento</label>
@@ -424,52 +342,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Modal remplazar documento-->
-                  <div class="modal fade" id="ModalRem<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadD" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar documento</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Cargar imagen del documento-->
-                  <div class="modal fade" id="ModalImg<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/uploadI" method="POST" enctype="multipart/form-data">
-                            <input id="Id" name="Id" value="<%= doc.Id %>" type="hidden" />
-                            <input type="file" name="pdfFile" id="pdfFile"
-                                class="btn btn-outline-danger m-1" required>                         
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-secondary">Cargar Imagen</button>
-                        </form>
-                          <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </tr>
                 <% }) %>
               </tbody>
@@ -501,13 +373,13 @@
               <thead class="text-dark fs-4">
                 <tr>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Id</h6>
-                  </th>
-                  <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Nombre</h6>
                   </th>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Abreviacion</h6>
+                    <h6 class="fw-semibold mb-0">Version</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Año de publicacion</h6>
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Organismo</h6>
@@ -524,15 +396,15 @@
                 <% results.forEach((doc)=> { %>
                 <tr>
                   <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0"><%= doc.Id %></h6>
-                  </td>
-                  <td class="border-bottom-0">
                     <h6 class="fw-semibold mb-1">
                       <%= doc.Nombre %>
                     </h6>
                   </td>
                   <td class="border-bottom-0">
-                    <p class="mb-0 fw-normal"><%= doc.Abreviacion %></p>
+                    <p class="mb-0 fw-normal"><%= doc.Version %></p>
+                  </td>
+                  <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal"><%= doc.AnoPublicacion %></p>
                   </td>
                   <td class="border-bottom-0">
                     <p class="mb-0 fw-normal"><%= doc.Autor %></p>
@@ -554,31 +426,11 @@
                         <button class="btn btn-secondary ti ti-list-check" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalLect<%= doc.Id %>">Leer</a></li>
+                          <li><a type="button" class="dropdown-item" href="/LectorDoc<%= doc.Id %>" target="_blank">Leer</a></li>
                           <li><a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal<%= doc.Id %>">Consulta</a></li>
                         </ul>
                       </div>       
                   </td>
-                  <!-- Modal de lectura -->
-                  <div class="modal fade" id="ModalLect<%= doc.Id %>" data-bs-backdrop="static" >
-                    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title"><%= doc.Nombre %></h5>
-                          <button class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                          <object
-                            type="application/pdf"
-                            data="/<%= doc.LinkDoc %>"
-                            width="100%"
-                            height="100%"
-                          >
-                          </object>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
                   <!-- Consulta  -->
                   <div class="modal fade" id="Modal<%= doc.Id %>" data-bs-backdrop="static">

@@ -24,7 +24,7 @@
                     <p class="card-text">Version: <%= d.Version %></p>
                     <p class="card-text"><%= d.AnoPublicacion %></p>
                   </div>
-                  <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalLect<%= d.Id %>">Leer</a>
+                  <a type="button" class="btn btn-secondary" href="/LectorDoc<%= d.Id %>" target="_blank">Leer</a>
                 </div>
               </div>
               <!-- Modal de lectura -->
@@ -76,10 +76,12 @@
               <div class="col">
                 <div class="card card" style="width: 13rem; height: 18rem;">
                   <div class="card-body">
-                    <h5 class="card-title"> <%= d.NombDoc %></h5>
-                    <p class="card-text"><%= d.Descripcion %></p>
+                    <h5 class="card-title"> <%= d.Nombre %></h5>
+                    <h5 class="card-title"> <%= d.Autor %></h5>
+                    <p class="card-text">Version: <%= d.Version %></p>
+                    <p class="card-text"><%= d.AnoPublicacion %></p>
                   </div>
-                  <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalLect<%= d.Id %>">Leer</a>
+                  <a type="button" class="btn btn-secondary" href="/LectorDoc<%= d.Id %>" target="_blank">Leer</a>
                 </div>
               </div>
               <!-- Modal de lectura -->
@@ -110,7 +112,6 @@
   </div>
   </div>
 
-
      <% }else { %>
 
            <!--  Header Start -->
@@ -131,10 +132,12 @@
               <div class="col">
                 <div class="card card" style="width: 13rem; height: 18rem;">
                   <div class="card-body">
-                    <h5 class="card-title"> <%= d.NombDoc %></h5>
-                    <p class="card-text"><%= d.Descripcion %></p>
+                    <h5 class="card-title"> <%= d.Nombre %></h5>
+                    <h5 class="card-title"> <%= d.Autor %></h5>
+                    <p class="card-text">Version: <%= d.Version %></p>
+                    <p class="card-text"><%= d.AnoPublicacion %></p>
                   </div>
-                  <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#ModalLect<%= d.Id %>">Leer</a>
+                  <a type="button" class="btn btn-secondary" href="/LectorDoc<%= d.Id %>" target="_blank">Leer</a>
                 </div>
               </div>
               <!-- Modal de lectura -->
