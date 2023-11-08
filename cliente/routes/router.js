@@ -76,16 +76,27 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
         throw error;
       } else {
         conexion.query(
-          `select * from documentos where Estado = "Activo" and Pago = "NO" order by Nombre asc`,
+          `select * from documentos where Estado = "Activo" order by AnoPublicacion desc`,
           req.cookies.jwt,
           (error, results1) => {
             if (error) {
               throw error;
             } else {
-              res.render("ESP/admin/index", {
-                usuario: results,
-                results: results1,
-              });
+              conexion.query(
+                `select * from autores where Estado = "Activo" order by Autor asc`,
+                req.cookies.jwt,
+                (error, results2) => {
+                  if (error) {
+                    throw error;
+                  } else {
+                    res.render("ESP/admin/index", {
+                      usuario: results,
+                      results: results1,
+                      autores: results2,
+                    });
+                  }
+                }
+              );
             }
           }
         );

@@ -1,174 +1,333 @@
-<%- include ('../partials/admi/header') %>
+<%- include ('../partials/admi/header') %> <% usuario.forEach((user)=> { if
+(user.Rol == "Administrar") {%>
+<!--  Header Start -->
+<%- include ('../partials/admi/head') %>
+<!--  Header End -->
 
-<% usuario.forEach((user)=> { 
-  if (user.Rol == "Administrar") {%>
-  <!--  Header Start -->
-  <%- include ('../partials/admi/head') %>
-  <!--  Header End -->
-  <div
-  class="container-fluid"
-  style="overflow: scroll; height: calc(115vh - 80px)"
->
-  <div class="container-fluid">
-      <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Documentos gratuitos</h5>
-        <div class="card text-center">
-          <div class="card-body">
-            <div class="row row-cols-1 row-cols-md-4 g-4 scroll-sidebar">
-              <% results.forEach((d)=> {%>
-              <div class="col">
-                <div class="card card" style="width: 13rem; height: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title"> <%= d.Nombre %></h5>
-                    <h5 class="card-title"> <%= d.Autor %></h5>
-                    <p class="card-text">Version: <%= d.Version %></p>
-                    <p class="card-text"><%= d.AnoPublicacion %></p>
-                  </div>
-                  <a type="button" class="btn btn-secondary" href="/LectorDoc<%= d.Id %>" target="_blank">Leer</a>
-                </div>
-              </div>
-              <!-- Modal de lectura -->
-              <div class="modal fade" id="ModalLect<%= d.Id %>" data-bs-backdrop="static" >
-                <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title"><%= d.Nombre %></h5>
-                      <button class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                      <object
-                        type="application/pdf"
-                        data="/<%= d.LinkDoc %>"
-                        width="100%"
-                        height="100%"
-                      >
-                      </object>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% }) %>
-            </div> 
-          </div>
-        </div>
+<div class="container-fluid" style="overflow: scroll; height: calc(115vh - 80px)">
+  <div class="card-body p-2 text-center" id="filterContainer">
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Primer selector: Organismo -->
+        <label class="form-label">Organismo:</label>
+        <select class="form-control" id="filterAuthor">
+          <option selected value="todos">Todos los organismos</option>
+          <% autores.forEach((a) => { %>
+            <option value="<%= a.Autor %>"><%= a.Autor %></option>
+          <% }); %>
+        </select>
       </div>
+      <div class="col-md-4">
+        <!-- Segundo selector: Versión -->
+        <label class="form-label">Versión:</label>
+        <select class="form-control" id="filterVersion">
+          <option selected value="todas">Todas las versiones</option>
+          <% results.forEach((d) => { %>
+            <option value="<%= d.Version %>"><%= d.Version %></option>
+          <% }); %>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <!-- Tercer selector: Año de publicación -->
+        <label class="form-label">Año de publicación:</label>
+        <select class="form-control" id="filterYear">
+          <option selected value="todos">Todos los años</option>
+          <% results.forEach((d) => { %>
+            <option value="<%= d.AnoPublicacion %>"><%= d.AnoPublicacion %></option>
+          <% }); %>
+        </select>
+      </div>
+    </div>
   </div>
-  </div>
-
-    <% }else{ 
-      if(user.Rol == "Editar" ){ %>
-
-         <!--  Header Start -->
-  <%- include ('../partials/admi/headED') %>
-  <!--  Header End -->
   
-  <div
-  class="container-fluid"
-  style="overflow: scroll; height: calc(115vh - 80px)"
->
-  <div class="container-fluid">
-      <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Documentos gratuitos</h5>
-        <div class="card text-center">
-          <div class="card-body">
-            <div class="row row-cols-1 row-cols-md-4 g-4 scroll-sidebar">
-              <% results.forEach((d)=> {%>
-              <div class="col">
-                <div class="card card" style="width: 13rem; height: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title"> <%= d.Nombre %></h5>
-                    <h5 class="card-title"> <%= d.Autor %></h5>
-                    <p class="card-text">Version: <%= d.Version %></p>
-                    <p class="card-text"><%= d.AnoPublicacion %></p>
-                  </div>
-                  <a type="button" class="btn btn-secondary" href="/LectorDoc<%= d.Id %>" target="_blank">Leer</a>
-                </div>
-              </div>
-              <!-- Modal de lectura -->
-              <div class="modal fade" id="ModalLect<%= d.Id %>" data-bs-backdrop="static" >
-                <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title"><%= d.Nombre %></h5>
-                      <button class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                      <object
-                        type="application/pdf"
-                        data="/<%= d.LinkDoc %>"
-                        width="100%"
-                        height="100%"
-                      >
-                      </object>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% }) %>
-            </div> 
-          </div>
-        </div>
-      </div>
-  </div>
-  </div>
 
-     <% }else { %>
+  <div class="container py-4">
+    <!--<div class="pagination justify-content-center">
+      <button id="prevPage" class="page-item btn btn-info">Anterior</button>
+      <span id="currentPage">1</span> de <span id="totalPages">1</span>
+      <button id="nextPage" class="page-item btn btn-info">Siguiente</button>
+    </div>-->
+    <ul class="pagination justify-content-center">
+      <li class="page-item active">
+        <a class="page-link" id="prevPage">Anterior</a>
+      </li>
+      <li class="page-item disabled">
+        <a class="page-link" id="currentPage">1</a>
+      </li>
+      <li class="page-item disabled">
+        <a class="page-link">de</a>
+      </li>
+      <li class="page-item disabled">
+       <a class="page-link" id="totalPages">1</a>
+      </li>
+      <li class="page-item active">
+        <a class="page-link" id="nextPage">Siguiente</a>
+      </li>
 
-           <!--  Header Start -->
-  <%- include ('../partials/admi/headLE') %>
-  <!--  Header End -->
+    </ul>
+    <div class="row py-4" id="contentContainer"></div>
+  </div>
+</div>
+
+<script>
+  // Corrigiendo la asignación de r y la conversión JSON
+  const r = <%- JSON.stringify(results) %>;
+
+  const itemsPerPage = 12; // Cambiar a 8 tarjetas por página
+  let currentPage = 1;
+
+  // Filtrar las tarjetas según las selecciones del usuario
+  function filterItems() {
+    const selectedAuthor = document.getElementById('filterAuthor').value;
+    const selectedVersion = document.getElementById('filterVersion').value;
+    const selectedYear = document.getElementById('filterYear').value;
+
+    const filteredItems = r.filter((d) => {
+      return (
+        (selectedAuthor === 'todos' || d.Autor === selectedAuthor) &&
+        (selectedVersion === 'todas' || d.Version === selectedVersion) &&
+        (selectedYear === 'todos' || d.AnoPublicacion === selectedYear)
+      );
+    });
+
+    return filteredItems;
+  }
+
+  function showItemsOnPage() {
+    const filteredItems = filterItems();
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const itemsToDisplay = filteredItems.slice(startIndex, endIndex);
+
+    const contentContainer = document.getElementById('contentContainer');
+    contentContainer.innerHTML = '';
+
+    itemsToDisplay.forEach((d) => {
+      const colDiv = document.createElement('div');
+          colDiv.classList.add('col-md-3'); // Bootstrap grid column class
   
-  <div
+          const cardDiv = document.createElement('div');
+          cardDiv.classList.add('card', 'mb-4'); // Add margin bottom for spacing
+  
+          const cardBody = document.createElement('div');
+          cardBody.classList.add('card-body');
+  
+          const title = document.createElement('h5');
+          title.classList.add('card-title', 'text-center');
+          title.textContent = d.Nombre;
+          cardBody.appendChild(title);
+  
+          const author = document.createElement('h5');
+          author.classList.add('card-title', 'text-center');
+          author.textContent = d.Autor;
+          cardBody.appendChild(author);
+  
+          const version = document.createElement('p');
+          version.classList.add('card-text', 'text-center');
+          version.textContent = `Version: ${d.Version}`;
+          cardBody.appendChild(version);
+  
+          const publicationYear = document.createElement('p');
+          publicationYear.classList.add('card-text', 'text-center');
+          publicationYear.textContent = d.AnoPublicacion;
+          cardBody.appendChild(publicationYear);
+  
+          const button = document.createElement('a');
+          button.setAttribute('type', 'button');
+          button.classList.add('btn', d.Pago === 'No' ? 'btn-secondary' : 'btn-primary', 'btn-block');
+          button.href = d.Pago === 'No' ? `/LectorDoc`+d.Id : '';
+          button.textContent = d.Pago === 'No' ? 'Leer' : 'No disponible';
+          if (d.Pago === 'No') {
+              button.target = '_blank';
+          } else {
+              button.setAttribute('data-bs-toggle', 'modal');
+              button.setAttribute('data-bs-target', `#ModalLect`);
+          }
+          cardBody.appendChild(button);
+
+      cardDiv.appendChild(cardBody);
+      colDiv.appendChild(cardDiv);
+      contentContainer.appendChild(colDiv);
+    });
+  }
+
+  function updatePagination() {
+    const filteredItems = filterItems();
+    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+    const currentPageSpan = document.getElementById('currentPage');
+    currentPageSpan.textContent = currentPage;
+
+    const totalPagesSpan = document.getElementById('totalPages');
+    totalPagesSpan.textContent = totalPages;
+
+    showItemsOnPage();
+  }
+
+  const prevPageButton = document.getElementById('prevPage');
+  prevPageButton.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      updatePagination();
+    }
+  });
+
+  const nextPageButton = document.getElementById('nextPage');
+  nextPageButton.addEventListener('click', () => {
+    const filteredItems = filterItems();
+    if (currentPage < Math.ceil(filteredItems.length / itemsPerPage)) {
+      currentPage++;
+      updatePagination();
+    }
+  });
+
+  // Agregar un evento de cambio a los selectores para actualizar las tarjetas
+  const filterAuthor = document.getElementById('filterAuthor');
+  filterAuthor.addEventListener('change', updatePagination);
+
+  const filterVersion = document.getElementById('filterVersion');
+  filterVersion.addEventListener('change', updatePagination);
+
+  const filterYear = document.getElementById('filterYear');
+  filterYear.addEventListener('change', updatePagination);
+
+  updatePagination();
+</script>
+
+  
+
+<% }else{ if(user.Rol == "Editar" ){ %>
+
+<!--  Header Start -->
+<%- include ('../partials/admi/headED') %>
+<!--  Header End -->
+
+<div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
+  <div class="container-fluid" id="contentContainer">
+    <div class="card-body">
+      <h5 class="card-title fw-semibold mb-4">Documentos gratuitos</h5>
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="row row-cols-1 row-cols-md-4 g-4 scroll-sidebar">
+            <% results.forEach((d)=> {%>
+            <div class="col">
+              <div class="card card" style="width: 13rem; height: 18rem">
+                <div class="card-body">
+                  <h5 class="card-title"><%= d.Nombre %></h5>
+                  <h5 class="card-title"><%= d.Autor %></h5>
+                  <p class="card-text">Version: <%= d.Version %></p>
+                  <p class="card-text"><%= d.AnoPublicacion %></p>
+                </div>
+                <a
+                  type="button"
+                  class="btn btn-secondary"
+                  href="/LectorDoc<%= d.Id %>"
+                  target="_blank"
+                  >Leer</a
+                >
+              </div>
+            </div>
+            <!-- Modal de lectura -->
+            <div
+              class="modal fade"
+              id="ModalLect<%= d.Id %>"
+              data-bs-backdrop="static"
+            >
+              <div
+                class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered"
+              >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"><%= d.Nombre %></h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <object
+                      type="application/pdf"
+                      data="/<%= d.LinkDoc %>"
+                      width="100%"
+                      height="100%"
+                    ></object>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% }else { %>
+
+<!--  Header Start -->
+<%- include ('../partials/admi/headLE') %>
+<!--  Header End -->
+
+<div
   class="container-fluid"
   style="overflow: scroll; height: calc(115vh - 80px)"
 >
   <div class="container-fluid">
-      <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Documentos gratuitos</h5>
-        <div class="card text-center">
-          <div class="card-body">
-            <div class="row row-cols-1 row-cols-md-4 g-4 scroll-sidebar">
-              <% results.forEach((d)=> {%>
-              <div class="col">
-                <div class="card card" style="width: 13rem; height: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title"> <%= d.Nombre %></h5>
-                    <h5 class="card-title"> <%= d.Autor %></h5>
-                    <p class="card-text">Version: <%= d.Version %></p>
-                    <p class="card-text"><%= d.AnoPublicacion %></p>
+    <div class="card-body">
+      <h5 class="card-title fw-semibold mb-4">Documentos gratuitos</h5>
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="row row-cols-1 row-cols-md-4 g-4 scroll-sidebar">
+            <% results.forEach((d)=> {%>
+            <div class="col">
+              <div class="card card" style="width: 13rem; height: 18rem">
+                <div class="card-body">
+                  <h5 class="card-title"><%= d.Nombre %></h5>
+                  <h5 class="card-title"><%= d.Autor %></h5>
+                  <p class="card-text">Version: <%= d.Version %></p>
+                  <p class="card-text"><%= d.AnoPublicacion %></p>
+                </div>
+                <a
+                  type="button"
+                  class="btn btn-secondary"
+                  href="/LectorDoc<%= d.Id %>"
+                  target="_blank"
+                  >Leer</a
+                >
+              </div>
+            </div>
+            <!-- Modal de lectura -->
+            <div
+              class="modal fade"
+              id="ModalLect<%= d.Id %>"
+              data-bs-backdrop="static"
+            >
+              <div
+                class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered"
+              >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"><%= d.Nombre %></h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
                   </div>
-                  <a type="button" class="btn btn-secondary" href="/LectorDoc<%= d.Id %>" target="_blank">Leer</a>
+                  <div class="modal-body">
+                    <object
+                      type="application/pdf"
+                      data="/<%= d.LinkDoc %>"
+                      width="100%"
+                      height="100%"
+                    ></object>
+                  </div>
                 </div>
               </div>
-              <!-- Modal de lectura -->
-              <div class="modal fade" id="ModalLect<%= d.Id %>" data-bs-backdrop="static" >
-                <div class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title"><%= d.Nombre %></h5>
-                      <button class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                      <object
-                        type="application/pdf"
-                        data="/<%= d.LinkDoc %>"
-                        width="100%"
-                        height="100%"
-                      >
-                      </object>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% }) %>
-            </div> 
+            </div>
+            <% }) %>
           </div>
         </div>
       </div>
+    </div>
   </div>
-  </div>
+</div>
 
-
-    <% }}}) %>
-
-    <%-include('../partials/admi/footer') %> 
+<% }}}) %> <%-include('../partials/admi/footer') %>
