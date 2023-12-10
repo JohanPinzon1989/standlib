@@ -89,11 +89,33 @@ router.get("/ia", adlogin.isAuthenticated, (req, res) => {
                   if (error) {
                     throw error;
                   } else {
-                    res.render("ESP/admin/index", {
-                      usuario: results,
-                      results: results1,
-                      autores: results2,
-                    });
+                    conexion.query(
+                      `select distinct Version from documentos order by Version asc`,
+                      req.cookies.jwt,
+                      (error, results3) => {
+                        if (error) {
+                          throw error;
+                        } else {
+                          conexion.query(
+                            `select distinct AnoPublicacion from documentos order by AnoPublicacion desc`,
+                            req.cookies.jwt,
+                            (error, results4) => {
+                              if (error) {
+                                throw error;
+                              } else {
+                                res.render("ESP/admin/index", {
+                                  usuario: results,
+                                  results: results1,
+                                  autores: results2,
+                                  version: results3,
+                                  año: results4,
+                                });
+                              }
+                            }
+                          );
+                        }
+                      }
+                    );
                   }
                 }
               );

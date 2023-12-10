@@ -4,7 +4,10 @@
 <%- include ('../partials/admi/head') %>
 <!--  Header End -->
 
-<div class="container-fluid" style="overflow: scroll; height: calc(115vh - 80px)">
+<div
+  class="container-fluid"
+  style="overflow: scroll; height: calc(115vh - 80px)"
+>
   <div class="card-body p-2 text-center" id="filterContainer">
     <div class="row">
       <div class="col-md-4">
@@ -13,7 +16,7 @@
         <select class="form-control" id="filterAuthor">
           <option selected value="todos">Todos los organismos</option>
           <% autores.forEach((a) => { %>
-            <option value="<%= a.Autor %>"><%= a.Autor %></option>
+          <option value="<%= a.Autor %>"><%= a.Autor %></option>
           <% }); %>
         </select>
       </div>
@@ -22,8 +25,8 @@
         <label class="form-label">Versión:</label>
         <select class="form-control" id="filterVersion">
           <option selected value="todas">Todas las versiones</option>
-          <% results.forEach((d) => { %>
-            <option value="<%= d.Version %>"><%= d.Version %></option>
+          <% version.forEach((v) => { %>
+          <option value="<%= v.Version %>"><%= v.Version %></option>
           <% }); %>
         </select>
       </div>
@@ -32,14 +35,37 @@
         <label class="form-label">Año de publicación:</label>
         <select class="form-control" id="filterYear">
           <option selected value="todos">Todos los años</option>
-          <% results.forEach((d) => { %>
-            <option value="<%= d.AnoPublicacion %>"><%= d.AnoPublicacion %></option>
+          <% año.forEach((a) => { %>
+          <option value="<%= a.AnoPublicacion %>">
+            <%= a.AnoPublicacion %>
+          </option>
           <% }); %>
         </select>
       </div>
     </div>
+
+    <!-- Modal de lectura -->
+    <div
+    class="modal fade"
+    id="ModalLect"
+    data-bs-backdrop="static"
+  >
+    <div
+      class="modal-dialog modal-fullscreen modal-dialog-scrollable modal-dialog-centered"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Documento de pago</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Contactese con nosotros</p>
+        </div>
+      </div>
+    </div>
   </div>
-  
+
+  </div>
 
   <div class="container py-4">
     <!--<div class="pagination justify-content-center">
@@ -58,143 +84,150 @@
         <a class="page-link">de</a>
       </li>
       <li class="page-item disabled">
-       <a class="page-link" id="totalPages">1</a>
+        <a class="page-link" id="totalPages">1</a>
       </li>
       <li class="page-item active">
         <a class="page-link" id="nextPage">Siguiente</a>
       </li>
-
     </ul>
     <div class="row py-4" id="contentContainer"></div>
   </div>
 </div>
 
 <script>
-  // Corrigiendo la asignación de r y la conversión JSON
-  const r = <%- JSON.stringify(results) %>;
+    // Corrigiendo la asignación de r y la conversión JSON
+    const r = <%- JSON.stringify(results) %>;
 
-  const itemsPerPage = 12; // Cambiar a 8 tarjetas por página
-  let currentPage = 1;
+    const itemsPerPage = 12; // Cambiar a 8 tarjetas por página
+    let currentPage = 1;
 
-  // Filtrar las tarjetas según las selecciones del usuario
-  function filterItems() {
-    const selectedAuthor = document.getElementById('filterAuthor').value;
-    const selectedVersion = document.getElementById('filterVersion').value;
-    const selectedYear = document.getElementById('filterYear').value;
+    // Filtrar las tarjetas según las selecciones del usuario
+    function filterItems() {
+      const selectedAuthor = document.getElementById('filterAuthor').value;
+      const selectedVersion = document.getElementById('filterVersion').value;
+      const selectedYear = document.getElementById('filterYear').value;
 
-    const filteredItems = r.filter((d) => {
-      return (
-        (selectedAuthor === 'todos' || d.Autor === selectedAuthor) &&
-        (selectedVersion === 'todas' || d.Version === selectedVersion) &&
-        (selectedYear === 'todos' || d.AnoPublicacion === selectedYear)
-      );
+      const filteredItems = r.filter((d) => {
+        return (
+          (selectedAuthor === 'todos' || d.Autor === selectedAuthor) &&
+          (selectedVersion === 'todas' || d.Version === selectedVersion) &&
+          (selectedYear === 'todos' || d.AnoPublicacion === selectedYear)
+        );
+      });
+
+      return filteredItems;
+    }
+
+    function showItemsOnPage() {
+      const filteredItems = filterItems();
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const itemsToDisplay = filteredItems.slice(startIndex, endIndex);
+
+      const contentContainer = document.getElementById('contentContainer');
+      contentContainer.innerHTML = '';
+
+      itemsToDisplay.forEach((d) => {
+        const colDiv = document.createElement('div');
+            colDiv.classList.add('col-md-3'); // Bootstrap grid column class
+
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('card', 'mb-4'); // Add margin bottom for spacing
+
+            const cardBody = document.createElement('div');
+            cardBody.classList.add('card-body');
+
+            const title = document.createElement('h5');
+            title.classList.add('card-title', 'text-center');
+            title.textContent = d.Nombre;
+            cardBody.appendChild(title);
+
+            const author = document.createElement('h5');
+            author.classList.add('card-title', 'text-center');
+            author.textContent = d.Autor;
+            cardBody.appendChild(author);
+
+            const version = document.createElement('p');
+            version.classList.add('card-text', 'text-center');
+            version.textContent = `Version: ${d.Version}`;
+            cardBody.appendChild(version);
+
+            const publicationYear = document.createElement('p');
+            publicationYear.classList.add('card-text', 'text-center');
+            publicationYear.textContent = d.AnoPublicacion;
+            cardBody.appendChild(publicationYear);
+
+            const button = document.createElement('a');
+  button.setAttribute('type', 'button');
+  button.classList.add('btn', d.Pago === 'No' ? 'btn-secondary' : 'btn-primary', 'btn-block', 'w-100');
+  button.href = d.Pago === 'No' ? `/LectorDoc` + d.Id : '';
+  button.textContent = d.Pago === 'No' ? 'Leer' : 'No disponible';
+
+  if (d.Pago === 'No') {
+    button.target = '_blank';
+  } else {
+    button.setAttribute('data-bs-toggle', 'modal');
+    button.setAttribute('data-bs-target', `#ModalLect`);
+    // Agrega un evento click al botón para abrir el modal cuando se hace clic
+    button.addEventListener('click', function () {
+      // Abre el modal
+      var myModal = new bootstrap.Modal(document.getElementById('ModalLect'));
+      myModal.show();
+    });
+  }
+
+  cardBody.appendChild(button);
+
+
+
+        cardDiv.appendChild(cardBody);
+        colDiv.appendChild(cardDiv);
+        contentContainer.appendChild(colDiv);
+      });
+    }
+
+    function updatePagination() {
+      const filteredItems = filterItems();
+      const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+      const currentPageSpan = document.getElementById('currentPage');
+      currentPageSpan.textContent = currentPage;
+
+      const totalPagesSpan = document.getElementById('totalPages');
+      totalPagesSpan.textContent = totalPages;
+
+      showItemsOnPage();
+    }
+
+    const prevPageButton = document.getElementById('prevPage');
+    prevPageButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePagination();
+      }
     });
 
-    return filteredItems;
-  }
-
-  function showItemsOnPage() {
-    const filteredItems = filterItems();
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const itemsToDisplay = filteredItems.slice(startIndex, endIndex);
-
-    const contentContainer = document.getElementById('contentContainer');
-    contentContainer.innerHTML = '';
-
-    itemsToDisplay.forEach((d) => {
-      const colDiv = document.createElement('div');
-          colDiv.classList.add('col-md-3'); // Bootstrap grid column class
-  
-          const cardDiv = document.createElement('div');
-          cardDiv.classList.add('card', 'mb-4'); // Add margin bottom for spacing
-  
-          const cardBody = document.createElement('div');
-          cardBody.classList.add('card-body');
-  
-          const title = document.createElement('h5');
-          title.classList.add('card-title', 'text-center');
-          title.textContent = d.Nombre;
-          cardBody.appendChild(title);
-  
-          const author = document.createElement('h5');
-          author.classList.add('card-title', 'text-center');
-          author.textContent = d.Autor;
-          cardBody.appendChild(author);
-  
-          const version = document.createElement('p');
-          version.classList.add('card-text', 'text-center');
-          version.textContent = `Version: ${d.Version}`;
-          cardBody.appendChild(version);
-  
-          const publicationYear = document.createElement('p');
-          publicationYear.classList.add('card-text', 'text-center');
-          publicationYear.textContent = d.AnoPublicacion;
-          cardBody.appendChild(publicationYear);
-  
-          const button = document.createElement('a');
-          button.setAttribute('type', 'button');
-          button.classList.add('btn', d.Pago === 'No' ? 'btn-secondary' : 'btn-primary', 'btn-block');
-          button.href = d.Pago === 'No' ? `/LectorDoc`+d.Id : '';
-          button.textContent = d.Pago === 'No' ? 'Leer' : 'No disponible';
-          if (d.Pago === 'No') {
-              button.target = '_blank';
-          } else {
-              button.setAttribute('data-bs-toggle', 'modal');
-              button.setAttribute('data-bs-target', `#ModalLect`);
-          }
-          cardBody.appendChild(button);
-
-      cardDiv.appendChild(cardBody);
-      colDiv.appendChild(cardDiv);
-      contentContainer.appendChild(colDiv);
+    const nextPageButton = document.getElementById('nextPage');
+    nextPageButton.addEventListener('click', () => {
+      const filteredItems = filterItems();
+      if (currentPage < Math.ceil(filteredItems.length / itemsPerPage)) {
+        currentPage++;
+        updatePagination();
+      }
     });
-  }
 
-  function updatePagination() {
-    const filteredItems = filterItems();
-    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+    // Agregar un evento de cambio a los selectores para actualizar las tarjetas
+    const filterAuthor = document.getElementById('filterAuthor');
+    filterAuthor.addEventListener('change', updatePagination);
 
-    const currentPageSpan = document.getElementById('currentPage');
-    currentPageSpan.textContent = currentPage;
+    const filterVersion = document.getElementById('filterVersion');
+    filterVersion.addEventListener('change', updatePagination);
 
-    const totalPagesSpan = document.getElementById('totalPages');
-    totalPagesSpan.textContent = totalPages;
+    const filterYear = document.getElementById('filterYear');
+    filterYear.addEventListener('change', updatePagination);
 
-    showItemsOnPage();
-  }
-
-  const prevPageButton = document.getElementById('prevPage');
-  prevPageButton.addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      updatePagination();
-    }
-  });
-
-  const nextPageButton = document.getElementById('nextPage');
-  nextPageButton.addEventListener('click', () => {
-    const filteredItems = filterItems();
-    if (currentPage < Math.ceil(filteredItems.length / itemsPerPage)) {
-      currentPage++;
-      updatePagination();
-    }
-  });
-
-  // Agregar un evento de cambio a los selectores para actualizar las tarjetas
-  const filterAuthor = document.getElementById('filterAuthor');
-  filterAuthor.addEventListener('change', updatePagination);
-
-  const filterVersion = document.getElementById('filterVersion');
-  filterVersion.addEventListener('change', updatePagination);
-
-  const filterYear = document.getElementById('filterYear');
-  filterYear.addEventListener('change', updatePagination);
-
-  updatePagination();
+    updatePagination();
 </script>
-
-  
 
 <% }else{ if(user.Rol == "Editar" ){ %>
 
@@ -263,7 +296,7 @@
   </div>
 </div>
 
-<% }else { %>
+<% }else { if(user.Rol == "Leer" ){ %>
 
 <!--  Header Start -->
 <%- include ('../partials/admi/headLE') %>
@@ -330,4 +363,6 @@
   </div>
 </div>
 
+<% } %>
+<h1>Acceso no permitido</h1>
 <% }}}) %> <%-include('../partials/admi/footer') %>
