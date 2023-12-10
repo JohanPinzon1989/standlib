@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 cliente/node_modules
 cliente/package-lock.js
-cliente/public/file
+cliente/public/file/masivo
 cliente\public\file\Excel
